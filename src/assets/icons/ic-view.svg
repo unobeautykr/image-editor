@@ -1,0 +1,9 @@
+<svg width="44" height="22" viewBox="0 0 44 22" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(1 1)" fill="none" fill-rule="evenodd">
+        <rect stroke="#0060FF" fill-opacity=".1" fill="#0060FF" width="42" height="20" rx="4"/>
+        <text font-family="AppleSDGothicNeo-SemiBold, Apple SD Gothic Neo" font-size="12" font-weight="500" fill="#0060FF" transform="translate(8 3)">
+                            <tspan x="0" y="11">보기</tspan>
+                        </text>
+        <path stroke="#0060FF" stroke-linecap="round" d="M31.5 7.379 33.621 9.5 31.5 11.621"/>
+    </g>
+</svg>
