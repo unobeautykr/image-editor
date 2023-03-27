@@ -39,13 +39,6 @@ export function TextToolbarContent() {
   const [openBoilerplate, setOpenBoilerplate] = useState(false);
   const [boilerplates, setBoilerplates] = useState<BoilerplateData[]>([]);
 
-  // const loadBoilerplates = useCallback(async () => {
-  //   const res = await api.getPenchartBoilerplates();
-  //   const payload = await res.json();
-
-  //   setBoilerplates(payload.data);
-  // }, [api]);
-
   const load = useCallback(async () => {
     const data = await boilerplate.onLoadBoilerplate();
     setBoilerplates(data);
@@ -76,8 +69,6 @@ export function TextToolbarContent() {
 
   const onClickSave = async () => {
     await boilerplate.onSaveBoilerplate(core.getSelectedTextContents());
-    // await api.createPenchartBoilerplate(core.getSelectedTextContents());
-    // sb.open("문구를 상용구로 저장했습니다.");
     load();
   };
 
@@ -88,8 +79,6 @@ export function TextToolbarContent() {
 
   const onDeleteBoilerplate = async (id: number) => {
     await boilerplate.onDeleteBoilerplate(id);
-    // await api.deletePenchartBoilerplate(id);
-    // sb.open("상용구를 삭제했습니다.");
     load();
   };
 
