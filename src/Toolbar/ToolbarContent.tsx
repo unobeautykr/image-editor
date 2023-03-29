@@ -1,4 +1,5 @@
 import { Box } from "@mui/system";
+import { useImageEditor } from "~/ImageEditor";
 
 interface ToolbarContentProps {
   leadingItems?: React.ReactNode;
@@ -11,6 +12,8 @@ export function ToolbarContent({
   palette = null,
   trailingItems,
 }: ToolbarContentProps) {
+  const { toolbarPosition } = useImageEditor();
+
   return (
     <>
       <Box
@@ -18,6 +21,7 @@ export function ToolbarContent({
           display: "flex",
           alignItems: "center",
           gap: 2,
+          flexDirection: toolbarPosition === "right" ? "column" : "row",
         }}
       >
         {leadingItems}
@@ -29,6 +33,7 @@ export function ToolbarContent({
           justifyContent: "flex-end",
           alignItems: "center",
           gap: 2,
+          flexDirection: toolbarPosition === "right" ? "column" : "row",
         }}
       >
         {trailingItems}

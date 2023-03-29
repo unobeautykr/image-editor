@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { useMemo } from "react";
 import sampleImage from "../samples/highres-portrait.jpeg";
 import { ImageEditor, ImageEditorProps } from "./ImageEditor";
@@ -28,13 +28,17 @@ function App() {
     []
   );
   return (
-    <Box sx={{ width: "100vw", height: "100vh" }}>
-      <ImageEditor
-        imageUrl={sampleImage}
-        boilerplate={boilerplate}
-        touch={false}
-      />
-    </Box>
+    <>
+      <CssBaseline />
+      <Box sx={{ width: "100vw", height: "100vh" }}>
+        <ImageEditor
+          imageUrl={sampleImage}
+          boilerplate={boilerplate}
+          touch={false}
+          toolbarPosition="right"
+        />
+      </Box>
+    </>
   );
 }
 

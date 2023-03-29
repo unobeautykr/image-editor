@@ -1,30 +1,5 @@
 import { Box, IconButton } from "@mui/material";
-
-const Thickness = ({ thickness, selected }) => {
-  return (
-    <Box
-      sx={{
-        p: 1,
-        backgroundColor: selected ? "black" : "transparent",
-        borderRadius: 2,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: 24,
-        height: 24,
-      }}
-    >
-      <Box
-        sx={{
-          width: thickness * 4,
-          height: thickness * 4,
-          borderRadius: "50%",
-          backgroundColor: selected ? "white" : "black",
-        }}
-      ></Box>
-    </Box>
-  );
-};
+import { Thickness } from "../Thickness";
 
 const thicknesses = [1, 2, 3, 4, 5];
 export const EraserConfigView = ({ value, onChange }) => {

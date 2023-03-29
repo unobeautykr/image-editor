@@ -13,15 +13,29 @@ import { BoilerplateDialog } from "../BoilerplateDialog";
 import { BoilerplateData } from "~/types";
 
 const SizeSlider = ({ value, onChange }) => {
+  const { toolbarPosition } = useImageEditor();
+
   return (
     <Stack
       spacing={2}
-      direction="row"
-      sx={{ mb: 1, width: 200 }}
+      direction={toolbarPosition === "bottom" ? "row" : "column-reverse"}
+      sx={{
+        mb: 1,
+        ...(toolbarPosition === "bottom" && {
+          width: 200,
+        }),
+        ...(toolbarPosition === "right" && {
+          height: 200,
+        }),
+      }}
       alignItems="center"
     >
       <TextDecreaseIcon />
-      <Slider aria-label="Volume" value={value} onChange={onChange} />
+      <Slider
+        orientation={toolbarPosition === "bottom" ? "horizontal" : "vertical"}
+        value={value}
+        onChange={onChange}
+      />
       <TextIncreaseIcon />
     </Stack>
   );

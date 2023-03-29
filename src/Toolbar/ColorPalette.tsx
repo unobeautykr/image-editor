@@ -18,6 +18,7 @@ import {
   yellow,
 } from "@mui/material/colors";
 import { PresetColor } from "../EditorCore";
+import { useImageEditor } from "~/ImageEditor";
 
 const colors = [
   PresetColor.BLACK,
@@ -119,6 +120,7 @@ function ColorGrid({ onChange }) {
 
 export function ColorPalette({ value, onChange }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const { toolbarPosition } = useImageEditor();
 
   const onClickColor = (c) => {
     if (!value) return;
@@ -151,8 +153,14 @@ export function ColorPalette({ value, onChange }) {
     <Box
       sx={{
         display: "grid",
-        gridTemplateRows: "repeat(2, minmax(0, 1fr))",
-        gridTemplateColumns: "repeat(3, minmax(0, min-content))",
+        ...(toolbarPosition === "bottom" && {
+          gridTemplateRows: "repeat(2, minmax(0, 1fr))",
+          gridTemplateColumns: "repeat(3, minmax(0, min-content))",
+        }),
+        ...(toolbarPosition === "right" && {
+          gridTemplateRows: "repeat(3, minmax(0, 1fr))",
+          gridTemplateColumns: "repeat(2, minmax(0, min-content))",
+        }),
         gap: 1,
       }}
     >

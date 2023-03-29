@@ -23,6 +23,7 @@ interface ImageEditorContextValue {
     onSaveBoilerplate: (contents: string) => Promise<void>;
     onDeleteBoilerplate: (id: number) => Promise<void>;
   };
+  toolbarPosition: "bottom" | "right";
 }
 
 interface ImageEditorProviderProps {
@@ -31,6 +32,7 @@ interface ImageEditorProviderProps {
   children: React.ReactNode;
   boilerplate?: ImageEditorContextValue["boilerplate"];
   touch?: boolean;
+  toolbarPosition: "bottom" | "right";
 }
 
 const ImageEditorContext = createContext<ImageEditorContextValue | null>(null);
@@ -41,6 +43,7 @@ const ImageEditorProvider = ({
   children,
   touch = true,
   boilerplate,
+  toolbarPosition,
 }: ImageEditorProviderProps) => {
   const core = useMemo(() => {
     return new EditorCore({
@@ -72,8 +75,9 @@ const ImageEditorProvider = ({
       core,
       boilerplate,
       touch,
+      toolbarPosition,
     }),
-    [boilerplate, core, touch]
+    [boilerplate, core, touch, toolbarPosition]
   );
 
   return (
@@ -108,11 +112,18 @@ export interface ImageEditorProps {
   imageUrl: string;
   boilerplate?: ImageEditorContextValue["boilerplate"];
   touch?: boolean;
+  toolbarPosition?: "bottom" | "right";
 }
 
 export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
   function ImageEditor(
-    { viewOnly = false, imageUrl, boilerplate, touch },
+    {
+      viewOnly = false,
+      imageUrl,
+      boilerplate,
+      touch,
+      toolbarPosition = "bottom",
+    },
     ref
   ) {
     const containerRef = useRef<HTMLElement | null>(null);
@@ -125,8 +136,15 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
         imageUrl={imageUrl}
         boilerplate={boilerplate}
         touch={touch}
+        toolbarPosition={toolbarPosition}
       >
-        <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: toolbarPosition === "right" ? "row" : "column",
+          }}
+        >
           <Box
             ref={containerRef}
             sx={{
