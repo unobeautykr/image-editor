@@ -9,6 +9,7 @@ interface ImageEditorContextValue {
         onSaveBoilerplate: (contents: string) => Promise<void>;
         onDeleteBoilerplate: (id: number) => Promise<void>;
     };
+    toolbarPosition: "bottom" | "right";
 }
 export declare function useImageEditor(): ImageEditorContextValue;
 export declare function useTool(): {
@@ -20,6 +21,7 @@ export interface ImageEditorProps {
     imageUrl: string;
     boilerplate?: ImageEditorContextValue["boilerplate"];
     touch?: boolean;
+    toolbarPosition?: "bottom" | "right";
 }
 export declare const ImageEditor: import("react").ForwardRefExoticComponent<ImageEditorProps & import("react").RefAttributes<HTMLElement>>;
 export {};
