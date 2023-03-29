@@ -29,7 +29,6 @@ export default defineConfig({
         "@mui/icons-material",
         "@emotion/react",
         "@emotion/styled",
-        "fabric",
       ],
       output: {
         globals: {
@@ -39,7 +38,6 @@ export default defineConfig({
           "@mui/icons-material": "MuiIconsMaterial",
           "@emotion/react": "EmotionReact",
           "@emotion/styled": "EmotionStyled",
-          fabric: "FabricJS",
         },
       },
     },
