@@ -106,7 +106,6 @@ export class EditorCore extends EventTarget {
     const c = this.c;
     this.c.usePencil = this.touchEnabled ? this.config.usePencil : false;
 
-    console.log("load", this.imageUrl);
     fabric.Image.fromURL(
       this.imageUrl,
       (oImg) => {
