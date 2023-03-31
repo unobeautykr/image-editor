@@ -22686,7 +22686,7 @@ const xe = {
       selection: !1
     });
     const _ = this.c;
-    this.c.usePencil = this.touchEnabled ? this.config.usePencil : !1, console.log("load", this.imageUrl), $e.fabric.Image.fromURL(
+    this.c.usePencil = this.touchEnabled ? this.config.usePencil : !1, $e.fabric.Image.fromURL(
       this.imageUrl,
       (m) => {
         console.log("loaded"), _.getElement() && (m.erasable = !1, this.busy = !1, _.setBackgroundImage(m, null), this.fitCanvas(), this.pushHistory(), this.selectTool(this.fetchTool()), this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseUp), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:cleared", this.onObjectDeselected));
