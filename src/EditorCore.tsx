@@ -608,8 +608,8 @@ export class EditorCore extends EventTarget {
         {
           width: this.c.clipPath.width,
           height: this.c.clipPath.height,
-          left: this.c.clipPath.left,
-          top: this.c.clipPath.top,
+          left: this.c.clipPath.left + 1,
+          top: this.c.clipPath.top + 1,
         }
       );
     });
