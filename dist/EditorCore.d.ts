@@ -42,6 +42,8 @@ export declare class EditorCore extends EventTarget {
     private _isTraversingHistory;
     private touchEnabled;
     private c;
+    tool: null;
+    private tools;
     constructor({ imageUrl, touchEnabled, }: {
         imageUrl: string;
         touchEnabled: boolean;
@@ -59,7 +61,10 @@ export declare class EditorCore extends EventTarget {
     addImage(imageUrl: any): void;
     calcTextSize(fontSize: any): number;
     calcFontSize(textSize: any): number;
-    addText(placeholder: any): void;
+    addText(placeholder: string, position?: {
+        x: number;
+        y: number;
+    }): void;
     undo(): Promise<void>;
     redo(): Promise<void>;
     loadFromHistory(history: any): Promise<void>;

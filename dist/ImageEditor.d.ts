@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import { ReactNode } from "react";
 import { EditorCore } from "./EditorCore";
 import { BoilerplateData } from "./types";
 interface ImageEditorContextValue {
@@ -22,6 +22,7 @@ export interface ImageEditorProps {
     boilerplate?: ImageEditorContextValue["boilerplate"];
     touch?: boolean;
     toolbarPosition?: "bottom" | "right";
+    leadingItems?: ReactNode;
 }
 export declare const ImageEditor: import("react").ForwardRefExoticComponent<ImageEditorProps & import("react").RefAttributes<HTMLElement>>;
 export {};

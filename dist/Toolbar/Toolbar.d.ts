@@ -1,2 +1,4 @@
-/// <reference types="react" />
-export declare function Toolbar(): JSX.Element;
+import { ReactNode } from "react";
+export declare function Toolbar({ leadingItems }: {
+    leadingItems: ReactNode;
+}): JSX.Element;
