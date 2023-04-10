@@ -592,17 +592,35 @@ export class EditorCore extends EventTarget {
     return dataUrl;
   }
 
-  toBlob() {
-    return new Promise((res, rej) => {
-      this.c.toBlob((blob) => {
-        if (!blob) {
-          rej(new Error("Cannot create blob"));
-          return;
-        }
+  async toBlob() {
+    const originalTransform = this.c.viewportTransform;
+    this.c.viewportTransform = fabric.iMatrix.slice(0);
+    const blob = new Promise((res, rej) => {
+      this.c.toBlob(
+        (blob) => {
+          if (!blob) {
+            rej(new Error("Cannot create blob"));
+            return;
+          }
 
-        res(blob);
-      });
+          res(blob);
+        },
+        {
+          width: this.c.clipPath.width,
+          height: this.c.clipPath.height,
+          left: this.c.clipPath.left,
+          top: this.c.clipPath.top,
+        }
+      );
     });
+    try {
+      this.busy = true;
+      await blob;
+      return blob;
+    } finally {
+      this.c.viewportTransform = originalTransform;
+      this.busy = false;
+    }
   }
 
   deleteSelectedObject() {
