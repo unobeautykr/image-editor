@@ -38,7 +38,6 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <Button onClick={onClickSave}>save</Button>
       <Box sx={{ width: "100vw", height: "100vh" }}>
         <ImageEditor
           ref={editorRef}
@@ -46,6 +45,7 @@ function App() {
           boilerplate={boilerplate}
           touch={false}
           toolbarPosition="right"
+          leadingItems={<Button onClick={onClickSave}>save</Button>}
         />
       </Box>
     </>

@@ -33,7 +33,12 @@ export function FreedrawButton() {
 
   return (
     <>
-      <ToolbarButton selected={selected} Icon={PenToolIcon} onClick={onClick} />
+      <ToolbarButton
+        selected={selected}
+        Icon={PenToolIcon}
+        onClick={onClick}
+        tooltip="펜"
+      />
       <ToolbarPopover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}

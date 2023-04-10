@@ -4,6 +4,7 @@ import { FreedrawTool } from "./tools/FreedrawTool";
 import { MarkerTool } from "./tools/MarkerTool";
 import { PanTool } from "./tools/PanTool";
 import { SelectTool } from "./tools/SelectTool";
+import { TextTool } from "./tools/TextTool";
 
 export const ToolName = {
   FREEDRAW: "FREEDRAW",
@@ -65,6 +66,29 @@ export class EditorCore extends EventTarget {
   private touchEnabled: boolean;
   private c: fabric.Canvas | null = null;
 
+  public tool = null;
+
+  private tools = {
+    [ToolName.FREEDRAW]: {
+      class: FreedrawTool,
+    },
+    [ToolName.MARKER]: {
+      class: MarkerTool,
+    },
+    [ToolName.ERASER]: {
+      class: EraserTool,
+    },
+    [ToolName.PAN]: {
+      class: PanTool,
+    },
+    [ToolName.SELECT]: {
+      class: SelectTool,
+    },
+    [ToolName.TEXT]: {
+      class: TextTool,
+    },
+  };
+
   constructor({
     imageUrl,
     touchEnabled,
@@ -78,23 +102,6 @@ export class EditorCore extends EventTarget {
     this._busy = true;
     this.imageUrl = imageUrl;
 
-    this.tools = {
-      [ToolName.FREEDRAW]: {
-        class: FreedrawTool,
-      },
-      [ToolName.MARKER]: {
-        class: MarkerTool,
-      },
-      [ToolName.ERASER]: {
-        class: EraserTool,
-      },
-      [ToolName.PAN]: {
-        class: PanTool,
-      },
-      [ToolName.SELECT]: {
-        class: SelectTool,
-      },
-    };
     this.touchEnabled = touchEnabled;
   }
 
@@ -404,14 +411,26 @@ export class EditorCore extends EventTarget {
     );
   }
 
-  addText(placeholder) {
+  addText(placeholder: string, position?: { x: number; y: number }) {
     if (!this.available) return;
 
-    this.selectTool(ToolName.SELECT);
+    if (this.touchEnabled) {
+      this.selectTool(ToolName.SELECT);
+    }
+
     const text = new fabric.IText(placeholder);
     text.set("fill", this.config.text.color.code);
     text.set("fontSize", this.calcTextSize(this.config.text.fontSize));
-    this.c.viewportCenterObject(text);
+    if (position) {
+      const canvasSpace = this.c.getPointer({
+        clientX: position.x,
+        clientY: position.y,
+      });
+      text.set("left", canvasSpace.x);
+      text.set("top", canvasSpace.y);
+    } else {
+      this.c.viewportCenterObject(text);
+    }
     text.erasable = false;
 
     this.c.add(text);

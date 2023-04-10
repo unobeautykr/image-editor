@@ -76,6 +76,7 @@ export function BrushToolbarContent() {
             disabled={!available || history.index <= 0}
             Icon={UndoIcon}
             onClick={onClickUndo}
+            tooltip="실행취소"
           />
 
           <ToolbarButton
@@ -83,6 +84,7 @@ export function BrushToolbarContent() {
             disabled={!available || history.index >= history.histories - 1}
             Icon={RedoIcon}
             onClick={onClickRedo}
+            tooltip="재실행"
           />
           {touch && <SettingsButton />}
         </>

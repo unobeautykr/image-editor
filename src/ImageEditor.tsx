@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import { useElementSize } from "./useElementSize";
 import {
+  ReactNode,
   createContext,
   forwardRef,
   useContext,
@@ -116,6 +117,7 @@ export interface ImageEditorProps {
   boilerplate?: ImageEditorContextValue["boilerplate"];
   touch?: boolean;
   toolbarPosition?: "bottom" | "right";
+  leadingItems?: ReactNode;
 }
 
 export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
@@ -126,6 +128,7 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
       boilerplate,
       touch,
       toolbarPosition = "bottom",
+      leadingItems,
     },
     ref
   ) {
@@ -143,6 +146,7 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
       >
         <Box
           sx={{
+            backgroundColor: "#f5f5f8",
             height: "100%",
             display: "flex",
             flexDirection: toolbarPosition === "right" ? "row" : "column",
@@ -160,7 +164,7 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
           >
             {containerSize && <EditorCanvas containerSize={containerSize} />}
           </Box>
-          {!viewOnly && <Toolbar />}
+          {!viewOnly && <Toolbar leadingItems={leadingItems} />}
         </Box>
       </ImageEditorProvider>
     );

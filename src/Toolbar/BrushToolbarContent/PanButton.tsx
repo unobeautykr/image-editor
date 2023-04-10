@@ -12,6 +12,11 @@ export function PanButton() {
   };
 
   return (
-    <ToolbarButton selected={selected} Icon={PanToolIcon} onClick={onClick} />
+    <ToolbarButton
+      selected={selected}
+      Icon={PanToolIcon}
+      onClick={onClick}
+      tooltip="이동"
+    />
   );
 }

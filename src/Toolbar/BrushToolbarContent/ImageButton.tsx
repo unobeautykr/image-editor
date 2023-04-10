@@ -3,6 +3,7 @@ import { grey } from "@mui/material/colors";
 import { useImageEditor } from "~/ImageEditor";
 import { ToolName } from "~/EditorCore";
 import { ImageToolIcon } from "~/icons/ImageToolIcon";
+import { Tooltip } from "@mui/material";
 
 const ButtonLabel = styled("label")``;
 const HiddenInput = styled("input")`
@@ -10,7 +11,7 @@ const HiddenInput = styled("input")`
 `;
 
 export const ImageButton = ({ ...props }) => {
-  const { core } = useImageEditor();
+  const { core, toolbarPosition } = useImageEditor();
 
   const onClickUpload = (e) => {
     e.target.value = null;
@@ -37,33 +38,39 @@ export const ImageButton = ({ ...props }) => {
   const disabled = false;
 
   return (
-    <ButtonLabel
-      htmlFor="file-upload"
-      sx={{
-        display: "flex",
-        ":hover": {
-          backgroundColor: grey[200],
-        },
-        p: 1.5,
-        borderRadius: "50%",
-        backgroundColor: grey[200],
-        color: "black",
-      }}
+    <Tooltip
+      title="이미지"
+      arrow
+      placement={toolbarPosition === "right" ? "left" : "top"}
     >
-      <ImageToolIcon
+      <ButtonLabel
+        htmlFor="file-upload"
         sx={{
-          fontSize: 20,
-          color: disabled ? "action.disabled" : "inherit",
+          display: "flex",
+          ":hover": {
+            backgroundColor: grey[200],
+          },
+          p: 1.5,
+          borderRadius: "50%",
+          backgroundColor: grey[200],
+          color: "black",
         }}
-      />
-      <HiddenInput
-        id="file-upload"
-        type="file"
-        {...props}
-        accept="image/*"
-        onClick={onClickUpload}
-        onChange={onChangeFiles}
-      />
-    </ButtonLabel>
+      >
+        <ImageToolIcon
+          sx={{
+            fontSize: 20,
+            color: disabled ? "action.disabled" : "inherit",
+          }}
+        />
+        <HiddenInput
+          id="file-upload"
+          type="file"
+          {...props}
+          accept="image/*"
+          onClick={onClickUpload}
+          onChange={onChangeFiles}
+        />
+      </ButtonLabel>
+    </Tooltip>
   );
 };

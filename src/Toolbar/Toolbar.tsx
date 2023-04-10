@@ -1,5 +1,5 @@
 import { useImageEditor } from "../ImageEditor";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { BrushToolbarContent } from "./BrushToolbarContent/BrushToolbarContent";
 import { TextToolbarContent } from "./TextToolbarContent/TextToolbarContent";
 import { ImageToolbarContent } from "./ImageToolbarContent/ImageToolbarContent";
@@ -7,7 +7,7 @@ import { EditorCore } from "../EditorCore";
 import { grey } from "@mui/material/colors";
 import { Box, Paper } from "@mui/material";
 
-export function Toolbar() {
+export function Toolbar({ leadingItems }: { leadingItems: ReactNode }) {
   const { core, toolbarPosition } = useImageEditor();
   const [mode, setMode] = useState(core.mode);
 
@@ -25,28 +25,59 @@ export function Toolbar() {
     >
       <Paper
         sx={{
-          display: "grid",
-          backgroundColor: grey[50],
+          display: "flex",
           overflow: "auto",
-          color: "black",
-          gap: 3,
+          backgroundColor: grey[50],
+          alignItems: "center",
+          gap: 1,
           ...(toolbarPosition === "right" && {
-            gridTemplateRows: `404px 88px 128px`,
+            flexDirection: "column",
             width: 88,
             py: 4,
             px: 2,
           }),
           ...(toolbarPosition === "bottom" && {
-            gridTemplateColumns: `404px 88px 128px`,
+            flexDirection: "row",
             height: 88,
             py: 2,
             px: 4,
           }),
         }}
       >
-        {mode === EditorCore.Mode.BRUSH && <BrushToolbarContent />}
-        {mode === EditorCore.Mode.TEXT && <TextToolbarContent />}
-        {mode === EditorCore.Mode.IMAGE && <ImageToolbarContent />}
+        {leadingItems && (
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              ...(toolbarPosition === "right" && {
+                flexDirection: "column",
+              }),
+              ...(toolbarPosition === "bottom" && {
+                flexDirection: "row",
+              }),
+            }}
+          >
+            {leadingItems}
+          </Box>
+        )}
+        <Box
+          sx={{
+            display: "grid",
+            color: "black",
+            gap: 3,
+            ...(toolbarPosition === "right" && {
+              gridTemplateRows: `404px 88px 128px`,
+            }),
+            ...(toolbarPosition === "bottom" && {
+              gridTemplateColumns: `404px 88px 128px`,
+              height: 88,
+            }),
+          }}
+        >
+          {mode === EditorCore.Mode.BRUSH && <BrushToolbarContent />}
+          {mode === EditorCore.Mode.TEXT && <TextToolbarContent />}
+          {mode === EditorCore.Mode.IMAGE && <ImageToolbarContent />}
+        </Box>
       </Paper>
     </Box>
   );

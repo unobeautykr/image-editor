@@ -1,17 +1,29 @@
+import { ToolName } from "~/EditorCore";
 import { ToolbarButton } from "../ToolbarButton";
-import { useImageEditor } from "~/ImageEditor";
+import { useImageEditor, useTool } from "~/ImageEditor";
 import { TextToolIcon } from "~/icons/TextToolIcon";
 
 export function TextButton() {
-  const { core } = useImageEditor();
+  const { core, touch } = useImageEditor();
+  const { tool, setTool } = useTool();
+  const selected = tool === ToolName.TEXT;
 
   const onClick = (e) => {
-    core.addText("text");
+    if (touch) {
+      core.addText("text");
+    } else {
+      setTool(ToolName.TEXT);
+    }
   };
 
   return (
     <>
-      <ToolbarButton Icon={TextToolIcon} onClick={onClick} />
+      <ToolbarButton
+        selected={selected}
+        Icon={TextToolIcon}
+        onClick={onClick}
+        tooltip="텍스트"
+      />
     </>
   );
 }

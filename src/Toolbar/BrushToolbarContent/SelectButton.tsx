@@ -16,6 +16,7 @@ export function SelectButton() {
       selected={selected}
       Icon={SelectToolIcon}
       onClick={onClick}
+      tooltip="선택"
     />
   );
 }
