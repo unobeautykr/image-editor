@@ -1653,9 +1653,9 @@ esutils@^2.0.2:
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
-"fabric@git+https://git@github.com/unobeautykr/fabric.js.git#v521-10":
-  version "5.2.1-10"
-  resolved "git+https://git@github.com/unobeautykr/fabric.js.git#deab28065968e21ed43193e8468b0456f31167ae"
+"fabric@git+https://git@github.com/unobeautykr/fabric.js.git#v521-12":
+  version "5.2.1-12"
+  resolved "git+https://git@github.com/unobeautykr/fabric.js.git#6962fa1d1a783b388a236664017c56756d278260"
   optionalDependencies:
     canvas "^2.8.0"
     jsdom "^19.0.0"

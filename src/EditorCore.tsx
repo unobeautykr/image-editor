@@ -109,7 +109,6 @@ export class EditorCore extends EventTarget {
     fabric.Image.fromURL(
       this.imageUrl,
       (oImg) => {
-        console.log("loaded");
         if (!c.getElement()) return;
         oImg.erasable = false;
         this.busy = false;
@@ -365,7 +364,9 @@ export class EditorCore extends EventTarget {
 
   setContainerSize(size) {
     this.containerSize = size;
-    this.fitCanvas();
+    if (this.c) {
+      this.fitCanvas();
+    }
   }
 
   addImage(imageUrl) {
@@ -589,6 +590,19 @@ export class EditorCore extends EventTarget {
     });
     this.c.viewportTransform = originalTransform;
     return dataUrl;
+  }
+
+  toBlob() {
+    return new Promise((res, rej) => {
+      this.c.toBlob((blob) => {
+        if (!blob) {
+          rej(new Error("Cannot create blob"));
+          return;
+        }
+
+        res(blob);
+      });
+    });
   }
 
   deleteSelectedObject() {

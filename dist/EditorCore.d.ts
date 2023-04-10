@@ -81,6 +81,7 @@ export declare class EditorCore extends EventTarget {
     _dispatchAvailbilityChange(): void;
     fitCanvas(): void;
     getDataUrl(format: any): string;
+    toBlob(): Promise<unknown>;
     deleteSelectedObject(): void;
     changeSelectedTextSize(fontSize: any): void;
     changeSelectedTextColor(c: any): void;

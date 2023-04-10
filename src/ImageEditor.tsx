@@ -59,6 +59,9 @@ const ImageEditorProvider = ({
         getDataUrl(format) {
           return core.getDataUrl(format);
         },
+        toBlob() {
+          return core.toBlob();
+        },
         isDirty() {
           return core.isDirty();
         },
