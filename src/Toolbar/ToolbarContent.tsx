@@ -26,7 +26,15 @@ export function ToolbarContent({
       >
         {leadingItems}
       </Box>
-      <Box>{palette}</Box>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: toolbarPosition === "right" ? "column" : "row",
+        }}
+      >
+        {palette}
+      </Box>
       <Box
         sx={{
           display: "flex",

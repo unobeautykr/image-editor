@@ -23535,7 +23535,17 @@ function bi({
         children: d
       }
     ),
-    /* @__PURE__ */ W.jsx(at, { children: c }),
+    /* @__PURE__ */ W.jsx(
+      at,
+      {
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          flexDirection: _ === "right" ? "column" : "row"
+        },
+        children: c
+      }
+    ),
     /* @__PURE__ */ W.jsx(
       at,
       {
