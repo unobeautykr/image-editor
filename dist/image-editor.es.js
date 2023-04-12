@@ -2,8 +2,8 @@ var dn = Object.defineProperty;
 var gn = (d, c, v) => c in d ? dn(d, c, { enumerable: !0, configurable: !0, writable: !0, value: v }) : d[c] = v;
 var Be = (d, c, v) => (gn(d, typeof c != "symbol" ? c + "" : c, v), v);
 import * as fe from "react";
-import yr, { useState as Ie, useEffect as it, useRef as _r, useCallback as br, createContext as pn, forwardRef as mn, useMemo as Bi, useImperativeHandle as vn, useContext as yn } from "react";
-import { Popover as _n, IconButton as wt, Tooltip as Cr, Box as Ke, SvgIcon as ot, Menu as xr, MenuItem as Sr, ListItemText as wr, Switch as bn, Dialog as Cn, DialogTitle as xn, List as Sn, ListItem as wn, Stack as Tn, Slider as En, Paper as On } from "@mui/material";
+import yr, { useState as Ie, useEffect as ot, useRef as _r, useCallback as br, createContext as pn, forwardRef as mn, useMemo as Bi, useImperativeHandle as vn, useContext as yn } from "react";
+import { Popover as _n, IconButton as wt, Tooltip as Cr, Box as Ke, SvgIcon as st, Menu as xr, MenuItem as Sr, ListItemText as wr, Switch as bn, Dialog as Cn, DialogTitle as xn, List as Sn, ListItem as wn, Stack as Tn, Slider as En, Paper as On } from "@mui/material";
 import Pn from "@emotion/styled";
 import "@emotion/react";
 function Tr(d) {
@@ -689,12 +689,12 @@ function Er(d) {
     c[v] = Er(d[v]);
   }), c;
 }
-function rt(d, c, v = {
+function it(d, c, v = {
   clone: !0
 }) {
   const _ = v.clone ? ye({}, d) : d;
   return gt(d) && gt(c) && Object.keys(c).forEach((m) => {
-    m !== "__proto__" && (gt(c[m]) && m in d && gt(d[m]) ? _[m] = rt(d[m], c[m], v) : v.clone ? _[m] = gt(c[m]) ? Er(c[m]) : c[m] : _[m] = c[m]);
+    m !== "__proto__" && (gt(c[m]) && m in d && gt(d[m]) ? _[m] = it(d[m], c[m], v) : v.clone ? _[m] = gt(c[m]) ? Er(c[m]) : c[m] : _[m] = c[m]);
   }), _;
 }
 var me = {}, zi = {
@@ -1869,7 +1869,7 @@ const ys = (d, c) => {
   Array.isArray(d.__emotion_styles) && (d.__emotion_styles = c(d.__emotion_styles));
 }, _s = process.env.NODE_ENV !== "production" ? me.oneOfType([me.number, me.string, me.object, me.array]) : {}, lt = _s;
 function At(d, c) {
-  return c ? rt(d, c, {
+  return c ? it(d, c, {
     clone: !1
     // No need to clone deep, it's way faster.
   }) : d;
@@ -1891,7 +1891,7 @@ const mi = {
   keys: ["xs", "sm", "md", "lg", "xl"],
   up: (d) => `@media (min-width:${mi[d]}px)`
 };
-function nt(d, c, v) {
+function rt(d, c, v) {
   const _ = d.theme || {};
   if (Array.isArray(c)) {
     const T = _.breakpoints || nr;
@@ -1949,7 +1949,7 @@ function Oe(d) {
     if (D[c] == null)
       return null;
     const X = D[c], U = D.theme, h = Xt(U, _) || {};
-    return nt(D, X, (a) => {
+    return rt(D, X, (a) => {
       let o = Bt(h, m, a);
       return a === o && typeof a == "string" && (o = Bt(h, m, `${c}${a === "default" ? "" : Qe(a)}`, a)), v === !1 ? o : {
         [v]: o
@@ -2019,7 +2019,7 @@ function Ps(d, c, v, _) {
   if (c.indexOf(v) === -1)
     return null;
   const m = Ts(v), T = Os(m, _), D = d[v];
-  return nt(d, D, T);
+  return rt(d, D, T);
 }
 function Lr(d, c) {
   const v = Ir(d.theme);
@@ -2079,7 +2079,7 @@ const As = Oe({
     const c = Mt(d.theme, "shape.borderRadius", 4, "borderRadius"), v = (_) => ({
       borderRadius: Dt(c, _)
     });
-    return nt(d, d.borderRadius, v);
+    return rt(d, d.borderRadius, v);
   }
   return null;
 };
@@ -2093,7 +2093,7 @@ const Ut = (d) => {
     const c = Mt(d.theme, "spacing", 8, "gap"), v = (_) => ({
       gap: Dt(c, _)
     });
-    return nt(d, d.gap, v);
+    return rt(d, d.gap, v);
   }
   return null;
 };
@@ -2106,7 +2106,7 @@ const Gt = (d) => {
     const c = Mt(d.theme, "spacing", 8, "columnGap"), v = (_) => ({
       columnGap: Dt(c, _)
     });
-    return nt(d, d.columnGap, v);
+    return rt(d, d.columnGap, v);
   }
   return null;
 };
@@ -2119,7 +2119,7 @@ const Vt = (d) => {
     const c = Mt(d.theme, "spacing", 8, "rowGap"), v = (_) => ({
       rowGap: Dt(c, _)
     });
-    return nt(d, d.rowGap, v);
+    return rt(d, d.rowGap, v);
   }
   return null;
 };
@@ -2179,7 +2179,7 @@ const Qs = Oe({
         maxWidth: ((_ = d.theme) == null || (m = _.breakpoints) == null || (T = m.values) == null ? void 0 : T[v]) || mi[v] || Ne(v)
       };
     };
-    return nt(d, d.maxWidth, c);
+    return rt(d, d.maxWidth, c);
   }
   return null;
 };
@@ -2519,7 +2519,7 @@ function oo() {
         [v]: _
       };
     const o = Xt(m, h) || {};
-    return a ? a(D) : nt(D, _, (r) => {
+    return a ? a(D) : rt(D, _, (r) => {
       let t = Bt(o, i, r);
       return r === t && typeof r == "string" && (t = Bt(o, i, `${v}${r === "default" ? "" : Qe(r)}`, r)), U === !1 ? t : {
         [U]: t
@@ -2552,7 +2552,7 @@ function oo() {
             if (D[e])
               o = At(o, d(e, r, T, D));
             else {
-              const t = nt({
+              const t = rt({
                 theme: T
               }, r, (s) => ({
                 [e]: s
@@ -2702,7 +2702,7 @@ function yi(d = {}, ...c) {
     spacing: m,
     shape: T = {}
   } = d, D = We(d, vo), X = fo(v), U = mo(m);
-  let h = rt({
+  let h = it({
     breakpoints: X,
     direction: "ltr",
     components: {},
@@ -2713,7 +2713,7 @@ function yi(d = {}, ...c) {
     spacing: U,
     shape: ye({}, po, T)
   }, D);
-  return h = c.reduce((i, a) => rt(i, a), h), h.unstable_sxConfig = ye({}, $t, D == null ? void 0 : D.unstable_sxConfig), h.unstable_sx = function(a) {
+  return h = c.reduce((i, a) => it(i, a), h), h.unstable_sxConfig = ye({}, $t, D == null ? void 0 : D.unstable_sxConfig), h.unstable_sx = function(a) {
     return Kt({
       sx: a,
       theme: this
@@ -3009,7 +3009,7 @@ function zo(d, c) {
 }
 function No(d) {
   const [c, v] = Ie(null);
-  return it(() => {
+  return ot(() => {
     if (!d.current)
       throw Error("ref must be initialized in intial render");
     const _ = new ResizeObserver((T) => {
@@ -3026,9 +3026,9 @@ function No(d) {
 }
 function Ho({ containerSize: d }) {
   const c = _r(null), { core: v } = Ye();
-  return it(() => (v.setCanvas(c.current), () => {
+  return ot(() => (v.setCanvas(c.current), () => {
     v.detach();
-  }), [v]), it(() => {
+  }), [v]), ot(() => {
     v.setContainerSize(d);
   }, [d, v]), /* @__PURE__ */ W.jsx(W.Fragment, { children: /* @__PURE__ */ W.jsx("canvas", { ref: c }) });
 }
@@ -23630,7 +23630,7 @@ const Ue = ({
   ) });
 }, Ma = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("g", { fill: "currentColor", fillRule: "evenodd" }, /* @__PURE__ */ fe.createElement("path", { d: "M11.892 22.287c-.08.082-.15.168-.208.26.414.192 1.513.784 3.097 2.272 1.545 1.455 2.086 2.41 2.256 2.787.031-.026.066-.049.096-.076l12.081-12.082-5.241-5.24-12.08 12.079zM27.12 7.06l-1.797 1.797 5.241 5.24 1.798-1.795a1.592 1.592 0 0 0-.003-2.243l-2.997-2.998a1.593 1.593 0 0 0-2.243-.001M13.333 26.221c-1.901-1.784-3.061-2.19-3.061-2.19s-1.045 2.44-1.73 4.588c.602.348 1.633 1.105 2.425 2.494 2.096-.844 4.538-2.121 4.538-2.121s-.272-.984-2.172-2.77M7.45 30.087c-.41 1.278-.665 2.434-.357 2.655.292.209 1.291-.095 2.41-.545-.669-1.176-1.541-1.816-2.052-2.11M26.763 33.484H10.26l2.797-1.304H29z" })));
 function Da(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: Ma, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: Ma, ...d });
 }
 function Ra() {
   const [d, c] = Ie(null), { core: v } = Ye(), { tool: _, setTool: m } = mt(), [T, D] = Ie(v.getToolConfig(be.FREEDRAW)), X = _ === be.FREEDRAW, U = (a) => {
@@ -23664,7 +23664,7 @@ function Ra() {
 }
 const ja = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("path", { d: "m20 6.957-5.07 5.07h4.146v7.049h-7.05v-4.147L6.957 20l5.07 5.07v-4.147h7.05v7.05H14.93l5.07 5.07 5.07-5.07h-4.146v-7.05h7.05v4.147l5.07-5.07-5.07-5.07v4.146h-7.05v-7.05h4.147z", fill: "currentColor", fillRule: "evenodd" }));
 function Fa(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: ja, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: ja, ...d });
 }
 function Ia() {
   const { tool: d, setTool: c } = mt(), v = d === be.PAN, _ = (m) => {
@@ -23682,7 +23682,7 @@ function Ia() {
 }
 const La = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("path", { d: "M27.232 16.057c-.678 0-1.261.395-1.538.967v-.065c0-.948-.751-1.752-1.7-1.757a1.707 1.707 0 0 0-1.546.968v-.065c0-.92-.707-1.712-1.626-1.755a1.709 1.709 0 0 0-1.792 1.707v-7.3c0-.92-.707-1.712-1.626-1.755a1.709 1.709 0 0 0-1.791 1.707v14.246l-1.113-4.01c-.261-.94-1.272-1.708-2.248-1.708a1.709 1.709 0 0 0-1.19 2.103l1.964 6.909a14.75 14.75 0 0 0 1.317 3.17l.953 1.704a3.023 3.023 0 0 0 2.638 1.546h6.797c1.156 0 2.21-.658 2.717-1.697a14.746 14.746 0 0 0 1.493-6.466v-6.74c0-.944-.765-1.71-1.709-1.71", fill: "currentColor", fillRule: "evenodd" }));
 function Ba(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: La, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: La, ...d });
 }
 function Ya() {
   const { tool: d, setTool: c } = mt(), v = d === be.SELECT, _ = (m) => {
@@ -23716,7 +23716,7 @@ const Xa = [1, 2, 3, 4, 5], za = ({ value: d, onChange: c }) => {
   ) });
 }, Na = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("g", { fill: "currentColor", fillRule: "evenodd" }, /* @__PURE__ */ fe.createElement("path", { d: "m30.429 10.774-10.607 9.793 4.958 4.736 9.565-10.592c.054.072.064.03.066-.015v-.046l.002-.01c.01-.01.389.052-.326-.277l-3.651-3.582-.007-.007z", stroke: "currentColor", strokeWidth: 4 }), /* @__PURE__ */ fe.createElement("path", { d: "m16.451 21.895 6.837 6.523s-3.62-.739-6.193 2.297l-2.763-2.617s3.552-2.475 2.12-6.203M12.406 30.55l2.38 2.217 1.545-1.658-2.381-2.218zM5.903 33.254h7.748L11.33 31.22l-7.406-.016z" })));
 function Ha(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: Na, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: Na, ...d });
 }
 function Wa() {
   const [d, c] = Ie(null), { core: v } = Ye(), { tool: _, setTool: m } = mt(), [T, D] = Ie(v.getToolConfig(be.MARKER)), X = _ === be.MARKER, U = (a) => {
@@ -23750,7 +23750,7 @@ function Wa() {
 }
 const Ua = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("g", { fill: "currentColor", fillRule: "nonzero", stroke: "currentColor", strokeWidth: 0.6 }, /* @__PURE__ */ fe.createElement("path", { d: "M29.134 9.63H10.866a3.044 3.044 0 0 0-3.04 3.039v14.365l.002.013a3.043 3.043 0 0 0 3.038 3.015h18.267a3.043 3.043 0 0 0 3.04-3.03V12.669a3.043 3.043 0 0 0-3.04-3.04zm2.179 16.307-3.617-3.836a2.868 2.868 0 0 0-4.207 0l-2.437 2.584-3.538-3.86a2.802 2.802 0 0 0-2.08-.932c-.791 0-1.53.331-2.081.933l-4.666 5.09V12.668c0-1.201.978-2.18 2.18-2.18h18.267c1.201 0 2.179.979 2.179 2.18v13.268z" }), /* @__PURE__ */ fe.createElement("path", { d: "M25.22 17.718a2.181 2.181 0 0 1-2.18-2.178c0-1.202.977-2.18 2.18-2.18 1.2 0 2.178.978 2.178 2.18a2.181 2.181 0 0 1-2.179 2.178z" })));
 function Ga(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: Ua, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: Ua, ...d });
 }
 const Va = Gr("label")``, $a = Gr("input")`
   display: none;
@@ -23817,7 +23817,7 @@ const Va = Gr("label")``, $a = Gr("input")`
   );
 }, qa = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("path", { d: "M10.435 8.696v6.117h2.607v-2.515h5.403v16.4h-2.607v2.606h8.817v-2.607h-2.608V12.298h5.404v2.515h2.607V8.696z", fill: "currentColor", fillRule: "evenodd" }));
 function Qa(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: qa, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: qa, ...d });
 }
 function Ja() {
   const { core: d, touch: c } = Ye(), { tool: v, setTool: _ } = mt(), m = v === be.TEXT, T = (D) => {
@@ -23851,7 +23851,7 @@ const Za = [1, 2, 3, 4, 5], el = ({ value: d, onChange: c }) => {
   ) });
 }, tl = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("path", { d: "M25.09 5.217 6.086 24.22l6.637 6.635h21.189v-1.72h-15.2l15.146-15.147-8.77-8.77zM8.52 24.22l6.965-6.967 6.338 6.34-5.544 5.542h-2.843L8.52 24.22z", fill: "currentColor", fillRule: "evenodd" }));
 function il(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: tl, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: tl, ...d });
 }
 function rl() {
   const [d, c] = Ie(null), { core: v } = Ye(), { tool: _, setTool: m } = mt(), [T, D] = Ie(v.getToolConfig(be.ERASER)), X = _ === be.ERASER, U = (a) => {
@@ -23883,12 +23883,12 @@ function rl() {
     )
   ] });
 }
-var xi = {}, st = {}, nl = {
+var xi = {}, nt = {}, nl = {
   get exports() {
-    return st;
+    return nt;
   },
   set exports(d) {
-    st = d;
+    nt = d;
   }
 };
 (function(d) {
@@ -24094,7 +24094,7 @@ const theme2 = createTheme({ palette: {
     dark: fi,
     light: ur
   };
-  return process.env.NODE_ENV !== "production" && (e[c] || console.error(`MUI: The palette mode \`${c}\` is not supported.`)), rt(ye({
+  return process.env.NODE_ENV !== "production" && (e[c] || console.error(`MUI: The palette mode \`${c}\` is not supported.`)), it(ye({
     // A collection of common colors.
     common: ye({}, kt),
     // prevent mutable object.
@@ -24203,7 +24203,7 @@ function ml(d, c) {
       letterSpacing: "inherit"
     }
   };
-  return rt(ye({
+  return it(ye({
     htmlFontSize: h,
     pxToRem: r,
     fontFamily: _,
@@ -24294,7 +24294,7 @@ function kl(d = {}, ...c) {
   if (d.vars)
     throw new Error(process.env.NODE_ENV !== "production" ? "MUI: `vars` is a private field used for CSS variables support.\nPlease use another name." : xt(18));
   const X = dl(_), U = yi(d);
-  let h = rt(U, {
+  let h = it(U, {
     mixins: sl(U.breakpoints, v),
     palette: X,
     // Don't use [...shadows] until you've verified its transpiled code is not invoking the iterator protocol.
@@ -24303,7 +24303,7 @@ function kl(d = {}, ...c) {
     transitions: El(m),
     zIndex: ye({}, Pl)
   });
-  if (h = rt(h, D), h = c.reduce((i, a) => rt(i, a), h), process.env.NODE_ENV !== "production") {
+  if (h = it(h, D), h = c.reduce((i, a) => it(i, a), h), process.env.NODE_ENV !== "production") {
     const i = ["active", "checked", "completed", "disabled", "error", "expanded", "focused", "focusVisible", "required", "selected"], a = (o, e) => {
       let r;
       for (r in o) {
@@ -24563,7 +24563,7 @@ function pt() {
     var c = Hl;
   }(ui)), ui;
 }
-var Wl = st;
+var Wl = nt;
 Object.defineProperty(xi, "__esModule", {
   value: !0
 });
@@ -24608,11 +24608,11 @@ function $l() {
 }
 const Kl = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("path", { d: "M20.051 10.332V7.57a.614.614 0 0 0-.981-.492l-4.911 3.683a.616.616 0 0 0 0 .983l4.91 3.683a.617.617 0 0 0 .643.058.614.614 0 0 0 .34-.55v-2.762c5.246 0 9.514 4.268 9.514 9.515 0 5.246-4.268 9.514-9.515 9.514-5.246 0-9.514-4.268-9.514-9.514v-.614a.921.921 0 0 0-1.841 0v.614c0 6.261 5.094 11.355 11.355 11.355 6.262 0 11.356-5.094 11.356-11.355 0-6.262-5.094-11.356-11.356-11.356", fill: "currentColor", stroke: "currentColor", fillRule: "evenodd" }));
 function ql(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: Kl, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: Kl, ...d });
 }
 const Ql = (d) => /* @__PURE__ */ fe.createElement("svg", { viewBox: "0 0 40 40", xmlns: "http://www.w3.org/2000/svg", ...d }, /* @__PURE__ */ fe.createElement("path", { d: "M20.051 10.332V7.57a.614.614 0 0 1 .982-.492l4.91 3.683a.616.616 0 0 1 0 .983l-4.91 3.683a.617.617 0 0 1-.642.058.614.614 0 0 1-.34-.55v-2.762c-5.246 0-9.514 4.268-9.514 9.515 0 5.246 4.268 9.514 9.514 9.514 5.247 0 9.515-4.268 9.515-9.514v-.614a.921.921 0 0 1 1.841 0v.614c0 6.261-5.094 11.355-11.356 11.355-6.261 0-11.355-5.094-11.355-11.355 0-6.262 5.094-11.356 11.355-11.356", fill: "currentColor", stroke: "currentColor", fillRule: "evenodd" }));
 function Jl(d) {
-  return /* @__PURE__ */ W.jsx(ot, { inheritViewBox: !0, component: Ql, ...d });
+  return /* @__PURE__ */ W.jsx(st, { inheritViewBox: !0, component: Ql, ...d });
 }
 function Zl() {
   const { core: d, touch: c } = Ye(), { tool: v } = mt(), [_, m] = Ie(v ? d.getToolConfig(v) : null), [T, D] = Ie(d.getHistoryInfo()), [X, U] = Ie(d.available), h = (o) => {
@@ -24620,9 +24620,9 @@ function Zl() {
   }, i = (o) => {
     d.redo();
   };
-  it(() => {
+  ot(() => {
     v && m(d.getToolConfig(v));
-  }, [d, v]), it(() => d.on(He.Event.AVAILABILITY_CHANGE, U), [d]), it(() => d.on(He.Event.HISTORY_CHANGE, D), [d]);
+  }, [d, v]), ot(() => d.on(He.Event.AVAILABILITY_CHANGE, U), [d]), ot(() => d.on(He.Event.HISTORY_CHANGE, D), [d]);
   const a = (o) => {
     const e = d.updateToolConfig(v, {
       color: o
@@ -24668,7 +24668,7 @@ function Zl() {
     }
   );
 }
-var wi = {}, ec = st;
+var wi = {}, ec = nt;
 Object.defineProperty(wi, "__esModule", {
   value: !0
 });
@@ -24676,7 +24676,7 @@ var Jr = wi.default = void 0, tc = ec(pt()), ic = W, rc = (0, tc.default)(/* @__
   d: "M.99 19h2.42l1.27-3.58h5.65L11.59 19h2.42L8.75 5h-2.5L.99 19zm4.42-5.61L7.44 7.6h.12l2.03 5.79H5.41zM23 11v2h-8v-2h8z"
 }), "TextDecrease");
 Jr = wi.default = rc;
-var Ti = {}, nc = st;
+var Ti = {}, nc = nt;
 Object.defineProperty(Ti, "__esModule", {
   value: !0
 });
@@ -24684,7 +24684,7 @@ var Zr = Ti.default = void 0, sc = nc(pt()), oc = W, ac = (0, sc.default)(/* @__
   d: "M.99 19h2.42l1.27-3.58h5.65L11.59 19h2.42L8.75 5h-2.5L.99 19zm4.42-5.61L7.44 7.6h.12l2.03 5.79H5.41zM20 11h3v2h-3v3h-2v-3h-3v-2h3V8h2v3z"
 }), "TextIncrease");
 Zr = Ti.default = ac;
-var Ei = {}, lc = st;
+var Ei = {}, lc = nt;
 Object.defineProperty(Ei, "__esModule", {
   value: !0
 });
@@ -24692,7 +24692,7 @@ var en = Ei.default = void 0, cc = lc(pt()), hc = W, uc = (0, cc.default)(/* @__
   d: "M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"
 }), "Textsms");
 en = Ei.default = uc;
-var Oi = {}, fc = st;
+var Oi = {}, fc = nt;
 Object.defineProperty(Oi, "__esModule", {
   value: !0
 });
@@ -24700,7 +24700,7 @@ var tn = Oi.default = void 0, dc = fc(pt()), gc = W, pc = (0, dc.default)(/* @__
   d: "M21 7h-2v2h-2V7h-2V5h2V3h2v2h2v2zm-2 14-7-3-7 3V5c0-1.1.9-2 2-2h7c-.63.84-1 1.87-1 3 0 2.76 2.24 5 5 5 .34 0 .68-.03 1-.1V21z"
 }), "BookmarkAdd");
 tn = Oi.default = pc;
-var Pi = {}, mc = st;
+var Pi = {}, mc = nt;
 Object.defineProperty(Pi, "__esModule", {
   value: !0
 });
@@ -24708,7 +24708,7 @@ var Ai = Pi.default = void 0, vc = mc(pt()), yc = W, _c = (0, vc.default)(/* @__
   d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12 1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
 }), "DeleteForever");
 Ai = Pi.default = _c;
-var ki = {}, bc = st;
+var ki = {}, bc = nt;
 Object.defineProperty(ki, "__esModule", {
   value: !0
 });
@@ -24720,7 +24720,7 @@ function wc({ bp: d, onSelect: c, onDelete: v }) {
   const [_, m] = Ie(null), T = (U) => {
     U.stopPropagation(), m(U.currentTarget);
   }, D = async (U) => {
-    U.stopPropagation(), v(d.id);
+    U.stopPropagation(), X(), v(d.id);
   }, X = () => {
     m(null);
   };
@@ -24796,25 +24796,21 @@ function Oc() {
   const [v, _] = Ie(d.getSelectedTextSize()), [m, T] = Ie(d.getSelectedTextColor()), [D, X] = Ie(!1), [U, h] = Ie([]), i = br(async () => {
     const n = await c.onLoadBoilerplate();
     h(n);
-  }, [c]);
-  it(() => {
-    i();
-  }, [i]);
-  const a = () => {
+  }, [c]), a = () => {
     d.deleteSelectedObject();
   }, o = (n) => {
     const u = n.target.value;
     d.changeSelectedTextSize(u), _(u);
   }, e = (n) => {
     d.changeSelectedTextColor(n), T(n);
-  }, r = () => {
-    X((n) => !n);
+  }, r = async () => {
+    await i(), X((n) => !n);
   }, t = async () => {
-    await c.onSaveBoilerplate(d.getSelectedTextContents()), i();
+    await c.onSaveBoilerplate(d.getSelectedTextContents());
   }, s = (n) => {
     d.changeSelectedTextMessage(n), X(!1);
   }, l = async (n) => {
-    await c.onDeleteBoilerplate(n), i();
+    await c.onDeleteBoilerplate(n), h((u) => u.filter((f) => f.id !== n));
   };
   return /* @__PURE__ */ W.jsxs(W.Fragment, { children: [
     /* @__PURE__ */ W.jsx(
@@ -24868,7 +24864,7 @@ function Pc() {
 }
 function Ac({ leadingItems: d }) {
   const { core: c, toolbarPosition: v } = Ye(), [_, m] = Ie(c.mode);
-  return it(() => c.on(He.Event.MODE_CHANGE, m), [c]), /* @__PURE__ */ W.jsx(
+  return ot(() => c.on(He.Event.MODE_CHANGE, m), [c]), /* @__PURE__ */ W.jsx(
     Ke,
     {
       sx: {
@@ -24990,7 +24986,7 @@ function Ye() {
 function mt() {
   var m;
   const { core: d } = Ye(), [c, v] = Ie((m = d.tool) == null ? void 0 : m.name);
-  return it(() => d.on(He.Event.TOOL_CHANGE, (T) => v(T)), [d]), { tool: c, setTool: (T) => {
+  return ot(() => d.on(He.Event.TOOL_CHANGE, (T) => v(T)), [d]), { tool: c, setTool: (T) => {
     d.selectTool(T);
   } };
 }

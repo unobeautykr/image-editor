@@ -21,6 +21,7 @@ export function BoilerplateDialogItem({ bp, onSelect, onDelete }) {
 
   const onClickDelete = async (e) => {
     e.stopPropagation();
+    closeMenu();
     onDelete(bp.id);
   };
 

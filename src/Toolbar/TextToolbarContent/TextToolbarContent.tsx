@@ -58,10 +58,6 @@ export function TextToolbarContent() {
     setBoilerplates(data);
   }, [boilerplate]);
 
-  useEffect(() => {
-    load();
-  }, [load]);
-
   const onClickDelete = () => {
     core.deleteSelectedObject();
   };
@@ -77,13 +73,13 @@ export function TextToolbarContent() {
     setColor(c);
   };
 
-  const onClickBoilerplate = () => {
+  const onClickBoilerplate = async () => {
+    await load();
     setOpenBoilerplate((v) => !v);
   };
 
   const onClickSave = async () => {
     await boilerplate.onSaveBoilerplate(core.getSelectedTextContents());
-    load();
   };
 
   const onSelectBoilerplate = (message: string) => {
@@ -93,7 +89,7 @@ export function TextToolbarContent() {
 
   const onDeleteBoilerplate = async (id: number) => {
     await boilerplate.onDeleteBoilerplate(id);
-    load();
+    setBoilerplates((bps) => bps.filter((b) => b.id !== id));
   };
 
   return (
