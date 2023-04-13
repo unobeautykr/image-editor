@@ -22725,19 +22725,19 @@ const be = {
     this.c.usePencil = this.touchEnabled ? this.config.usePencil : !1, ze.fabric.Image.fromURL(
       this.imageUrl,
       (m) => {
-        _.getElement() && (m.erasable = !1, this.busy = !1, _.setBackgroundImage(m, null), this.fitCanvas(), this.pushHistory(), this.selectTool(this.fetchTool()), this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseUp), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:cleared", this.onObjectDeselected));
+        _.getElement() && (m.erasable = !1, this.busy = !1, _.setBackgroundImage(m, null), this.fitCanvas(), this.pushHistory(), this.selectTool(this.fetchTool()), this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseWheel), this.c.on("mouse:wheel", this.onMouseUp), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:cleared", this.onObjectDeselected));
       },
       {
         crossOrigin: "anonymous"
       }
-    ), this.c.on("mouse:wheel", (m) => {
+    ), this.onMouseWheel = (m) => {
       m.e.preventDefault(), m.e.stopPropagation();
       const T = m.e.deltaY;
       this.zoom(
         { x: m.e.offsetX, y: m.e.offsetY },
         this.c.getZoom() * 0.999 ** T
       );
-    }), this.onGesture = (m) => {
+    }, this.onGesture = (m) => {
       const T = m.e;
       if (T.touches && T.touches.length === 2) {
         this.isDragging = !1;
