@@ -125,7 +125,8 @@ export class EditorCore extends EventTarget {
         this.selectTool(this.fetchTool());
 
         this.c.on("touch:gesture", this.onGesture);
-        this.c.on("mouse:up", this.onMouseUp);
+        this.c.on("mouse:up", this.onMouseWheel);
+        this.c.on("mouse:wheel", this.onMouseUp);
         this.c.on("object:added", this.onObjectAdded);
         this.c.on("object:modified", this.onObjectModified);
         this.c.on("object:removed", this.onObjectRemoved);
@@ -137,7 +138,7 @@ export class EditorCore extends EventTarget {
       }
     );
 
-    this.c.on("mouse:wheel", (opt) => {
+    this.onMouseWheel = (opt) => {
       opt.e.preventDefault();
       opt.e.stopPropagation();
 
@@ -146,7 +147,7 @@ export class EditorCore extends EventTarget {
         { x: opt.e.offsetX, y: opt.e.offsetY },
         this.c.getZoom() * 0.999 ** delta
       );
-    });
+    };
 
     this.onGesture = (opt) => {
       const e = opt.e;
