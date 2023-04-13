@@ -125,8 +125,8 @@ export class EditorCore extends EventTarget {
         this.selectTool(this.fetchTool());
 
         this.c.on("touch:gesture", this.onGesture);
-        this.c.on("mouse:up", this.onMouseWheel);
-        this.c.on("mouse:wheel", this.onMouseUp);
+        this.c.on("mouse:up", this.onMouseUp);
+        this.c.on("mouse:wheel", this.onMouseWheel);
         this.c.on("object:added", this.onObjectAdded);
         this.c.on("object:modified", this.onObjectModified);
         this.c.on("object:removed", this.onObjectRemoved);
