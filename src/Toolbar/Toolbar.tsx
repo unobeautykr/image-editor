@@ -34,12 +34,10 @@ export function Toolbar({ leadingItems }: { leadingItems: ReactNode }) {
             flexDirection: "column",
             width: 88,
             py: 4,
-            px: 2,
           }),
           ...(toolbarPosition === "bottom" && {
             flexDirection: "row",
             height: 88,
-            py: 2,
             px: 4,
           }),
         }}
@@ -70,7 +68,6 @@ export function Toolbar({ leadingItems }: { leadingItems: ReactNode }) {
             }),
             ...(toolbarPosition === "bottom" && {
               gridTemplateColumns: `404px 88px 128px`,
-              height: 88,
             }),
           }}
         >

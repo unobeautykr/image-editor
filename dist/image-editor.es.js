@@ -24894,13 +24894,11 @@ function Ac({ leadingItems: d }) {
             ...v === "right" && {
               flexDirection: "column",
               width: 88,
-              py: 4,
-              px: 2
+              py: 4
             },
             ...v === "bottom" && {
               flexDirection: "row",
               height: 88,
-              py: 2,
               px: 4
             }
           },
@@ -24932,8 +24930,7 @@ function Ac({ leadingItems: d }) {
                     gridTemplateRows: "404px 88px 128px"
                   },
                   ...v === "bottom" && {
-                    gridTemplateColumns: "404px 88px 128px",
-                    height: 88
+                    gridTemplateColumns: "404px 88px 128px"
                   }
                 },
                 children: [
