@@ -1,4 +1,3 @@
-import { fabric } from "fabric";
 export declare const ToolName: {
     FREEDRAW: string;
     SELECT: string;
@@ -36,13 +35,29 @@ export declare class EditorCore extends EventTarget {
     mode: string;
     imageUrl: string;
     private _busy;
-    private readonly zoomMin;
-    private readonly zoomMax;
+    private zoomMin;
+    private zoomMax;
     private history;
     private _isTraversingHistory;
     private touchEnabled;
     private c;
-    tool: null;
+    tool: any;
+    config: any;
+    isDragging: any;
+    zoomStartScale: any;
+    touches: any;
+    lastPoint: any;
+    onMouseWheel: any;
+    onMouseUp: any;
+    onGesture: any;
+    onObjectAdded: any;
+    onObjectModified: any;
+    onObjectRemoved: any;
+    onObjectSelected: any;
+    onObjectDeselected: any;
+    containerSize: any;
+    onHistoryChangeListener: any;
+    onAvailabilityChangeListener: any;
     private tools;
     constructor({ imageUrl, touchEnabled, }: {
         imageUrl: string;
@@ -85,7 +100,7 @@ export declare class EditorCore extends EventTarget {
     _dispatchHistoryChange(): void;
     _dispatchAvailbilityChange(): void;
     fitCanvas(): void;
-    getDataUrl(format: any): string;
+    getDataUrl(format: any): any;
     toBlob(): Promise<unknown>;
     deleteSelectedObject(): void;
     changeSelectedTextSize(fontSize: any): void;
@@ -94,7 +109,7 @@ export declare class EditorCore extends EventTarget {
     getSelectedTextSize(): number;
     getSelectedTextColor(): {
         type: string;
-        code: string | fabric.Pattern | fabric.Gradient | undefined;
+        code: any;
     };
     getSelectedTextContents(): any;
     setUsePencil(use: any): void;

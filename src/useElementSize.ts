@@ -12,7 +12,7 @@ export function useElementSize(ref: React.RefObject<HTMLElement>) {
       const entry = entries[0];
       const rect = entry.target.getBoundingClientRect();
 
-      setSize((size) => {
+      setSize((size: any) => {
         if (size && size.width === rect.width && size.height === rect.height) {
           return size;
         }

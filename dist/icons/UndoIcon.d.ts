@@ -1,2 +1,3 @@
 /// <reference types="react" />
-export declare function UndoIcon(props: any): JSX.Element;
+import { SvgIconProps } from "@mui/material";
+export declare function UndoIcon(props: SvgIconProps): JSX.Element;

@@ -1,2 +1,3 @@
 /// <reference types="react" />
-export declare function PanToolIcon(props: any): JSX.Element;
+import { SvgIconProps } from "@mui/material";
+export declare function PanToolIcon(props: SvgIconProps): JSX.Element;
