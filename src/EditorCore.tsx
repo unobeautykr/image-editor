@@ -602,10 +602,10 @@ export class EditorCore extends EventTarget {
     this.c.backgroundImage.center();
 
     const clipPath = new fabric.Rect({
-      width: this.c.backgroundImage.width,
-      height: this.c.backgroundImage.height,
-      top: this.c.backgroundImage.top,
-      left: this.c.backgroundImage.left,
+      width: this.c.backgroundImage.width + 2,
+      height: this.c.backgroundImage.height + 2,
+      top: this.c.backgroundImage.top - 1,
+      left: this.c.backgroundImage.left - 1,
     });
     this.c.clipPath = clipPath;
 
@@ -633,7 +633,7 @@ export class EditorCore extends EventTarget {
   async toBlob() {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
-    console.log("check changed");
+
     const blob = new Promise((res, rej) => {
       this.c.toBlob(
         (blob: any) => {
@@ -645,10 +645,10 @@ export class EditorCore extends EventTarget {
           res(blob);
         },
         {
-          width: this.c.clipPath.width,
-          height: this.c.clipPath.height,
-          left: this.c.clipPath.left,
-          top: this.c.clipPath.top,
+          width: this.c.clipPath.width - 2,
+          height: this.c.clipPath.height - 2,
+          left: this.c.clipPath.left + 1,
+          top: this.c.clipPath.top + 1,
         }
       );
     });
