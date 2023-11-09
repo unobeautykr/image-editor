@@ -1,6 +1,6 @@
 import { Popover } from "@mui/material";
 
-export function ToolbarPopover({ children, ...props }) {
+export function ToolbarPopover({ children, ...props }: any) {
   return (
     <Popover
       sx={{

@@ -8,7 +8,7 @@ export function TextButton() {
   const { tool, setTool } = useTool();
   const selected = tool === ToolName.TEXT;
 
-  const onClick = (e) => {
+  const onClick = (_: any) => {
     if (touch) {
       core.addText("text");
     } else {

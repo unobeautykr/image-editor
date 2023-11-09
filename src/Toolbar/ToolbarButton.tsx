@@ -8,7 +8,7 @@ export const ToolbarButton = ({
   small = false,
   tooltip,
   ...props
-}) => {
+}: any) => {
   const { toolbarPosition } = useImageEditor();
   return (
     <Tooltip

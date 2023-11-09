@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-export const Thickness = ({ thickness, selected }) => {
+export const Thickness = ({ thickness, selected }: any) => {
   return (
     <Box
       sx={{

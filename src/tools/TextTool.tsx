@@ -1,17 +1,17 @@
 import { ToolBase } from "./ToolBase";
 
 export class TextTool extends ToolBase {
-  constructor(core, config = null) {
+  constructor(core: any, config = null) {
     super(core, config);
   }
 
   private selected = false;
 
-  onMouseDownBefore = (opt) => {
+  onMouseDownBefore = (opt: any) => {
     this.selected = Boolean(this.c.getActiveObject());
   };
 
-  onMouseDown = (opt) => {
+  onMouseDown = (opt: any) => {
     if (this.selected) return;
 
     const e = opt.e;

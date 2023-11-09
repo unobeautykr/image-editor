@@ -30,7 +30,7 @@ function App() {
     []
   );
 
-  const editorRef = useRef<HTMLElement>(null);
+  const editorRef = useRef<HTMLElement & any>(null);
 
   const onClickSave = async () => {
     const blob = await editorRef.current?.toBlob();

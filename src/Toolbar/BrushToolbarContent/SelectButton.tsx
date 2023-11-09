@@ -7,7 +7,7 @@ export function SelectButton() {
   const { tool, setTool } = useTool();
   const selected = tool === ToolName.SELECT;
 
-  const onClick = (e) => {
+  const onClick = (_: any) => {
     setTool(ToolName.SELECT);
   };
 

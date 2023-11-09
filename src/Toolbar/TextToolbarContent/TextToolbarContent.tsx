@@ -8,11 +8,11 @@ import TextsmsIcon from "@mui/icons-material/Textsms";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { ToolbarButton } from "../ToolbarButton";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { BoilerplateDialog } from "../BoilerplateDialog";
 import { BoilerplateData } from "~/types";
 
-const SizeSlider = ({ value, onChange }) => {
+const SizeSlider = ({ value, onChange }: any) => {
   const { toolbarPosition } = useImageEditor();
 
   return (
@@ -62,13 +62,13 @@ export function TextToolbarContent() {
     core.deleteSelectedObject();
   };
 
-  const onChangeSize = (e) => {
+  const onChangeSize = (e: any) => {
     const fontSize = e.target.value;
     core.changeSelectedTextSize(fontSize);
     setSize(fontSize);
   };
 
-  const onChangeColor = (c) => {
+  const onChangeColor = (c: any) => {
     core.changeSelectedTextColor(c);
     setColor(c);
   };
@@ -89,7 +89,7 @@ export function TextToolbarContent() {
 
   const onDeleteBoilerplate = async (id: number) => {
     await boilerplate.onDeleteBoilerplate(id);
-    setBoilerplates((bps) => bps.filter((b) => b.id !== id));
+    setBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
   return (

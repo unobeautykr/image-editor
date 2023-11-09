@@ -1,7 +1,7 @@
 import { ToolBase } from "./ToolBase";
 
 export class SelectTool extends ToolBase {
-  constructor(core, config = null) {
+  constructor(core: any, config = null) {
     super(core, config);
   }
 

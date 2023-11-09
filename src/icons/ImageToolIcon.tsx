@@ -1,6 +1,6 @@
-import { SvgIcon } from "@mui/material";
+import { SvgIcon, SvgIconProps } from "@mui/material";
 import { ReactComponent } from "~/assets/icons/ic-editor-image.svg";
 
-export function ImageToolIcon(props) {
+export function ImageToolIcon(props: SvgIconProps) {
   return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
 }

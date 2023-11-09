@@ -28,7 +28,7 @@ const colors = [
   PresetColor.BLUE,
 ];
 
-function ColorButton({ type, color, selected, onClick }) {
+function ColorButton({ type, color, selected, onClick }: any) {
   return (
     <IconButton sx={{ p: 0 }} onClick={onClick}>
       <svg width="24" height="24">
@@ -69,7 +69,11 @@ function ColorButton({ type, color, selected, onClick }) {
 }
 
 const levels = [100, 200, 300, 400, 500, 600, 700, 800, 900];
-const greyLevels = ["#ffffff", ...levels.map((l) => grey[l]), "#000000"];
+const greyLevels = [
+  "#ffffff",
+  ...levels.map((l: any) => (grey as any)[l]),
+  "#000000",
+];
 const hues = [
   lightBlue,
   indigo,
@@ -84,10 +88,10 @@ const hues = [
   green,
 ];
 const gridColors = greyLevels.concat(
-  ...levels.map((l) => hues.map((c) => c[l]))
+  ...levels.map((l) => hues.map((c: any) => c[l]))
 );
 
-function ColorGridItem({ color, onClick }) {
+function ColorGridItem({ color, onClick }: any) {
   return (
     <Box
       sx={{
@@ -102,7 +106,7 @@ function ColorGridItem({ color, onClick }) {
   );
 }
 
-function ColorGrid({ onChange }) {
+function ColorGrid({ onChange }: any) {
   return (
     <Box
       sx={{
@@ -118,11 +122,11 @@ function ColorGrid({ onChange }) {
   );
 }
 
-export function ColorPalette({ value, onChange }) {
+export function ColorPalette({ value, onChange }: any) {
   const [anchorEl, setAnchorEl] = useState(null);
   const { toolbarPosition } = useImageEditor();
 
-  const onClickColor = (c) => {
+  const onClickColor = (c: any) => {
     if (!value) return;
 
     onChange({
@@ -131,7 +135,7 @@ export function ColorPalette({ value, onChange }) {
     });
   };
 
-  const onClickCustom = (e) => {
+  const onClickCustom = (e: any) => {
     if (!value) return;
 
     setAnchorEl(e.currentTarget);
@@ -141,7 +145,7 @@ export function ColorPalette({ value, onChange }) {
     setAnchorEl(null);
   }, []);
 
-  const onChangeCustomColor = (c) => {
+  const onChangeCustomColor = (c: any) => {
     onChange({
       type: "custom",
       code: c,

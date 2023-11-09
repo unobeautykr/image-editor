@@ -13,7 +13,7 @@ export function FreedrawButton() {
   const [config, setConfig] = useState(core.getToolConfig(ToolName.FREEDRAW));
   const selected = tool === ToolName.FREEDRAW;
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     if (selected) {
       setAnchorEl(e.currentTarget);
     } else {
@@ -25,7 +25,7 @@ export function FreedrawButton() {
     setAnchorEl(null);
   };
 
-  const onChangeConfig = (attr) => {
+  const onChangeConfig = (attr: any) => {
     const newConfig = core.updateToolConfig(ToolName.FREEDRAW, attr);
     setConfig(newConfig);
     handleClose();

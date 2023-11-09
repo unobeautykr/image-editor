@@ -2,9 +2,9 @@ import { Box } from "@mui/system";
 import { useImageEditor } from "~/ImageEditor";
 
 interface ToolbarContentProps {
-  leadingItems?: React.ReactNode;
-  palette?: React.ReactNode;
-  trailingItems?: React.ReactNode;
+  leadingItems?: any;
+  palette?: any;
+  trailingItems?: any;
 }
 
 export function ToolbarContent({

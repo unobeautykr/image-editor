@@ -13,17 +13,17 @@ const HiddenInput = styled("input")`
 export const ImageButton = ({ ...props }) => {
   const { core, toolbarPosition } = useImageEditor();
 
-  const onClickUpload = (e) => {
+  const onClickUpload = (e: any) => {
     e.target.value = null;
   };
 
-  const onChangeFiles = async (e) => {
+  const onChangeFiles = async (e: any) => {
     await Promise.all(
       [...e.target.files].map(
         (file) =>
-          new Promise((resolve, reject) => {
+          new Promise((resolve: any, reject) => {
             const reader = new FileReader();
-            reader.onload = function (f) {
+            reader.onload = function (f: any) {
               core.addImage(f.target.result);
               resolve();
             };

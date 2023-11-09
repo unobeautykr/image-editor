@@ -7,7 +7,7 @@ export function PanButton() {
   const { tool, setTool } = useTool();
   const selected = tool === ToolName.PAN;
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     setTool(ToolName.PAN);
   };
 

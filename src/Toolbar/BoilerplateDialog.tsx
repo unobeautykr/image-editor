@@ -11,15 +11,15 @@ import {
 import { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-export function BoilerplateDialogItem({ bp, onSelect, onDelete }) {
+export function BoilerplateDialogItem({ bp, onSelect, onDelete }: any) {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const onClickMore = (e) => {
+  const onClickMore = (e: any) => {
     e.stopPropagation();
     setAnchorEl(e.currentTarget);
   };
 
-  const onClickDelete = async (e) => {
+  const onClickDelete = async (e: any) => {
     e.stopPropagation();
     closeMenu();
     onDelete(bp.id);
@@ -48,13 +48,13 @@ export function BoilerplateDialog({
   onSelect,
   onClose,
   onDelete,
-}) {
-  const onSelectBoilerplate = (contents) => {
+}: any) {
+  const onSelectBoilerplate = (contents: any) => {
     onSelect(contents);
     onClose();
   };
 
-  const onDeleteBoilerplate = async (id) => {
+  const onDeleteBoilerplate = async (id: any) => {
     onDelete(id);
   };
 
@@ -62,7 +62,7 @@ export function BoilerplateDialog({
     <Dialog fullWidth maxWidth="xs" onClose={onClose} open={open}>
       <DialogTitle>상용구를 선택하세요</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {boilerplates.map((bp) => (
+        {boilerplates.map((bp: any) => (
           <BoilerplateDialogItem
             key={bp.id}
             bp={bp}

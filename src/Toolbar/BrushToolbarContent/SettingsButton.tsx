@@ -8,7 +8,7 @@ export function SettingsButton() {
   const { core } = useImageEditor();
   const [anchorEl, setAnchorEl] = useState(null);
   const [usePencil, setUsePencil] = useState(core.config.usePencil);
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     setAnchorEl((current) => (current ? null : e.currentTarget));
   };
 
@@ -16,7 +16,7 @@ export function SettingsButton() {
     setAnchorEl(null);
   };
 
-  const onClickTogglePencil = (e) => {
+  const onClickTogglePencil = (e: any) => {
     setUsePencil(!e.target.checked);
     core.setUsePencil(!e.target.checked);
   };

@@ -24,11 +24,11 @@ export function BrushToolbarContent() {
   const [history, setHistory] = useState(core.getHistoryInfo());
   const [available, setAvailable] = useState(core.available);
 
-  const onClickUndo = (e) => {
+  const onClickUndo = (e: any) => {
     core.undo();
   };
 
-  const onClickRedo = (e) => {
+  const onClickRedo = (e: any) => {
     core.redo();
   };
 
@@ -46,7 +46,7 @@ export function BrushToolbarContent() {
     return core.on(EditorCore.Event.HISTORY_CHANGE, setHistory);
   }, [core]);
 
-  const onChangeToolColor = (c) => {
+  const onChangeToolColor = (c: any) => {
     const newConfig = core.updateToolConfig(tool, {
       color: c,
     });

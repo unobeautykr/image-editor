@@ -1,5 +1,5 @@
 import { useImageEditor } from "../ImageEditor";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrushToolbarContent } from "./BrushToolbarContent/BrushToolbarContent";
 import { TextToolbarContent } from "./TextToolbarContent/TextToolbarContent";
 import { ImageToolbarContent } from "./ImageToolbarContent/ImageToolbarContent";
@@ -7,7 +7,7 @@ import { EditorCore } from "../EditorCore";
 import { grey } from "@mui/material/colors";
 import { Box, Paper } from "@mui/material";
 
-export function Toolbar({ leadingItems }: { leadingItems: ReactNode }) {
+export function Toolbar({ leadingItems }: { leadingItems: any }) {
   const { core, toolbarPosition } = useImageEditor();
   const [mode, setMode] = useState(core.mode);
 

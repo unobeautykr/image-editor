@@ -13,7 +13,7 @@ export function EraserButton() {
   const [config, setConfig] = useState(core.getToolConfig(ToolName.ERASER));
   const selected = tool === ToolName.ERASER;
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     if (selected) {
       setAnchorEl(e.currentTarget);
     } else {
@@ -25,7 +25,7 @@ export function EraserButton() {
     setAnchorEl(null);
   };
 
-  const onChangeConfig = (config) => {
+  const onChangeConfig = (config: any) => {
     const newConfig = core.updateToolConfig(ToolName.ERASER, config);
     setConfig(newConfig);
     handleClose();

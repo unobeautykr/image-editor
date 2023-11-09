@@ -2,8 +2,8 @@ import { Box, IconButton } from "@mui/material";
 import { Thickness } from "../Thickness";
 
 const thicknesses = [1, 2, 3, 4, 5];
-export const FreedrawConfigView = ({ value, onChange }) => {
-  const onClickThickness = (t) => {
+export const FreedrawConfigView = ({ value, onChange }: any) => {
+  const onClickThickness = (t: any) => {
     onChange({
       thickness: t,
     });

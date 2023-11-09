@@ -56,17 +56,35 @@ export class EditorCore extends EventTarget {
   public imageUrl: string;
 
   private _busy: boolean;
-  private readonly zoomMin = 1;
-  private readonly zoomMax = 2;
+  private zoomMin: number = 1;
+  private zoomMax: number = 2;
   private history = {
     index: -1,
     records: [],
   };
   private _isTraversingHistory = false;
   private touchEnabled: boolean;
-  private c: fabric.Canvas | null = null;
+  private c: fabric.Canvas | null | any = null;
 
-  public tool = null;
+  public tool: any = null;
+
+  config: any;
+  isDragging: any;
+  zoomStartScale: any;
+  touches: any;
+  lastPoint: any;
+
+  onMouseWheel: any;
+  onMouseUp: any;
+  onGesture: any;
+  onObjectAdded: any;
+  onObjectModified: any;
+  onObjectRemoved: any;
+  onObjectSelected: any;
+  onObjectDeselected: any;
+  containerSize: any;
+  onHistoryChangeListener: any;
+  onAvailabilityChangeListener: any;
 
   private tools = {
     [ToolName.FREEDRAW]: {
@@ -115,7 +133,7 @@ export class EditorCore extends EventTarget {
 
     fabric.Image.fromURL(
       this.imageUrl,
-      (oImg) => {
+      (oImg: any) => {
         if (!c.getElement()) return;
         oImg.erasable = false;
         this.busy = false;
@@ -138,7 +156,7 @@ export class EditorCore extends EventTarget {
       }
     );
 
-    this.onMouseWheel = (opt) => {
+    this.onMouseWheel = (opt: any) => {
       opt.e.preventDefault();
       opt.e.stopPropagation();
 
@@ -149,7 +167,7 @@ export class EditorCore extends EventTarget {
       );
     };
 
-    this.onGesture = (opt) => {
+    this.onGesture = (opt: any) => {
       const e = opt.e;
 
       if (e.touches && e.touches.length === 2) {
@@ -183,7 +201,7 @@ export class EditorCore extends EventTarget {
       }
     };
 
-    this.onMouseUp = (opt) => {
+    this.onMouseUp = (opt: any) => {
       const e = opt.e;
       if (e.type === "touchend") {
         this.lastPoint = null;
@@ -191,22 +209,22 @@ export class EditorCore extends EventTarget {
       }
     };
 
-    this.onObjectAdded = (opt) => {
+    this.onObjectAdded = (opt: any) => {
       if (opt.target.type === "path") {
         const path = opt.target;
         path.selectable = false;
         path.hoverCursor = "default";
       }
 
-      this.c.getObjects("image").forEach((image) => {
+      this.c.getObjects("image").forEach((image: any) => {
         this.c.bringToFront(image);
       });
 
-      this.c.getObjects("path").forEach((text) => {
+      this.c.getObjects("path").forEach((text: any) => {
         this.c.bringToFront(text);
       });
 
-      this.c.getObjects("i-text").forEach((text) => {
+      this.c.getObjects("i-text").forEach((text: any) => {
         this.c.bringToFront(text);
       });
 
@@ -214,7 +232,7 @@ export class EditorCore extends EventTarget {
       this.pushHistory();
     };
 
-    this.onObjectModified = (opt) => {
+    this.onObjectModified = (opt: any) => {
       if (this.isTraversingHistory) return;
 
       if (opt.target.type === "i-text" && opt.target.text.trim() === "") {
@@ -227,12 +245,12 @@ export class EditorCore extends EventTarget {
       this.pushHistory();
     };
 
-    this.onObjectRemoved = (opt) => {
+    this.onObjectRemoved = (opt: any) => {
       if (this.isTraversingHistory) return;
       this.pushHistory();
     };
 
-    this.onObjectSelected = (opt) => {
+    this.onObjectSelected = (opt: any) => {
       const selected = opt.selected[0];
 
       switch (selected.type) {
@@ -247,24 +265,24 @@ export class EditorCore extends EventTarget {
       }
     };
 
-    this.onObjectDeselected = (opt) => {
+    this.onObjectDeselected = (opt: any) => {
       this._dispatch(EditorCore.Event.MODE_CHANGE, EditorCore.Mode.BRUSH);
     };
   }
 
-  zoom(point, targetZoom) {
+  zoom(point: any, targetZoom: any) {
     const zoom = Math.max(this.zoomMin, Math.min(this.zoomMax, targetZoom));
 
     this.c.zoomToPoint(point, zoom);
     this.adjustPan();
   }
 
-  pan(x, y) {
+  pan(x: any, y: any) {
     this.c.relativePan({ x, y });
     this.adjustPan();
   }
 
-  clamp(value, min, max) {
+  clamp(value: any, min: any, max: any) {
     return Math.min(Math.max(value, min), max);
   }
 
@@ -310,7 +328,7 @@ export class EditorCore extends EventTarget {
     }
   }
 
-  getToolConfig(toolId) {
+  getToolConfig(toolId: any) {
     switch (toolId) {
       case ToolName.FREEDRAW:
         return this.config.freedraw;
@@ -323,14 +341,14 @@ export class EditorCore extends EventTarget {
     }
   }
 
-  selectTool(toolId) {
+  selectTool(toolId: any) {
     if (!this.available) return;
 
     const config = this.getToolConfig(toolId);
-    const newTool = new this.tools[toolId].class(this, config);
+    const newTool: any = new this.tools[toolId].class(this, config);
 
     const old = this.tool;
-    old?.instance.onDeselect?.();
+    (old as any)?.instance.onDeselect?.();
 
     this.tool = { name: toolId, instance: newTool };
 
@@ -343,7 +361,7 @@ export class EditorCore extends EventTarget {
     this.cacheTool();
   }
 
-  updateToolConfig(toolId, attr) {
+  updateToolConfig(toolId: any, attr: any) {
     const old = this.getToolConfig(toolId);
     const newConfig = Object.assign({}, old, attr);
 
@@ -370,20 +388,20 @@ export class EditorCore extends EventTarget {
     return newConfig;
   }
 
-  setContainerSize(size) {
+  setContainerSize(size: any) {
     this.containerSize = size;
     if (this.c) {
       this.fitCanvas();
     }
   }
 
-  addImage(imageUrl) {
+  addImage(imageUrl: any) {
     if (!this.available) return;
     this.busy = true;
     this.selectTool(ToolName.SELECT);
     fabric.Image.fromURL(
       imageUrl,
-      (img) => {
+      (img: any) => {
         //i create an extra var for to change some image properties
         this.c.add(img);
         this.c.centerObject(img);
@@ -397,14 +415,14 @@ export class EditorCore extends EventTarget {
     );
   }
 
-  calcTextSize(fontSize) {
+  calcTextSize(fontSize: any) {
     return (
       (MIN_TEXT_SIZE + (fontSize / 100) * (MAX_TEXT_SIZE - MIN_TEXT_SIZE)) /
       this.zoomMin
     );
   }
 
-  calcFontSize(textSize) {
+  calcFontSize(textSize: any) {
     return (
       ((textSize * this.zoomMin - MIN_TEXT_SIZE) /
         (MAX_TEXT_SIZE - MIN_TEXT_SIZE)) *
@@ -419,7 +437,7 @@ export class EditorCore extends EventTarget {
       this.selectTool(ToolName.SELECT);
     }
 
-    const text = new fabric.IText(placeholder);
+    const text: any = new fabric.IText(placeholder);
     text.set("fill", this.config.text.color.code);
     text.set("fontSize", this.calcTextSize(this.config.text.fontSize));
     if (position) {
@@ -469,22 +487,22 @@ export class EditorCore extends EventTarget {
     this._dispatchHistoryChange();
   }
 
-  async loadFromHistory(history) {
+  async loadFromHistory(history: any) {
     this.isTraversingHistory = true;
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve: any, reject) => {
       try {
         fabric.util.enlivenObjects(
           history,
-          (objects) => {
+          (objects: any) => {
             this.c.remove(...this.c.getObjects());
-            objects.forEach((o) => {
+            objects.forEach((o: any) => {
               this.c.add(o);
             });
 
             this.c.renderAll();
             resolve();
           },
-          null
+          null as any
         );
       } catch (e) {
         reject(e);
@@ -518,22 +536,22 @@ export class EditorCore extends EventTarget {
 
   pushHistory() {
     const prevHistories = this.history.records.slice(0, this.history.index + 1);
-    this.history.records = [...prevHistories, this.c.toObject().objects];
+    this.history.records = [...prevHistories, this.c.toObject().objects] as any;
     this.history.index = this.history.records.length - 1;
 
     this._dispatchHistoryChange();
   }
 
-  onHistoryChange(listener) {
+  onHistoryChange(listener: any) {
     this.onHistoryChangeListener = listener;
   }
 
-  onAvailabilityChange(listener) {
+  onAvailabilityChange(listener: any) {
     this.onAvailabilityChangeListener = listener;
   }
 
-  on(eventName, listener) {
-    const wrapper = (e) => {
+  on(eventName: any, listener: any) {
+    const wrapper = (e: any) => {
       listener(e.detail);
     };
 
@@ -551,7 +569,7 @@ export class EditorCore extends EventTarget {
     };
   }
 
-  _dispatch(eventName, data) {
+  _dispatch(eventName: any, data: any) {
     this.dispatchEvent(
       new CustomEvent(eventName, {
         detail: data,
@@ -598,7 +616,7 @@ export class EditorCore extends EventTarget {
     );
   }
 
-  getDataUrl(format) {
+  getDataUrl(format: any) {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
     const dataUrl = this.c.toDataURL({
@@ -615,9 +633,10 @@ export class EditorCore extends EventTarget {
   async toBlob() {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
+    console.log("check changed");
     const blob = new Promise((res, rej) => {
       this.c.toBlob(
-        (blob) => {
+        (blob: any) => {
           if (!blob) {
             rej(new Error("Cannot create blob"));
             return;
@@ -628,8 +647,8 @@ export class EditorCore extends EventTarget {
         {
           width: this.c.clipPath.width,
           height: this.c.clipPath.height,
-          left: this.c.clipPath.left + 1,
-          top: this.c.clipPath.top + 1,
+          left: this.c.clipPath.left,
+          top: this.c.clipPath.top,
         }
       );
     });
@@ -647,7 +666,7 @@ export class EditorCore extends EventTarget {
     this.c.remove(this.c.getActiveObject());
   }
 
-  changeSelectedTextSize(fontSize) {
+  changeSelectedTextSize(fontSize: any) {
     const text = this.c.getActiveObject();
     text.set("fontSize", this.calcTextSize(fontSize));
     this.config.text.fontSize = fontSize;
@@ -655,7 +674,7 @@ export class EditorCore extends EventTarget {
     this.c.requestRenderAll();
   }
 
-  changeSelectedTextColor(c) {
+  changeSelectedTextColor(c: any) {
     const text = this.c.getActiveObject();
     text.set("fill", c.code);
     this.config.text.color = c;
@@ -663,7 +682,7 @@ export class EditorCore extends EventTarget {
     this.c.requestRenderAll();
   }
 
-  changeSelectedTextMessage(message) {
+  changeSelectedTextMessage(message: any) {
     const text = this.c.getActiveObject();
     text.set("text", message);
     this.c.requestRenderAll();
@@ -696,7 +715,7 @@ export class EditorCore extends EventTarget {
     return text.text;
   }
 
-  setUsePencil(use) {
+  setUsePencil(use: any) {
     this.config.usePencil = use;
     this.c.usePencil = use;
     this.cacheConfig();

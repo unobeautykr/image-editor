@@ -57,7 +57,7 @@ const ImageEditorProvider = ({
     editorRef,
     () => {
       return {
-        getDataUrl(format) {
+        getDataUrl(format: string) {
           return core.getDataUrl(format);
         },
         toBlob() {
@@ -69,7 +69,7 @@ const ImageEditorProvider = ({
         isBusy() {
           return core.busy;
         },
-      };
+      } as any;
     },
     [core]
   );
@@ -96,15 +96,15 @@ export function useImageEditor() {
 }
 
 export function useTool() {
-  const { core } = useImageEditor();
+  const { core }: any = useImageEditor();
 
   const [tool, setTool] = useState(core.tool?.name);
 
   useEffect(() => {
-    return core.on(EditorCore.Event.TOOL_CHANGE, (t) => setTool(t));
+    return core.on(EditorCore.Event.TOOL_CHANGE, (t: any) => setTool(t));
   }, [core]);
 
-  const selectTool = (t) => {
+  const selectTool = (t: any) => {
     core.selectTool(t);
   };
 

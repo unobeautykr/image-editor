@@ -2,12 +2,25 @@ import { ToolBase } from "./ToolBase";
 
 // http://fabricjs.com/fabric-intro-part-5#pan_zoom
 export class PanTool extends ToolBase {
-  constructor(core, config = null) {
+  touchPositions: any;
+  onMouseDown: any;
+  isDragging: any;
+  onMouseUp: any;
+  onMouseMove: any;
+  onObjectSelected: any;
+  onSelectionCleared: any;
+  onTouchDrag: any;
+
+  lastPosX: any;
+  lastPosY: any;
+  pausePanning: any;
+
+  constructor(core: any, config = null) {
     super(core, config);
 
     this.touchPositions = {};
 
-    this.onMouseDown = (opt) => {
+    this.onMouseDown = (opt: any) => {
       const e = opt.e;
       if (e.type === "touchstart") {
         this.isDragging = e.touches.length === 1;
@@ -25,7 +38,7 @@ export class PanTool extends ToolBase {
       }
     };
 
-    this.onMouseUp = (opt) => {
+    this.onMouseUp = (opt: any) => {
       const e = opt.e;
       if (e.type === "touchend") {
         for (const touch of e.changedTouches) {
@@ -38,7 +51,7 @@ export class PanTool extends ToolBase {
       this.isDragging = false;
     };
 
-    this.onMouseMove = (opt) => {
+    this.onMouseMove = (opt: any) => {
       if (opt.e.type !== "mousemove") return;
 
       if (this.isDragging) {
@@ -49,15 +62,15 @@ export class PanTool extends ToolBase {
       }
     };
 
-    this.onObjectSelected = (e) => {
+    this.onObjectSelected = (e: any) => {
       this.pausePanning = true;
     };
 
-    this.onSelectionCleared = (e) => {
+    this.onSelectionCleared = (e: any) => {
       this.pausePanning = false;
     };
 
-    this.onTouchDrag = (opt) => {
+    this.onTouchDrag = (opt: any) => {
       const e = opt.e;
       if (e.type !== "touchmove") return;
 

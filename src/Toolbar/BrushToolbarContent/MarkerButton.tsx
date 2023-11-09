@@ -13,7 +13,7 @@ export function MarkerButton() {
   const [config, setConfig] = useState(core.getToolConfig(ToolName.MARKER));
   const selected = tool === ToolName.MARKER;
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     if (selected) {
       setAnchorEl(e.currentTarget);
     } else {
@@ -25,7 +25,7 @@ export function MarkerButton() {
     setAnchorEl(null);
   };
 
-  const onChangeConfig = (configAttr) => {
+  const onChangeConfig = (configAttr: any) => {
     const newConfig = core.updateToolConfig(ToolName.MARKER, configAttr);
     setConfig(newConfig);
     handleClose();
