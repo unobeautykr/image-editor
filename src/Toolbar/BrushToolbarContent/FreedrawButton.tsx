@@ -1,10 +1,10 @@
-import { ToolbarButton } from "../ToolbarButton";
-import { FreedrawConfigView } from "./FreedrawConfigView";
-import { ToolbarPopover } from "../ToolbarPopover";
-import { useState } from "react";
-import { useImageEditor, useTool } from "~/ImageEditor";
-import { ToolName } from "~/EditorCore";
-import { PenToolIcon } from "~/icons/PenToolIcon";
+import { ToolbarButton } from '../ToolbarButton';
+import { FreedrawConfigView } from './FreedrawConfigView';
+import { ToolbarPopover } from '../ToolbarPopover';
+import { useState } from 'react';
+import { useImageEditor, useTool } from '~/ImageEditor';
+import { ToolName } from '~/EditorCore';
+import { PenToolIcon } from '~/icons/PenToolIcon';
 
 export function FreedrawButton() {
   const [anchorEl, setAnchorEl] = useState(null);

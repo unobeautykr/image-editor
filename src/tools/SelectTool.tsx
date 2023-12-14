@@ -1,4 +1,4 @@
-import { ToolBase } from "./ToolBase";
+import { ToolBase } from './ToolBase';
 
 export class SelectTool extends ToolBase {
   constructor(core: any, config = null) {

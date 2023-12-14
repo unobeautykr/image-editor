@@ -1,3 +1,2 @@
 /// <reference types="react" />
-import { SvgIconProps } from "@mui/material";
-export declare function PenToolIcon(props: SvgIconProps): JSX.Element;
+export declare function PenToolIcon(props: any): JSX.Element;

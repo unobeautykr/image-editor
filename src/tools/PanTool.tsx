@@ -1,4 +1,4 @@
-import { ToolBase } from "./ToolBase";
+import { ToolBase } from './ToolBase';
 
 // http://fabricjs.com/fabric-intro-part-5#pan_zoom
 export class PanTool extends ToolBase {
@@ -22,7 +22,7 @@ export class PanTool extends ToolBase {
 
     this.onMouseDown = (opt: any) => {
       const e = opt.e;
-      if (e.type === "touchstart") {
+      if (e.type === 'touchstart') {
         this.isDragging = e.touches.length === 1;
 
         for (const touch of e.changedTouches) {
@@ -40,7 +40,7 @@ export class PanTool extends ToolBase {
 
     this.onMouseUp = (opt: any) => {
       const e = opt.e;
-      if (e.type === "touchend") {
+      if (e.type === 'touchend') {
         for (const touch of e.changedTouches) {
           delete this.touchPositions[touch.identifier];
         }
@@ -52,7 +52,7 @@ export class PanTool extends ToolBase {
     };
 
     this.onMouseMove = (opt: any) => {
-      if (opt.e.type !== "mousemove") return;
+      if (opt.e.type !== 'mousemove') return;
 
       if (this.isDragging) {
         const e = opt.e;
@@ -72,7 +72,7 @@ export class PanTool extends ToolBase {
 
     this.onTouchDrag = (opt: any) => {
       const e = opt.e;
-      if (e.type !== "touchmove") return;
+      if (e.type !== 'touchmove') return;
 
       if (this.isDragging) {
         if (e.touches.length > 1) return;
@@ -93,20 +93,20 @@ export class PanTool extends ToolBase {
   }
 
   onSelect() {
-    this.c.on("mouse:down", this.onMouseDown);
-    this.c.on("mouse:move", this.onMouseMove);
-    this.c.on("mouse:up", this.onMouseUp);
-    this.c.on("object:selected", this.onObjectSelected);
-    this.c.on("selection:cleared", this.onSelectionCleared);
-    this.c.on("touch:drag", this.onTouchDrag);
+    this.c.on('mouse:down', this.onMouseDown);
+    this.c.on('mouse:move', this.onMouseMove);
+    this.c.on('mouse:up', this.onMouseUp);
+    this.c.on('object:selected', this.onObjectSelected);
+    this.c.on('selection:cleared', this.onSelectionCleared);
+    this.c.on('touch:drag', this.onTouchDrag);
   }
 
   onDeselect() {
-    this.c.off("mouse:down", this.onMouseDown);
-    this.c.off("mouse:move", this.onMouseMove);
-    this.c.off("mouse:up", this.onMouseUp);
-    this.c.off("object:selected", this.onObjectSelected);
-    this.c.off("selection:cleared", this.onSelectionCleared);
-    this.c.off("touch:drag", this.onTouchDrag);
+    this.c.off('mouse:down', this.onMouseDown);
+    this.c.off('mouse:move', this.onMouseMove);
+    this.c.off('mouse:up', this.onMouseUp);
+    this.c.off('object:selected', this.onObjectSelected);
+    this.c.off('selection:cleared', this.onSelectionCleared);
+    this.c.off('touch:drag', this.onTouchDrag);
   }
 }

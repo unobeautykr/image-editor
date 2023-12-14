@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useElementSize(ref: React.RefObject<HTMLElement>) {
   const [size, setSize] = useState(null);
 
   useEffect(() => {
     if (!ref.current) {
-      throw Error("ref must be initialized in intial render");
+      throw Error('ref must be initialized in intial render');
     }
 
     const resizeObserver = new ResizeObserver((entries) => {

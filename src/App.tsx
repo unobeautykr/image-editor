@@ -1,21 +1,21 @@
-import { Box, Button, CssBaseline } from "@mui/material";
-import { useMemo, useRef } from "react";
-import sampleImage from "../samples/highres-portrait.jpeg";
-import { ImageEditor, ImageEditorProps } from "./ImageEditor";
+import { Box, Button, CssBaseline } from '@mui/material';
+import { useMemo, useRef } from 'react';
+import sampleImage from '../samples/highres-portrait.jpeg';
+import { ImageEditor, ImageEditorProps } from './ImageEditor';
 
 let boilerplates = [
   {
     id: 1,
-    contents: "test",
+    contents: 'test',
   },
   {
     id: 2,
-    contents: "test2",
+    contents: 'test2',
   },
 ];
 
 function App() {
-  const boilerplate: ImageEditorProps["boilerplate"] = useMemo(
+  const boilerplate: ImageEditorProps['boilerplate'] = useMemo(
     () => ({
       onLoadBoilerplate: async () => {
         return boilerplates;
@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <Box sx={{ width: "100vw", height: "100vh" }}>
+      <Box sx={{ width: '100vw', height: '100vh' }}>
         <ImageEditor
           ref={editorRef}
           imageUrl={sampleImage}

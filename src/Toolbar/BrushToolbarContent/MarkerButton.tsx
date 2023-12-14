@@ -1,10 +1,10 @@
-import { ToolbarButton } from "../ToolbarButton";
-import { ToolbarPopover } from "../ToolbarPopover";
-import { useState } from "react";
-import { useImageEditor, useTool } from "~/ImageEditor";
-import { ToolName } from "~/EditorCore";
-import { MarkerConfigView } from "./MarkerConfigView";
-import { MarkerToolIcon } from "~/icons/MarkerToolIcon";
+import { ToolbarButton } from '../ToolbarButton';
+import { ToolbarPopover } from '../ToolbarPopover';
+import { useState } from 'react';
+import { useImageEditor, useTool } from '~/ImageEditor';
+import { ToolName } from '~/EditorCore';
+import { MarkerConfigView } from './MarkerConfigView';
+import { MarkerToolIcon } from '~/icons/MarkerToolIcon';
 
 export function MarkerButton() {
   const [anchorEl, setAnchorEl] = useState(null);

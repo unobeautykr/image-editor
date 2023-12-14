@@ -1,4 +1,4 @@
-import { ToolBase } from "./ToolBase";
+import { ToolBase } from './ToolBase';
 
 export class TextTool extends ToolBase {
   constructor(core: any, config = null) {
@@ -21,16 +21,16 @@ export class TextTool extends ToolBase {
       y: e.clientY,
     };
 
-    this.core.addText("text", position);
+    this.core.addText('text', position);
   };
 
   onSelect() {
-    this.c.on("mouse:down:before", this.onMouseDownBefore);
-    this.c.on("mouse:down", this.onMouseDown);
+    this.c.on('mouse:down:before', this.onMouseDownBefore);
+    this.c.on('mouse:down', this.onMouseDown);
   }
 
   onDeselect() {
-    this.c.off("mouse:down", this.onMouseDown);
-    this.c.off("mouse:down:before", this.onMouseDownBefore);
+    this.c.off('mouse:down', this.onMouseDown);
+    this.c.off('mouse:down:before', this.onMouseDownBefore);
   }
 }

@@ -1,4 +1,4 @@
-import { ToolBase } from "./ToolBase";
+import { ToolBase } from './ToolBase';
 export declare class PanTool extends ToolBase {
     touchPositions: any;
     onMouseDown: any;

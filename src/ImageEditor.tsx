@@ -1,5 +1,5 @@
-import { Box } from "@mui/system";
-import { useElementSize } from "./useElementSize";
+import { Box } from '@mui/system';
+import { useElementSize } from './useElementSize';
 import {
   ReactNode,
   createContext,
@@ -10,11 +10,11 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
-import { EditorCanvas } from "./EditorCanvas";
-import { Toolbar } from "./Toolbar/Toolbar";
-import { EditorCore } from "./EditorCore";
-import { BoilerplateData } from "./types";
+} from 'react';
+import { EditorCanvas } from './EditorCanvas';
+import { Toolbar } from './Toolbar/Toolbar';
+import { EditorCore } from './EditorCore';
+import { BoilerplateData } from './types';
 
 interface ImageEditorContextValue {
   core: EditorCore;
@@ -24,16 +24,16 @@ interface ImageEditorContextValue {
     onSaveBoilerplate: (contents: string) => Promise<void>;
     onDeleteBoilerplate: (id: number) => Promise<void>;
   };
-  toolbarPosition: "bottom" | "right";
+  toolbarPosition: 'bottom' | 'right';
 }
 
 interface ImageEditorProviderProps {
   editorRef: React.Ref<HTMLElement>;
   imageUrl: string;
   children: React.ReactNode;
-  boilerplate?: ImageEditorContextValue["boilerplate"];
+  boilerplate?: ImageEditorContextValue['boilerplate'];
   touch?: boolean;
-  toolbarPosition: "bottom" | "right";
+  toolbarPosition: 'bottom' | 'right';
 }
 
 const ImageEditorContext = createContext<ImageEditorContextValue | null>(null);
@@ -55,9 +55,9 @@ const ImageEditorProvider = ({
 
   useImperativeHandle(
     editorRef,
-    () => {
+    (): any => {
       return {
-        getDataUrl(format: string) {
+        getDataUrl(format: any) {
           return core.getDataUrl(format);
         },
         toBlob() {
@@ -69,7 +69,7 @@ const ImageEditorProvider = ({
         isBusy() {
           return core.busy;
         },
-      } as any;
+      };
     },
     [core]
   );
@@ -96,9 +96,9 @@ export function useImageEditor() {
 }
 
 export function useTool() {
-  const { core }: any = useImageEditor();
+  const { core } = useImageEditor();
 
-  const [tool, setTool] = useState(core.tool?.name);
+  const [tool, setTool] = useState((core.tool as any)?.name);
 
   useEffect(() => {
     return core.on(EditorCore.Event.TOOL_CHANGE, (t: any) => setTool(t));
@@ -114,9 +114,9 @@ export function useTool() {
 export interface ImageEditorProps {
   viewOnly?: boolean;
   imageUrl: string;
-  boilerplate?: ImageEditorContextValue["boilerplate"];
+  boilerplate?: ImageEditorContextValue['boilerplate'];
   touch?: boolean;
-  toolbarPosition?: "bottom" | "right";
+  toolbarPosition?: 'bottom' | 'right';
   leadingItems?: ReactNode;
 }
 
@@ -127,7 +127,7 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
       imageUrl,
       boilerplate,
       touch,
-      toolbarPosition = "bottom",
+      toolbarPosition = 'bottom',
       leadingItems,
     },
     ref
@@ -146,20 +146,20 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
       >
         <Box
           sx={{
-            backgroundColor: "#f5f5f8",
-            height: "100%",
-            display: "flex",
-            flexDirection: toolbarPosition === "right" ? "row" : "column",
+            backgroundColor: '#f5f5f8',
+            height: '100%',
+            display: 'flex',
+            flexDirection: toolbarPosition === 'right' ? 'row' : 'column',
           }}
         >
           <Box
             ref={containerRef}
             sx={{
-              overflow: "hidden",
+              overflow: 'hidden',
               flexGrow: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             {containerSize && <EditorCanvas containerSize={containerSize} />}

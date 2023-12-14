@@ -1,10 +1,10 @@
-import { ToolbarButton } from "../ToolbarButton";
-import { ToolbarPopover } from "../ToolbarPopover";
-import { useState } from "react";
-import { useImageEditor, useTool } from "~/ImageEditor";
-import { ToolName } from "~/EditorCore";
-import { EraserConfigView } from "./EraserConfigView";
-import { EraserToolIcon } from "~/icons/EraserToolIcon";
+import { ToolbarButton } from '../ToolbarButton';
+import { ToolbarPopover } from '../ToolbarPopover';
+import { useState } from 'react';
+import { useImageEditor, useTool } from '~/ImageEditor';
+import { ToolName } from '~/EditorCore';
+import { EraserConfigView } from './EraserConfigView';
+import { EraserToolIcon } from '~/icons/EraserToolIcon';
 
 export function EraserButton() {
   const [anchorEl, setAnchorEl] = useState(null);

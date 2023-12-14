@@ -1,6 +1,6 @@
-import { SvgIcon, SvgIconProps } from "@mui/material";
-import { ReactComponent } from "~/assets/icons/ic-editor-redo.svg";
+import { SvgIcon } from '@mui/material';
+import { ReactComponent } from '~/assets/icons/ic-editor-redo.svg';
 
-export function RedoIcon(props: SvgIconProps) {
+export function RedoIcon(props: any) {
   return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
 }

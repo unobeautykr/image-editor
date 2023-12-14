@@ -1,8 +1,8 @@
-import { ListItemText, Menu, MenuItem, Switch } from "@mui/material";
-import { useState } from "react";
-import { ToolbarButton } from "../ToolbarButton";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useImageEditor } from "~/ImageEditor";
+import { ListItemText, Menu, MenuItem, Switch } from '@mui/material';
+import { useState } from 'react';
+import { ToolbarButton } from '../ToolbarButton';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useImageEditor } from '~/ImageEditor';
 
 export function SettingsButton() {
   const { core } = useImageEditor();
@@ -29,15 +29,15 @@ export function SettingsButton() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          'aria-labelledby': 'basic-button',
         }}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
         transformOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
       >
         <MenuItem onClick={onClickTogglePencil}>

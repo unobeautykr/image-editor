@@ -7,9 +7,9 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-} from "@mui/material";
-import { useState } from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+} from '@mui/material';
+import { useState } from 'react';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export function BoilerplateDialogItem({ bp, onSelect, onDelete }: any) {
   const [anchorEl, setAnchorEl] = useState(null);

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 
 export const Thickness = ({ thickness, selected }: any) => {
   return (
@@ -6,19 +6,19 @@ export const Thickness = ({ thickness, selected }: any) => {
       sx={{
         width: 32,
         height: 32,
-        backgroundColor: selected ? "black" : "transparent",
+        backgroundColor: selected ? 'black' : 'transparent',
         borderRadius: 2,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <Box
         sx={{
           width: thickness * 4,
           height: thickness * 4,
-          borderRadius: "50%",
-          backgroundColor: selected ? "white" : "black",
+          borderRadius: '50%',
+          backgroundColor: selected ? 'white' : 'black',
         }}
       ></Box>
     </Box>

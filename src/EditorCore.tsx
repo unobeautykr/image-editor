@@ -1,50 +1,50 @@
-import { fabric } from "fabric";
-import { EraserTool } from "./tools/EraserTool";
-import { FreedrawTool } from "./tools/FreedrawTool";
-import { MarkerTool } from "./tools/MarkerTool";
-import { PanTool } from "./tools/PanTool";
-import { SelectTool } from "./tools/SelectTool";
-import { TextTool } from "./tools/TextTool";
+import { fabric } from 'fabric';
+import { EraserTool } from './tools/EraserTool';
+import { FreedrawTool } from './tools/FreedrawTool';
+import { MarkerTool } from './tools/MarkerTool';
+import { PanTool } from './tools/PanTool';
+import { SelectTool } from './tools/SelectTool';
+import { TextTool } from './tools/TextTool';
 
 export const ToolName = {
-  FREEDRAW: "FREEDRAW",
-  SELECT: "SELECT",
-  PAN: "PAN",
-  TEXT: "TEXT",
-  MARKER: "MARKER",
-  ERASER: "ERASER",
+  FREEDRAW: 'FREEDRAW',
+  SELECT: 'SELECT',
+  PAN: 'PAN',
+  TEXT: 'TEXT',
+  MARKER: 'MARKER',
+  ERASER: 'ERASER',
 };
 
 export const PresetColor = {
-  BLACK: "#000000",
-  RED: "#d82735",
-  YELLOW: "#ffcb35",
-  GREEN: "#009e47",
-  BLUE: "#0052a5",
+  BLACK: '#000000',
+  RED: '#d82735',
+  YELLOW: '#ffcb35',
+  GREEN: '#009e47',
+  BLUE: '#0052a5',
 };
 
 const MIN_TEXT_SIZE = 6;
 const MAX_TEXT_SIZE = 60;
 
 const Event = {
-  HISTORY_CHANGE: "history.change",
-  AVAILABILITY_CHANGE: "availability.change",
-  TOOL_CHANGE: "tool.change",
-  MODE_CHANGE: "mode.change",
-  TEXT_CHANGE: "text.change",
+  HISTORY_CHANGE: 'history.change',
+  AVAILABILITY_CHANGE: 'availability.change',
+  TOOL_CHANGE: 'tool.change',
+  MODE_CHANGE: 'mode.change',
+  TEXT_CHANGE: 'text.change',
 };
 
 const Mode = {
-  BRUSH: "BRUSH",
-  TEXT: "TEXT",
-  IMAGE: "IMAGE",
+  BRUSH: 'BRUSH',
+  TEXT: 'TEXT',
+  IMAGE: 'IMAGE',
 };
 
 const ConfigName = {
-  FREEDRAW: "FREEBRUSH",
-  MARKER: "MARKER",
-  ERASER: "ERASER",
-  TEXT: "TEXT",
+  FREEDRAW: 'FREEBRUSH',
+  MARKER: 'MARKER',
+  ERASER: 'ERASER',
+  TEXT: 'TEXT',
 };
 
 export class EditorCore extends EventTarget {
@@ -142,17 +142,17 @@ export class EditorCore extends EventTarget {
         this.pushHistory();
         this.selectTool(this.fetchTool());
 
-        this.c.on("touch:gesture", this.onGesture);
-        this.c.on("mouse:up", this.onMouseUp);
-        this.c.on("mouse:wheel", this.onMouseWheel);
-        this.c.on("object:added", this.onObjectAdded);
-        this.c.on("object:modified", this.onObjectModified);
-        this.c.on("object:removed", this.onObjectRemoved);
-        this.c.on("selection:created", this.onObjectSelected);
-        this.c.on("selection:cleared", this.onObjectDeselected);
+        this.c.on('touch:gesture', this.onGesture);
+        this.c.on('mouse:up', this.onMouseUp);
+        this.c.on('mouse:wheel', this.onMouseWheel);
+        this.c.on('object:added', this.onObjectAdded);
+        this.c.on('object:modified', this.onObjectModified);
+        this.c.on('object:removed', this.onObjectRemoved);
+        this.c.on('selection:created', this.onObjectSelected);
+        this.c.on('selection:cleared', this.onObjectDeselected);
       },
       {
-        crossOrigin: "anonymous",
+        crossOrigin: 'anonymous',
       }
     );
 
@@ -184,7 +184,7 @@ export class EditorCore extends EventTarget {
           });
         }
 
-        if (opt.self.state === "start") {
+        if (opt.self.state === 'start') {
           this.zoomStartScale = this.c.getZoom();
           this.touches = touches;
           return;
@@ -203,28 +203,28 @@ export class EditorCore extends EventTarget {
 
     this.onMouseUp = (opt: any) => {
       const e = opt.e;
-      if (e.type === "touchend") {
+      if (e.type === 'touchend') {
         this.lastPoint = null;
         this.touches = null;
       }
     };
 
     this.onObjectAdded = (opt: any) => {
-      if (opt.target.type === "path") {
+      if (opt.target.type === 'path') {
         const path = opt.target;
         path.selectable = false;
-        path.hoverCursor = "default";
+        path.hoverCursor = 'default';
       }
 
-      this.c.getObjects("image").forEach((image: any) => {
+      this.c.getObjects('image').forEach((image: any) => {
         this.c.bringToFront(image);
       });
 
-      this.c.getObjects("path").forEach((text: any) => {
+      this.c.getObjects('path').forEach((text: any) => {
         this.c.bringToFront(text);
       });
 
-      this.c.getObjects("i-text").forEach((text: any) => {
+      this.c.getObjects('i-text').forEach((text: any) => {
         this.c.bringToFront(text);
       });
 
@@ -235,7 +235,7 @@ export class EditorCore extends EventTarget {
     this.onObjectModified = (opt: any) => {
       if (this.isTraversingHistory) return;
 
-      if (opt.target.type === "i-text" && opt.target.text.trim() === "") {
+      if (opt.target.type === 'i-text' && opt.target.text.trim() === '') {
         const old = this.isTraversingHistory;
         this.isTraversingHistory = true;
         this.c.remove(opt.target);
@@ -254,10 +254,10 @@ export class EditorCore extends EventTarget {
       const selected = opt.selected[0];
 
       switch (selected.type) {
-        case "i-text":
+        case 'i-text':
           this._dispatch(EditorCore.Event.MODE_CHANGE, EditorCore.Mode.TEXT);
           return;
-        case "image":
+        case 'image':
           this._dispatch(EditorCore.Event.MODE_CHANGE, EditorCore.Mode.IMAGE);
           return;
         default:
@@ -410,7 +410,7 @@ export class EditorCore extends EventTarget {
         this.busy = false;
       },
       {
-        crossOrigin: "anonymous",
+        crossOrigin: 'anonymous',
       }
     );
   }
@@ -438,15 +438,15 @@ export class EditorCore extends EventTarget {
     }
 
     const text: any = new fabric.IText(placeholder);
-    text.set("fill", this.config.text.color.code);
-    text.set("fontSize", this.calcTextSize(this.config.text.fontSize));
+    text.set('fill', this.config.text.color.code);
+    text.set('fontSize', this.calcTextSize(this.config.text.fontSize));
     if (position) {
       const canvasSpace = this.c.getPointer({
         clientX: position.x,
         clientY: position.y,
       });
-      text.set("left", canvasSpace.x);
-      text.set("top", canvasSpace.y);
+      text.set('left', canvasSpace.x);
+      text.set('top', canvasSpace.y);
     } else {
       this.c.viewportCenterObject(text);
     }
@@ -620,7 +620,7 @@ export class EditorCore extends EventTarget {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
     const dataUrl = this.c.toDataURL({
-      format: format.toLowerCase() === "png" ? "png" : "jpeg",
+      format: format.toLowerCase() === 'png' ? 'png' : 'jpeg',
       width: this.c.clipPath.width,
       height: this.c.clipPath.height,
       left: this.c.clipPath.left,
@@ -638,7 +638,7 @@ export class EditorCore extends EventTarget {
       this.c.toBlob(
         (blob: any) => {
           if (!blob) {
-            rej(new Error("Cannot create blob"));
+            rej(new Error('Cannot create blob'));
             return;
           }
 
@@ -668,7 +668,7 @@ export class EditorCore extends EventTarget {
 
   changeSelectedTextSize(fontSize: any) {
     const text = this.c.getActiveObject();
-    text.set("fontSize", this.calcTextSize(fontSize));
+    text.set('fontSize', this.calcTextSize(fontSize));
     this.config.text.fontSize = fontSize;
     this.cacheConfig();
     this.c.requestRenderAll();
@@ -676,7 +676,7 @@ export class EditorCore extends EventTarget {
 
   changeSelectedTextColor(c: any) {
     const text = this.c.getActiveObject();
-    text.set("fill", c.code);
+    text.set('fill', c.code);
     this.config.text.color = c;
     this.cacheConfig();
     this.c.requestRenderAll();
@@ -684,7 +684,7 @@ export class EditorCore extends EventTarget {
 
   changeSelectedTextMessage(message: any) {
     const text = this.c.getActiveObject();
-    text.set("text", message);
+    text.set('text', message);
     this.c.requestRenderAll();
   }
 
@@ -699,12 +699,12 @@ export class EditorCore extends EventTarget {
 
     if (Object.values(PresetColor).includes(text.fill)) {
       return {
-        type: "preset",
+        type: 'preset',
         code: text.fill,
       };
     } else {
       return {
-        type: "custom",
+        type: 'custom',
         code: text.fill,
       };
     }
@@ -722,21 +722,21 @@ export class EditorCore extends EventTarget {
   }
 
   fetchConfig() {
-    const storedConfigRaw = localStorage.getItem("editorConfig");
+    const storedConfigRaw = localStorage.getItem('editorConfig');
     const storedConfig = storedConfigRaw ? JSON.parse(storedConfigRaw) : null;
 
     return {
       freedraw: storedConfig?.freedraw ?? {
         thickness: 3,
         color: {
-          type: "preset",
+          type: 'preset',
           code: PresetColor.BLACK,
         },
       },
       marker: storedConfig?.marker ?? {
         thickness: 3,
         color: {
-          type: "preset",
+          type: 'preset',
           code: PresetColor.BLACK,
         },
       },
@@ -745,7 +745,7 @@ export class EditorCore extends EventTarget {
       },
       text: storedConfig?.text ?? {
         color: {
-          type: "preset",
+          type: 'preset',
           code: PresetColor.BLACK,
         },
         fontSize: 40,
@@ -755,15 +755,15 @@ export class EditorCore extends EventTarget {
   }
 
   fetchTool() {
-    return localStorage.getItem("editorTool") ?? ToolName.PAN;
+    return localStorage.getItem('editorTool') ?? ToolName.PAN;
   }
 
   cacheConfig() {
-    localStorage.setItem("editorConfig", JSON.stringify(this.config));
+    localStorage.setItem('editorConfig', JSON.stringify(this.config));
   }
 
   cacheTool() {
-    localStorage.setItem("editorTool", this.tool.name);
+    localStorage.setItem('editorTool', this.tool.name);
   }
 
   isDirty() {

@@ -1,8 +1,8 @@
-import { IconButton } from "@mui/material";
-import { Box } from "@mui/system";
-import colorwheel from "~/assets/images/colorwheel.png";
-import { useCallback, useState } from "react";
-import { ToolbarPopover } from "./ToolbarPopover";
+import { IconButton } from '@mui/material';
+import { Box } from '@mui/system';
+import colorwheel from '~/assets/images/colorwheel.png';
+import { useCallback, useState } from 'react';
+import { ToolbarPopover } from './ToolbarPopover';
 import {
   amber,
   deepPurple,
@@ -16,9 +16,9 @@ import {
   purple,
   red,
   yellow,
-} from "@mui/material/colors";
-import { PresetColor } from "../EditorCore";
-import { useImageEditor } from "~/ImageEditor";
+} from '@mui/material/colors';
+import { PresetColor } from '../EditorCore';
+import { useImageEditor } from '~/ImageEditor';
 
 const colors = [
   PresetColor.BLACK,
@@ -43,13 +43,13 @@ function ColorButton({ type, color, selected, onClick }: any) {
           />
           <circle cx="50%" cy="50%" r="8" fill="white" />
         </mask>
-        {type === "preset" ? (
+        {type === 'preset' ? (
           <circle
             cx="50%"
             cy="50%"
             r="50%"
             fill={color}
-            mask={selected ? "url(#mask)" : ""}
+            mask={selected ? 'url(#mask)' : ''}
           />
         ) : (
           <image
@@ -58,7 +58,7 @@ function ColorButton({ type, color, selected, onClick }: any) {
             width="100%"
             height="100%"
             href={colorwheel}
-            mask={selected ? "url(#mask)" : ""}
+            mask={selected ? 'url(#mask)' : ''}
           ></image>
         )}
 
@@ -70,9 +70,9 @@ function ColorButton({ type, color, selected, onClick }: any) {
 
 const levels = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 const greyLevels = [
-  "#ffffff",
+  '#ffffff',
   ...levels.map((l: any) => (grey as any)[l]),
-  "#000000",
+  '#000000',
 ];
 const hues = [
   lightBlue,
@@ -111,8 +111,8 @@ function ColorGrid({ onChange }: any) {
     <Box
       sx={{
         p: 2,
-        display: "grid",
-        gridTemplateColumns: "repeat(11, 1fr)",
+        display: 'grid',
+        gridTemplateColumns: 'repeat(11, 1fr)',
       }}
     >
       {gridColors.map((c) => (
@@ -130,7 +130,7 @@ export function ColorPalette({ value, onChange }: any) {
     if (!value) return;
 
     onChange({
-      type: "preset",
+      type: 'preset',
       code: c,
     });
   };
@@ -147,7 +147,7 @@ export function ColorPalette({ value, onChange }: any) {
 
   const onChangeCustomColor = (c: any) => {
     onChange({
-      type: "custom",
+      type: 'custom',
       code: c,
     });
     handleClose();
@@ -156,14 +156,14 @@ export function ColorPalette({ value, onChange }: any) {
   return (
     <Box
       sx={{
-        display: "grid",
-        ...(toolbarPosition === "bottom" && {
-          gridTemplateRows: "repeat(2, minmax(0, 1fr))",
-          gridTemplateColumns: "repeat(3, minmax(0, min-content))",
+        display: 'grid',
+        ...(toolbarPosition === 'bottom' && {
+          gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
+          gridTemplateColumns: 'repeat(3, minmax(0, min-content))',
         }),
-        ...(toolbarPosition === "right" && {
-          gridTemplateRows: "repeat(3, minmax(0, 1fr))",
-          gridTemplateColumns: "repeat(2, minmax(0, min-content))",
+        ...(toolbarPosition === 'right' && {
+          gridTemplateRows: 'repeat(3, minmax(0, 1fr))',
+          gridTemplateColumns: 'repeat(2, minmax(0, min-content))',
         }),
         gap: 1,
       }}
@@ -171,16 +171,16 @@ export function ColorPalette({ value, onChange }: any) {
       {colors.map((c, i) => (
         <ColorButton
           key={i}
-          selected={value?.type === "preset" && value?.code === c}
+          selected={value?.type === 'preset' && value?.code === c}
           type="preset"
           color={c}
           onClick={() => onClickColor(c)}
         />
       ))}
       <ColorButton
-        selected={value?.type === "custom"}
+        selected={value?.type === 'custom'}
         type="custom"
-        color={value?.type === "custom" ? value?.code : null}
+        color={value?.type === 'custom' ? value?.code : null}
         onClick={onClickCustom}
       />
       <ToolbarPopover
@@ -189,7 +189,7 @@ export function ColorPalette({ value, onChange }: any) {
         onClose={handleClose}
         anchorOrigin={{
           vertical: -16,
-          horizontal: "center",
+          horizontal: 'center',
         }}
       >
         <ColorGrid onChange={onChangeCustomColor} />

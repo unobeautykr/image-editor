@@ -1,11 +1,11 @@
-import { useImageEditor } from "../ImageEditor";
-import { useEffect, useState } from "react";
-import { BrushToolbarContent } from "./BrushToolbarContent/BrushToolbarContent";
-import { TextToolbarContent } from "./TextToolbarContent/TextToolbarContent";
-import { ImageToolbarContent } from "./ImageToolbarContent/ImageToolbarContent";
-import { EditorCore } from "../EditorCore";
-import { grey } from "@mui/material/colors";
-import { Box, Paper } from "@mui/material";
+import { useImageEditor } from '../ImageEditor';
+import { ReactNode, useEffect, useState } from 'react';
+import { BrushToolbarContent } from './BrushToolbarContent/BrushToolbarContent';
+import { TextToolbarContent } from './TextToolbarContent/TextToolbarContent';
+import { ImageToolbarContent } from './ImageToolbarContent/ImageToolbarContent';
+import { EditorCore } from '../EditorCore';
+import { grey } from '@mui/material/colors';
+import { Box, Paper } from '@mui/material';
 
 export function Toolbar({ leadingItems }: { leadingItems: any }) {
   const { core, toolbarPosition } = useImageEditor();
@@ -18,25 +18,25 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: toolbarPosition === "right" ? "column" : "row",
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
       }}
     >
       <Paper
         sx={{
-          display: "flex",
-          overflow: "auto",
+          display: 'flex',
+          overflow: 'auto',
           backgroundColor: grey[50],
-          alignItems: "center",
+          alignItems: 'center',
           gap: 1,
-          ...(toolbarPosition === "right" && {
-            flexDirection: "column",
+          ...(toolbarPosition === 'right' && {
+            flexDirection: 'column',
             width: 88,
             py: 4,
           }),
-          ...(toolbarPosition === "bottom" && {
-            flexDirection: "row",
+          ...(toolbarPosition === 'bottom' && {
+            flexDirection: 'row',
             height: 88,
             px: 4,
           }),
@@ -45,13 +45,13 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
         {leadingItems && (
           <Box
             sx={{
-              display: "flex",
+              display: 'flex',
               gap: 1,
-              ...(toolbarPosition === "right" && {
-                flexDirection: "column",
+              ...(toolbarPosition === 'right' && {
+                flexDirection: 'column',
               }),
-              ...(toolbarPosition === "bottom" && {
-                flexDirection: "row",
+              ...(toolbarPosition === 'bottom' && {
+                flexDirection: 'row',
               }),
             }}
           >
@@ -60,13 +60,13 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
         )}
         <Box
           sx={{
-            display: "grid",
-            color: "black",
+            display: 'grid',
+            color: 'black',
             gap: 3,
-            ...(toolbarPosition === "right" && {
+            ...(toolbarPosition === 'right' && {
               gridTemplateRows: `404px 88px 128px`,
             }),
-            ...(toolbarPosition === "bottom" && {
+            ...(toolbarPosition === 'bottom' && {
               gridTemplateColumns: `404px 88px 128px`,
             }),
           }}

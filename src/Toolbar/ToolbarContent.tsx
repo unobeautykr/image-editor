@@ -1,5 +1,5 @@
-import { Box } from "@mui/system";
-import { useImageEditor } from "~/ImageEditor";
+import { Box } from '@mui/system';
+import { useImageEditor } from '~/ImageEditor';
 
 interface ToolbarContentProps {
   leadingItems?: any;
@@ -18,30 +18,30 @@ export function ToolbarContent({
     <>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           gap: 2,
-          flexDirection: toolbarPosition === "right" ? "column" : "row",
+          flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
         }}
       >
         {leadingItems}
       </Box>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: toolbarPosition === "right" ? "column" : "row",
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
         }}
       >
         {palette}
       </Box>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
           gap: 2,
-          flexDirection: toolbarPosition === "right" ? "column" : "row",
+          flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
         }}
       >
         {trailingItems}

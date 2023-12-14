@@ -1,12 +1,12 @@
-import { styled } from "@mui/system";
-import { grey } from "@mui/material/colors";
-import { useImageEditor } from "~/ImageEditor";
-import { ToolName } from "~/EditorCore";
-import { ImageToolIcon } from "~/icons/ImageToolIcon";
-import { Tooltip } from "@mui/material";
+import { styled } from '@mui/system';
+import { grey } from '@mui/material/colors';
+import { useImageEditor } from '~/ImageEditor';
+import { ToolName } from '~/EditorCore';
+import { ImageToolIcon } from '~/icons/ImageToolIcon';
+import { Tooltip } from '@mui/material';
 
-const ButtonLabel = styled("label")``;
-const HiddenInput = styled("input")`
+const ButtonLabel = styled('label')``;
+const HiddenInput = styled('input')`
   display: none;
 `;
 
@@ -41,25 +41,25 @@ export const ImageButton = ({ ...props }) => {
     <Tooltip
       title="이미지"
       arrow
-      placement={toolbarPosition === "right" ? "left" : "top"}
+      placement={toolbarPosition === 'right' ? 'left' : 'top'}
     >
       <ButtonLabel
         htmlFor="file-upload"
         sx={{
-          display: "flex",
-          ":hover": {
+          display: 'flex',
+          ':hover': {
             backgroundColor: grey[200],
           },
           p: 1.5,
-          borderRadius: "50%",
+          borderRadius: '50%',
           backgroundColor: grey[200],
-          color: "black",
+          color: 'black',
         }}
       >
         <ImageToolIcon
           sx={{
             fontSize: 20,
-            color: disabled ? "action.disabled" : "inherit",
+            color: disabled ? 'action.disabled' : 'inherit',
           }}
         />
         <HiddenInput

@@ -1,16 +1,16 @@
-import { Slider, Stack } from "@mui/material";
-import { useImageEditor } from "../../ImageEditor";
-import { ColorPalette } from "../ColorPalette";
-import { ToolbarContent } from "../ToolbarContent";
-import TextDecreaseIcon from "@mui/icons-material/TextDecrease";
-import TextIncreaseIcon from "@mui/icons-material/TextIncrease";
-import TextsmsIcon from "@mui/icons-material/Textsms";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { ToolbarButton } from "../ToolbarButton";
-import { useCallback, useState } from "react";
-import { BoilerplateDialog } from "../BoilerplateDialog";
-import { BoilerplateData } from "~/types";
+import { Slider, Stack } from '@mui/material';
+import { useImageEditor } from '../../ImageEditor';
+import { ColorPalette } from '../ColorPalette';
+import { ToolbarContent } from '../ToolbarContent';
+import TextDecreaseIcon from '@mui/icons-material/TextDecrease';
+import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
+import TextsmsIcon from '@mui/icons-material/Textsms';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { ToolbarButton } from '../ToolbarButton';
+import { useCallback, useEffect, useState } from 'react';
+import { BoilerplateDialog } from '../BoilerplateDialog';
+import { BoilerplateData } from '~/types';
 
 const SizeSlider = ({ value, onChange }: any) => {
   const { toolbarPosition } = useImageEditor();
@@ -18,13 +18,13 @@ const SizeSlider = ({ value, onChange }: any) => {
   return (
     <Stack
       spacing={2}
-      direction={toolbarPosition === "bottom" ? "row" : "column-reverse"}
+      direction={toolbarPosition === 'bottom' ? 'row' : 'column-reverse'}
       sx={{
         mb: 1,
-        ...(toolbarPosition === "bottom" && {
+        ...(toolbarPosition === 'bottom' && {
           width: 200,
         }),
-        ...(toolbarPosition === "right" && {
+        ...(toolbarPosition === 'right' && {
           height: 200,
         }),
       }}
@@ -32,7 +32,7 @@ const SizeSlider = ({ value, onChange }: any) => {
     >
       <TextDecreaseIcon />
       <Slider
-        orientation={toolbarPosition === "bottom" ? "horizontal" : "vertical"}
+        orientation={toolbarPosition === 'bottom' ? 'horizontal' : 'vertical'}
         value={value}
         onChange={onChange}
       />
@@ -45,7 +45,7 @@ export function TextToolbarContent() {
   const { core, boilerplate } = useImageEditor();
   if (!boilerplate)
     throw new Error(
-      "ImageEditor boilerplate attr must be provided in the edit mode"
+      'ImageEditor boilerplate attr must be provided in the edit mode'
     );
 
   const [size, setSize] = useState(core.getSelectedTextSize());

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useImageEditor } from "./ImageEditor";
+import { useEffect, useRef } from 'react';
+import { useImageEditor } from './ImageEditor';
 
 export function EditorCanvas({ containerSize }: any) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

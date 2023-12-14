@@ -1,6 +1,6 @@
-import { SvgIcon, SvgIconProps } from "@mui/material";
-import { ReactComponent } from "~/assets/icons/ic-editor-undo.svg";
+import { SvgIcon } from '@mui/material';
+import { ReactComponent } from '~/assets/icons/ic-editor-undo.svg';
 
-export function UndoIcon(props: SvgIconProps) {
+export function UndoIcon(props: any) {
   return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
 }

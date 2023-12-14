@@ -1,3 +1,2 @@
 /// <reference types="react" />
-import { SvgIconProps } from "@mui/material";
-export declare function RedoIcon(props: SvgIconProps): JSX.Element;
+export declare function RedoIcon(props: any): JSX.Element;

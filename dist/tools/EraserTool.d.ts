@@ -1,4 +1,4 @@
-import { ToolBase } from "./ToolBase";
+import { ToolBase } from './ToolBase';
 export declare class EraserTool extends ToolBase {
     onPathCreated: any;
     constructor(core: any, config: any);

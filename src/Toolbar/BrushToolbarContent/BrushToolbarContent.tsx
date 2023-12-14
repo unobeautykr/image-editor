@@ -1,19 +1,19 @@
-import { EditorCore } from "../../EditorCore";
-import { useImageEditor, useTool } from "../../ImageEditor";
-import { useEffect, useState } from "react";
-import { ColorPalette } from "../ColorPalette";
-import { ToolbarContent } from "../ToolbarContent";
-import { FreedrawButton } from "./FreedrawButton";
-import { ToolbarButton } from "../ToolbarButton";
-import { PanButton } from "./PanButton";
-import { SelectButton } from "./SelectButton";
-import { MarkerButton } from "./MarkerButton";
-import { ImageButton } from "./ImageButton";
-import { TextButton } from "./TextButton";
-import { EraserButton } from "./EraserButton";
-import { SettingsButton } from "./SettingsButton";
-import { UndoIcon } from "~/icons/UndoIcon";
-import { RedoIcon } from "~/icons/RedoIcon";
+import { EditorCore } from '../../EditorCore';
+import { useImageEditor, useTool } from '../../ImageEditor';
+import { useEffect, useState } from 'react';
+import { ColorPalette } from '../ColorPalette';
+import { ToolbarContent } from '../ToolbarContent';
+import { FreedrawButton } from './FreedrawButton';
+import { ToolbarButton } from '../ToolbarButton';
+import { PanButton } from './PanButton';
+import { SelectButton } from './SelectButton';
+import { MarkerButton } from './MarkerButton';
+import { ImageButton } from './ImageButton';
+import { TextButton } from './TextButton';
+import { EraserButton } from './EraserButton';
+import { SettingsButton } from './SettingsButton';
+import { UndoIcon } from '~/icons/UndoIcon';
+import { RedoIcon } from '~/icons/RedoIcon';
 
 export function BrushToolbarContent() {
   const { core, touch } = useImageEditor();

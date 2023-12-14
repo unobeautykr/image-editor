@@ -1,13 +1,13 @@
-import { ToolbarButton } from "../ToolbarButton";
-import { useTool } from "~/ImageEditor";
-import { ToolName } from "~/EditorCore";
-import { SelectToolIcon } from "~/icons/SelectToolIcon";
+import { ToolbarButton } from '../ToolbarButton';
+import { useTool } from '~/ImageEditor';
+import { ToolName } from '~/EditorCore';
+import { SelectToolIcon } from '~/icons/SelectToolIcon';
 
 export function SelectButton() {
   const { tool, setTool } = useTool();
   const selected = tool === ToolName.SELECT;
 
-  const onClick = (_: any) => {
+  const onClick = (e: any) => {
     setTool(ToolName.SELECT);
   };
 

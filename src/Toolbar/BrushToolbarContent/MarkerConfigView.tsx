@@ -1,5 +1,5 @@
-import { Box, IconButton } from "@mui/material";
-import { Thickness } from "../Thickness";
+import { Box, IconButton } from '@mui/material';
+import { Thickness } from '../Thickness';
 
 const thicknesses = [1, 2, 3, 4, 5];
 export const MarkerConfigView = ({ value, onChange }: any) => {
@@ -13,7 +13,7 @@ export const MarkerConfigView = ({ value, onChange }: any) => {
     <Box>
       <Box
         sx={{
-          display: "flex",
+          display: 'flex',
           gap: 1,
         }}
       >
