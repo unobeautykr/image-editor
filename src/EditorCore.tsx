@@ -138,12 +138,19 @@ export class EditorCore extends EventTarget {
     });
 
     const c = this.c;
+
     this.c.usePencil = this.touchEnabled ? this.config.usePencil : false;
 
     fabric.Image.fromURL(
       this.imageUrl,
       (oImg: any) => {
         if (!c.getElement()) return;
+        // const scaleH = this.containerSize.height / oImg.height;
+        // console.log('this.containerSize.width', this.containerSize.width);
+        // console.log('this.containerSize.height', this.containerSize.height);
+        // console.log('oImg.width', oImg.width);
+        // console.log('oImg.height', oImg.height);
+        // console.log('scaleH', scaleH);
         oImg.erasable = false;
         this.busy = false;
         c.setBackgroundImage(oImg, null);
@@ -420,6 +427,9 @@ export class EditorCore extends EventTarget {
       },
       {
         crossOrigin: 'anonymous',
+        borderColor: '#0B99FF',
+        cornerColor: '#0B99FF',
+        cornerSize: 11,
       }
     );
   }
@@ -450,7 +460,11 @@ export class EditorCore extends EventTarget {
       this.selectTool(ToolName.SELECT);
     }
 
-    const text: any = new fabric.IText(placeholder);
+    const text: any = new fabric.IText(placeholder, {
+      borderColor: '#0B99FF',
+      cornerColor: '#0B99FF',
+      cornerSize: 11,
+    });
     text.set('fill', this.config.text.color.code);
     text.set('fontSize', this.calcTextSize(this.config.text.fontSize));
     if (position) {
@@ -604,13 +618,24 @@ export class EditorCore extends EventTarget {
     if (!this.c.backgroundImage) return;
     if (!this.containerSize) return;
 
-    const zoomMin = Math.min(
+    let zoomMin = Math.min(
       1,
       Math.min(
         this.containerSize.width / this.c.backgroundImage.width,
         this.containerSize.height / this.c.backgroundImage.height
       )
     );
+
+    const isSmallImage =
+      this.containerSize.width > this.c.backgroundImage.width ||
+      this.containerSize.height > this.c.backgroundImage.height;
+
+    if (isSmallImage) {
+      zoomMin = Math.min(
+        this.containerSize.width / this.c.backgroundImage.width,
+        this.containerSize.height / this.c.backgroundImage.height
+      );
+    }
 
     this.c.setWidth(this.containerSize.width);
     this.c.setHeight(this.containerSize.height);
@@ -622,8 +647,8 @@ export class EditorCore extends EventTarget {
       top: this.c.backgroundImage.top - 1,
       left: this.c.backgroundImage.left - 1,
     });
-    this.c.clipPath = clipPath;
 
+    this.c.clipPath = clipPath;
     this.zoomMin = zoomMin;
     this.zoom(
       { x: this.containerSize.width / 2, y: this.containerSize.height / 2 },
