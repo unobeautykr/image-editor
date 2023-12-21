@@ -38,6 +38,7 @@ export function EraserButton() {
         Icon={EraserToolIcon}
         onClick={onClick}
         tooltip="지우개"
+        disableToolbar={true}
       />
       <ToolbarPopover
         open={Boolean(anchorEl)}

@@ -5,6 +5,8 @@ export declare const ToolName: {
     TEXT: string;
     MARKER: string;
     ERASER: string;
+    TIMESTAMP: string;
+    SIMPLE_INPUT: string;
 };
 export declare const PresetColor: {
     BLACK: string;
@@ -79,7 +81,7 @@ export declare class EditorCore extends EventTarget {
     addText(placeholder: string, position?: {
         x: number;
         y: number;
-    }): void;
+    }, skipEditing?: boolean): void;
     undo(): Promise<void>;
     redo(): Promise<void>;
     loadFromHistory(history: any): Promise<void>;

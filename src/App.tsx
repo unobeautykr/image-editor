@@ -21,6 +21,7 @@ function App() {
         return boilerplates;
       },
       onSaveBoilerplate: async (contents: string) => {
+        console.log('save', contents);
         return;
       },
       onDeleteBoilerplate: async (id: number) => {
@@ -46,7 +47,7 @@ function App() {
           imageUrl={sampleImage}
           boilerplate={boilerplate}
           touch={false}
-          toolbarPosition="bottom"
+          toolbarPosition="right"
           leadingItems={<Button onClick={onClickSave}>save</Button>}
         />
       </Box>

@@ -38,6 +38,7 @@ export function MarkerButton() {
         Icon={MarkerToolIcon}
         onClick={onClick}
         tooltip="브러쉬"
+        disableToolbar={true}
       />
       <ToolbarPopover
         open={Boolean(anchorEl)}

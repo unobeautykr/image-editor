@@ -1,16 +1,35 @@
-import { styled } from '@mui/system';
 import { grey } from '@mui/material/colors';
 import { useImageEditor } from '~/ImageEditor';
 import { ToolName } from '~/EditorCore';
 import { ImageToolIcon } from '~/icons/ImageToolIcon';
-import { Tooltip } from '@mui/material';
+import { Tooltip, Typography as MuiTypography, styled } from '@mui/material';
 
-const ButtonLabel = styled('label')``;
+const Typography = styled(MuiTypography)(
+  () => `
+  font-family: Apple SD Gothic Neo;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: center;
+`
+);
+
+const ButtonLabel = styled('label')`
+  cursor: pointer;
+`;
 const HiddenInput = styled('input')`
   display: none;
 `;
 
-export const ImageButton = ({ ...props }) => {
+export const ImageButton = ({
+  disableToolbar = true,
+  tooltip = '이미지',
+  ...props
+}: {
+  disableToolbar?: boolean;
+  tooltip?: string;
+}) => {
   const { core, toolbarPosition } = useImageEditor();
 
   const onClickUpload = (e: any) => {
@@ -37,9 +56,48 @@ export const ImageButton = ({ ...props }) => {
 
   const disabled = false;
 
-  return (
+  return disableToolbar ? (
+    <span
+      style={{
+        display: 'inline-flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '4px',
+      }}
+    >
+      <ButtonLabel
+        htmlFor="file-upload"
+        sx={{
+          display: 'flex',
+          ':hover': {
+            backgroundColor: grey[200],
+          },
+          p: 1.2,
+          borderRadius: '50%',
+          backgroundColor: grey[200],
+          color: 'black',
+        }}
+      >
+        <ImageToolIcon
+          sx={{
+            fontSize: 20,
+            color: disabled ? 'action.disabled' : 'inherit',
+          }}
+        />
+        <HiddenInput
+          id="file-upload"
+          type="file"
+          {...props}
+          accept="image/*"
+          onClick={onClickUpload}
+          onChange={onChangeFiles}
+        />
+      </ButtonLabel>
+      <Typography variant="body1">{tooltip}</Typography>
+    </span>
+  ) : (
     <Tooltip
-      title="이미지"
+      title={tooltip}
       arrow
       placement={toolbarPosition === 'right' ? 'left' : 'top'}
     >

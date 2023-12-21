@@ -14,6 +14,7 @@ export function SelectButton() {
   return (
     <ToolbarButton
       selected={selected}
+      disableToolbar={true}
       Icon={SelectToolIcon}
       onClick={onClick}
       tooltip="선택"

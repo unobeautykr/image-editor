@@ -1,5 +1,5 @@
 import { SvgIcon } from '@mui/material';
-import { ReactComponent } from '~/assets/icons/ic-editor-marker.svg';
+import { ReactComponent } from '~/assets/icons/update_icon/ic_pen.svg';
 
 export function MarkerToolIcon(props: any) {
   return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
