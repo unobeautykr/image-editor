@@ -38,6 +38,7 @@ export function FreedrawButton() {
         Icon={PenToolIcon}
         onClick={onClick}
         tooltip="펜"
+        disableToolbar={true}
       />
       <ToolbarPopover
         open={Boolean(anchorEl)}

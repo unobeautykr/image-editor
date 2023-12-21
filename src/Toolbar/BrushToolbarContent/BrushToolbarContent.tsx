@@ -14,6 +14,8 @@ import { EraserButton } from './EraserButton';
 import { SettingsButton } from './SettingsButton';
 import { UndoIcon } from '~/icons/UndoIcon';
 import { RedoIcon } from '~/icons/RedoIcon';
+import { TodayTimestampButton } from './TodayTimestampButton';
+import { SimpleInputButton } from './SimpleInputButton';
 
 export function BrushToolbarContent() {
   const { core, touch } = useImageEditor();
@@ -64,6 +66,8 @@ export function BrushToolbarContent() {
           <EraserButton />
           <TextButton />
           <ImageButton />
+          <TodayTimestampButton />
+          <SimpleInputButton />
         </>
       }
       palette={
@@ -72,15 +76,12 @@ export function BrushToolbarContent() {
       trailingItems={
         <>
           <ToolbarButton
-            small
             disabled={!available || history.index <= 0}
             Icon={UndoIcon}
             onClick={onClickUndo}
             tooltip="실행취소"
           />
-
           <ToolbarButton
-            small
             disabled={!available || history.index >= history.histories - 1}
             Icon={RedoIcon}
             onClick={onClickRedo}

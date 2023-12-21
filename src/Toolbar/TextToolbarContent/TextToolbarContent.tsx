@@ -4,11 +4,10 @@ import { ColorPalette } from '../ColorPalette';
 import { ToolbarContent } from '../ToolbarContent';
 import TextDecreaseIcon from '@mui/icons-material/TextDecrease';
 import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
-import TextsmsIcon from '@mui/icons-material/Textsms';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ToolbarButton } from '../ToolbarButton';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { BoilerplateDialog } from '../BoilerplateDialog';
 import { BoilerplateData } from '~/types';
 
@@ -98,7 +97,6 @@ export function TextToolbarContent() {
         leadingItems={
           <>
             <SizeSlider value={size} onChange={onChangeSize} />
-            <ToolbarButton Icon={TextsmsIcon} onClick={onClickBoilerplate} />
             <ToolbarButton Icon={BookmarkAddIcon} onClick={onClickSave} />
           </>
         }

@@ -13,6 +13,7 @@ export function PanButton() {
 
   return (
     <ToolbarButton
+      disableToolbar={true}
       selected={selected}
       Icon={PanToolIcon}
       onClick={onClick}

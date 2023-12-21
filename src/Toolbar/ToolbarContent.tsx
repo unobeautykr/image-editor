@@ -20,7 +20,7 @@ export function ToolbarContent({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 2,
+          gap: '10px',
           flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
         }}
       >
@@ -40,7 +40,7 @@ export function ToolbarContent({
           display: 'flex',
           justifyContent: 'flex-end',
           alignItems: 'center',
-          gap: 2,
+          gap: '10px',
           flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
         }}
       >

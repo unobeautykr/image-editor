@@ -5,6 +5,7 @@ import { MarkerTool } from './tools/MarkerTool';
 import { PanTool } from './tools/PanTool';
 import { SelectTool } from './tools/SelectTool';
 import { TextTool } from './tools/TextTool';
+import { TimestampTool } from './tools/TimestampTool';
 
 export const ToolName = {
   FREEDRAW: 'FREEDRAW',
@@ -13,6 +14,8 @@ export const ToolName = {
   TEXT: 'TEXT',
   MARKER: 'MARKER',
   ERASER: 'ERASER',
+  TIMESTAMP: 'TIMESTAMP',
+  SIMPLE_INPUT: 'SIMPLE_INPUT',
 };
 
 export const PresetColor = {
@@ -104,6 +107,12 @@ export class EditorCore extends EventTarget {
     },
     [ToolName.TEXT]: {
       class: TextTool,
+    },
+    [ToolName.TIMESTAMP]: {
+      class: TimestampTool,
+    },
+    [ToolName.SIMPLE_INPUT]: {
+      class: SelectTool,
     },
   };
 
@@ -430,7 +439,11 @@ export class EditorCore extends EventTarget {
     );
   }
 
-  addText(placeholder: string, position?: { x: number; y: number }) {
+  addText(
+    placeholder: string,
+    position?: { x: number; y: number },
+    skipEditing?: boolean
+  ) {
     if (!this.available) return;
 
     if (this.touchEnabled) {
@@ -453,10 +466,12 @@ export class EditorCore extends EventTarget {
     text.erasable = false;
 
     this.c.add(text);
-    this.c.setActiveObject(text);
-    text.selectAll();
 
-    text.enterEditing();
+    if (!skipEditing) {
+      this.c.setActiveObject(text);
+      text.selectAll();
+      text.enterEditing();
+    }
   }
 
   async undo() {

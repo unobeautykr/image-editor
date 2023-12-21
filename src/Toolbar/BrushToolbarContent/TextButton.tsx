@@ -19,6 +19,7 @@ export function TextButton() {
   return (
     <>
       <ToolbarButton
+        disableToolbar={true}
         selected={selected}
         Icon={TextToolIcon}
         onClick={onClick}
