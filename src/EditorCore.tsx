@@ -145,12 +145,6 @@ export class EditorCore extends EventTarget {
       this.imageUrl,
       (oImg: any) => {
         if (!c.getElement()) return;
-        // const scaleH = this.containerSize.height / oImg.height;
-        // console.log('this.containerSize.width', this.containerSize.width);
-        // console.log('this.containerSize.height', this.containerSize.height);
-        // console.log('oImg.width', oImg.width);
-        // console.log('oImg.height', oImg.height);
-        // console.log('scaleH', scaleH);
         oImg.erasable = false;
         this.busy = false;
         c.setBackgroundImage(oImg, null);
