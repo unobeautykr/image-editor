@@ -23,7 +23,7 @@ const IconButton = styled(MuiIconButton)<{ selected: boolean }>(
     disabled
       ? `
       svg, path {
-        fill: #BDBDBD;
+        fill: ${grey[400]};
       }
     `
       : ''
