@@ -93,12 +93,12 @@ export function SimpleInputButton() {
         anchorOrigin={
           toolbarPosition === 'bottom'
             ? {
-                vertical: -13,
+                vertical: -15,
                 horizontal: 'left',
               }
             : {
-                vertical: 'center',
-                horizontal: -10,
+                vertical: 'bottom',
+                horizontal: -20,
               }
         }
         transformOrigin={
@@ -108,7 +108,7 @@ export function SimpleInputButton() {
                 horizontal: 'left',
               }
             : {
-                vertical: 'center',
+                vertical: 'top',
                 horizontal: 'right',
               }
         }
