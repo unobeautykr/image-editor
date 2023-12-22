@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
-import { Popover } from '@mui/material';
-import { ToolbarButton } from '../ToolbarButton';
+import { Popover, styled } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import { SimpleInputToolIcon } from '~/icons/SimpleInputToolIcon';
 import { useImageEditor } from '~/ImageEditor';
 import { useTool } from '~/ImageEditor';
@@ -8,6 +9,32 @@ import { ToolName } from '~/EditorCore';
 import { BoilerplateDialog } from '../BoilerplateDialog';
 import { BoilerplateData } from '~/types';
 import { ReactComponent as IconBookmark } from '~/assets/icons/update_icon/ic_bookmark_get.svg';
+
+const ToolbarButton = styled(_ToolbarButton)<{}>(
+  () => `
+  &.inner-btn {
+    gap: 10px !important;
+    &.svg-20 {
+      svg,path {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    &.flex-row {
+      flex-direction: row !important;
+    }
+    &.flex-column {
+      flex-direction: column !important;
+    }
+    .MuiTypography-root {
+      background: ${grey[200]};
+      border-radius: 2px;
+      padding: 0 6px;
+      line-height: 18px;
+    }
+  }
+`
+);
 
 export function SimpleInputButton() {
   const { core, boilerplate, toolbarPosition } = useImageEditor();
@@ -66,28 +93,29 @@ export function SimpleInputButton() {
         anchorOrigin={
           toolbarPosition === 'bottom'
             ? {
-                vertical: -10,
-                horizontal: 'center',
+                vertical: -15,
+                horizontal: 'left',
               }
             : {
-                vertical: 'center',
-                horizontal: -10,
+                vertical: 'bottom',
+                horizontal: -20,
               }
         }
         transformOrigin={
           toolbarPosition === 'bottom'
             ? {
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'left',
               }
             : {
-                vertical: 'center',
+                vertical: 'top',
                 horizontal: 'right',
               }
         }
         PaperProps={{
           sx: {
-            padding: '8px',
+            background: 'none',
+            boxShadow: 'none',
           },
         }}
       >
@@ -107,10 +135,13 @@ export function SimpleInputButton() {
           }
         >
           <ToolbarButton
+            className={`inner-btn ${
+              toolbarPosition === 'bottom' ? 'flex-row' : 'flex-column'
+            } svg-20`}
             Icon={IconBookmark}
             onClick={onClickBoilerplate}
             disableToolbar={true}
-            tooltip={'상용구'}
+            tooltip={'자주쓰는 문구'}
           />
         </div>
       </Popover>

@@ -23,7 +23,7 @@ const IconButton = styled(MuiIconButton)<{ selected: boolean }>(
     disabled
       ? `
       svg, path {
-        fill: #BDBDBD;
+        fill: ${grey[400]};
       }
     `
       : ''
@@ -52,6 +52,7 @@ type ToolbarButtonProps = {
   onClick?: (value?: any) => void;
   disabled?: boolean;
   sx?: any;
+  className?: string;
 };
 
 export const ToolbarButton = ({
@@ -62,11 +63,13 @@ export const ToolbarButton = ({
   disableToolbar = false,
   sx,
   disabled,
+  className,
   ...props
 }: ToolbarButtonProps) => {
   const { toolbarPosition } = useImageEditor();
   return disableToolbar ? (
     <span
+      className={`toolbar-btn-wrapper ${className ? className : ''}`}
       style={{
         display: 'inline-flex',
         flexDirection: 'column',
@@ -104,7 +107,10 @@ export const ToolbarButton = ({
       arrow
       placement={toolbarPosition === 'right' ? 'left' : 'top'}
     >
-      <span style={{ cursor: 'pointer' }}>
+      <span
+        style={{ cursor: 'pointer' }}
+        className={`toolbar-btn-wrapper ${className ? className : ''}`}
+      >
         <IconButton
           disabled={disabled}
           color="inherit"
