@@ -17,6 +17,7 @@ import { ReactComponent as FoldIcon } from '~/assets/icons/update_icon/fold_dark
 const Paper = styled(MuiPaper)(
   () => `
   padding-top: 12px;
+  border-radius: 6px 6px 0 0;
 `
 );
 
@@ -56,7 +57,9 @@ const Box = styled(MuiBox)<{
   &.toggle-show-control-box {
     width: 100%;
     height: 12px;
+    border-radius: 6px 6px 0 0;
     background: white;
+    overflow:hidden;
   }
   &.show-control-btn-wrapper {
     width: 100%;
@@ -73,10 +76,10 @@ const Box = styled(MuiBox)<{
     justify-content: flex-end;
   }
   &.control-wrapper-1 {
-    width: 100%;
+    width: calc(100% - 2px);
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 1px;
+    top: 1px;
   }
 `
 );
@@ -91,7 +94,9 @@ const IconButton = styled(MuiIconButton)(
     width: 34px;
     height: 34px;
     box-shadow: none;
-    border: 0 none;
+    &.border-none {
+      border: 0 none;
+    }
   }
   &.hide-control-box-btn {
     display: flex;
@@ -179,7 +184,7 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
                 >
                   <Box className="toggle-show-control-box">
                     <IconButton
-                      className="show-control-box-btn rotate-180 hide-control-box-btn"
+                      className="show-control-box-btn rotate-180 hide-control-box-btn border-none"
                       onClick={handleToggleShowControlPad}
                     >
                       <FoldIcon />
