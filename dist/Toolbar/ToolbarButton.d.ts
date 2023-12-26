@@ -8,6 +8,7 @@ type ToolbarButtonProps = {
     onClick?: (value?: any) => void;
     disabled?: boolean;
     sx?: any;
+    className?: string;
 };
-export declare const ToolbarButton: ({ Icon, selected, small, tooltip, disableToolbar, sx, disabled, ...props }: ToolbarButtonProps) => JSX.Element;
+export declare const ToolbarButton: ({ Icon, selected, small, tooltip, disableToolbar, sx, disabled, className, ...props }: ToolbarButtonProps) => JSX.Element;
 export {};
