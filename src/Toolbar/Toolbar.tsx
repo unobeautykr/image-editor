@@ -1,5 +1,5 @@
 import { useImageEditor } from '../ImageEditor';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BrushToolbarContent } from './BrushToolbarContent/BrushToolbarContent';
 import { TextToolbarContent } from './TextToolbarContent/TextToolbarContent';
 import { ImageToolbarContent } from './ImageToolbarContent/ImageToolbarContent';
@@ -11,40 +11,50 @@ import {
   IconButton as MuiIconButton,
   styled,
 } from '@mui/material';
+import { useElementSize } from '~/useElementSize';
 import { ReactComponent as FoldIcon } from '~/assets/icons/update_icon/fold_dark_16.svg';
 
 const Paper = styled(MuiPaper)(
   () => `
+  padding-top: 12px;
 `
 );
 
 const Box = styled(MuiBox)<{
   toolbarposition?: 'bottom' | 'right';
-  showcontrolpad?: boolean;
-  _height?: number;
-  _width?: number;
+  window_height?: number;
+  window_width?: number;
+  toolbar_width?: number;
+  toolbar_height?: number;
 }>(
-  ({ toolbarposition, _height, _width }) => `
+  ({
+    toolbarposition,
+    window_height,
+    window_width,
+    toolbar_width,
+    toolbar_height,
+  }) => `
   &.toolbar-wrapper {
     overflow: auto;
     display: flex;
     width: ${toolbarposition === 'right' ? 'initial' : '100vw'};
     justify-content: ${
-      (toolbarposition === 'right' && _height && _height < 907) ||
-      (toolbarposition === 'bottom' && _width && _width < 791)
+      (toolbarposition === 'right' &&
+        window_height &&
+        toolbar_height &&
+        window_height < toolbar_height) ||
+      (toolbarposition === 'bottom' &&
+        window_width &&
+        toolbar_width &&
+        window_width < toolbar_width)
         ? 'flex-start'
         : 'center'
     };
     flex-direction: ${toolbarposition === 'right' ? 'column' : 'row'};
 
-    &.control-wrapper-1 {
-      position: relative;
-      bottom: 88px;
-      margin-top:-12px;
-    }
   }
   &.toggle-show-control-box {
-    width: 732px;
+    width: 100%;
     height: 12px;
     background: white;
   }
@@ -62,6 +72,12 @@ const Box = styled(MuiBox)<{
     align-items: center;
     justify-content: flex-end;
   }
+  &.control-wrapper-1 {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 `
 );
 
@@ -74,7 +90,8 @@ const IconButton = styled(MuiIconButton)(
     background: white;
     width: 34px;
     height: 34px;
-
+    box-shadow: none;
+    border: 0 none;
   }
   &.hide-control-box-btn {
     display: flex;
@@ -82,7 +99,6 @@ const IconButton = styled(MuiIconButton)(
     height: 100%;
     padding: 0;
     justify-content: flex-start;
-    
     padding-left: 6px;
   }
   &.rotate-180 {
@@ -94,9 +110,11 @@ const IconButton = styled(MuiIconButton)(
 export function Toolbar({ leadingItems }: { leadingItems: any }) {
   const { core, toolbarPosition } = useImageEditor();
   const [mode, setMode] = useState(core.mode);
+  const wrapperRef = useRef(null);
   const [showControlPad, setShowControlPad] = useState(true);
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
+  const toolbarSize = useElementSize(wrapperRef);
 
   const handleResize = () => {
     setHeight(window.innerHeight);
@@ -124,9 +142,10 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
       <Box
         className="toolbar-wrapper"
         toolbarposition={toolbarPosition}
-        showcontrolpad={showControlPad}
-        _width={width}
-        _height={height}
+        window_width={width}
+        window_height={height}
+        toolbar_width={toolbarSize?.width}
+        toolbar_height={toolbarSize?.height}
       >
         <div
           style={{
@@ -135,6 +154,7 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
         >
           {showControlPad && (
             <Paper
+              ref={wrapperRef}
               sx={{
                 display: 'flex',
                 backgroundColor: grey[50],
@@ -152,6 +172,21 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
                 }),
               }}
             >
+              {toolbarPosition === 'bottom' && (
+                <Box
+                  className="control-wrapper-1"
+                  toolbarposition={toolbarPosition}
+                >
+                  <Box className="toggle-show-control-box">
+                    <IconButton
+                      className="show-control-box-btn rotate-180 hide-control-box-btn"
+                      onClick={handleToggleShowControlPad}
+                    >
+                      <FoldIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              )}
               {leadingItems && (
                 <Box
                   className="leading-items"
@@ -191,35 +226,16 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
           )}
         </div>
       </Box>
-      {toolbarPosition === 'bottom' && showControlPad && (
-        <Box
-          className="toolbar-wrapper control-wrapper-1"
-          toolbarposition={toolbarPosition}
-          showcontrolpad={showControlPad}
-          _width={width + 59}
-          _height={height}
-        >
-          <Box className="toggle-show-control-box">
-            <IconButton
-              className="show-control-box-btn rotate-180 hide-control-box-btn"
-              onClick={handleToggleShowControlPad}
-            >
-              <FoldIcon />
-            </IconButton>
-          </Box>
-        </Box>
-      )}
       {!showControlPad && (
         <Box
           className="toolbar-wrapper control-wrapper-2"
           toolbarposition={toolbarPosition}
-          showcontrolpad={showControlPad}
-          _width={width}
-          _height={height}
+          window_width={width}
+          window_height={height}
         >
           <Box className="show-control-btn-wrapper">
             <IconButton
-              className="show-control-box-btn "
+              className="show-control-box-btn"
               onClick={handleToggleShowControlPad}
             >
               <FoldIcon />

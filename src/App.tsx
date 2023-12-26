@@ -47,7 +47,7 @@ function App() {
           imageUrl={sampleImage}
           boilerplate={boilerplate}
           touch={false}
-          toolbarPosition="bottom"
+          toolbarPosition="right"
           leadingItems={<Button onClick={onClickSave}>save</Button>}
         />
       </Box>

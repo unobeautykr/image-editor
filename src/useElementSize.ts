@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export function useElementSize(ref: React.RefObject<HTMLElement>) {
-  const [size, setSize] = useState(null);
+  const [size, setSize] = useState<{ width: number; height: number } | null>(
+    null
+  );
 
   useEffect(() => {
     if (!ref.current) {
