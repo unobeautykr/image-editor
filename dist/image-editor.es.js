@@ -26409,6 +26409,7 @@ function Qu() {
 const Hr = (f) => /* @__PURE__ */ he.createElement("svg", { width: 12, height: 12, viewBox: "0 0 12 12", fill: "none", xmlns: "http://www.w3.org/2000/svg", ...f }, /* @__PURE__ */ he.createElement("path", { d: "M6.58053 6.25992L9.9197 8.92093C10.1501 9.10457 10.5 8.94787 10.5 8.66102L10.5 3.33898C10.5 3.05213 10.1501 2.89543 9.9197 3.07907L6.58053 5.74008C6.4108 5.87535 6.4108 6.12465 6.58053 6.25992Z", fill: "black" }), /* @__PURE__ */ he.createElement("path", { d: "M1.6273 6.25992L4.96647 8.92093C5.19691 9.10457 5.54677 8.94787 5.54677 8.66102L5.54677 3.33898C5.54677 3.05213 5.19691 2.89543 4.96647 3.07907L1.6273 5.74008C1.45757 5.87535 1.45757 6.12465 1.6273 6.25992Z", fill: "black" })), Ju = ct(ts)(
   () => `
   padding-top: 12px;
+  border-radius: 6px 6px 0 0;
 `
 ), mt = ct(ot)(
   ({
@@ -26429,7 +26430,9 @@ const Hr = (f) => /* @__PURE__ */ he.createElement("svg", { width: 12, height: 1
   &.toggle-show-control-box {
     width: 100%;
     height: 12px;
+    border-radius: 6px 6px 0 0;
     background: white;
+    overflow:hidden;
   }
   &.show-control-btn-wrapper {
     width: 100%;
@@ -26446,10 +26449,10 @@ const Hr = (f) => /* @__PURE__ */ he.createElement("svg", { width: 12, height: 1
     justify-content: flex-end;
   }
   &.control-wrapper-1 {
-    width: 100%;
+    width: calc(100% - 2px);
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 1px;
+    top: 1px;
   }
 `
 ), Xr = ct(wt)(
@@ -26462,7 +26465,9 @@ const Hr = (f) => /* @__PURE__ */ he.createElement("svg", { width: 12, height: 1
     width: 34px;
     height: 34px;
     box-shadow: none;
-    border: 0 none;
+    &.border-none {
+      border: 0 none;
+    }
   }
   &.hide-control-box-btn {
     display: flex;
@@ -26532,7 +26537,7 @@ function Zu({ leadingItems: f }) {
                       children: /* @__PURE__ */ Y.jsx(mt, { className: "toggle-show-control-box", children: /* @__PURE__ */ Y.jsx(
                         Xr,
                         {
-                          className: "show-control-box-btn rotate-180 hide-control-box-btn",
+                          className: "show-control-box-btn rotate-180 hide-control-box-btn border-none",
                           onClick: r,
                           children: /* @__PURE__ */ Y.jsx(Hr, {})
                         }
