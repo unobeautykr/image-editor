@@ -97,7 +97,7 @@ export function SimpleInputButton() {
                 horizontal: 'left',
               }
             : {
-                vertical: 'bottom',
+                vertical: 'top',
                 horizontal: -20,
               }
         }

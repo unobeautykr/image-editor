@@ -16,10 +16,10 @@
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
     "react": "^18.0.0 || ^17.0.0",
-    "react-dom": "^18.0.0 || ^17.0.0"
+    "react-dom": "^18.0.0 || ^17.0.0",
+    "date-fns": "^2.30.0"
   },
   "dependencies": {
-    "date-fns": "^3.0.1",
     "fabric": "git+https://git@github.com/unobeautykr/fabric.js.git#v521-13",
     "react": "^18.0.0 || ^17.0.0",
     "react-dom": "^18.0.0 || ^17.0.0"
