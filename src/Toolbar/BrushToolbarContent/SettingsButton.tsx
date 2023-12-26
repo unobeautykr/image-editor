@@ -1,7 +1,7 @@
 import { ListItemText, Menu, MenuItem, Switch } from '@mui/material';
 import { useState } from 'react';
 import { ToolbarButton } from '../ToolbarButton';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { ReactComponent as MoreIcon } from '~/assets/icons/update_icon/ic_more.svg';
 import { useImageEditor } from '~/ImageEditor';
 
 export function SettingsButton() {
@@ -23,7 +23,7 @@ export function SettingsButton() {
 
   return (
     <>
-      <ToolbarButton small Icon={MoreHorizIcon} onClick={onClick} />
+      <ToolbarButton Icon={MoreIcon} onClick={onClick} />
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
