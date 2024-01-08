@@ -40,6 +40,7 @@ const Typography = styled(MuiTypography)(
   line-height: 12px;
   letter-spacing: 0em;
   text-align: center;
+  white-space: nowrap;
 `
 );
 

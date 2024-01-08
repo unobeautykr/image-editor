@@ -52,7 +52,7 @@ const SizeSlider = ({ value, onChange }: any) => {
 };
 
 export function TextToolbarContent() {
-  const { core, boilerplate } = useImageEditor();
+  const { core, boilerplate, toolbarPosition } = useImageEditor();
   if (!boilerplate)
     throw new Error(
       'ImageEditor boilerplate attr must be provided in the edit mode'
@@ -62,11 +62,6 @@ export function TextToolbarContent() {
   const [color, setColor] = useState(core.getSelectedTextColor());
   const [openBoilerplate, setOpenBoilerplate] = useState(false);
   const [boilerplates, setBoilerplates] = useState<BoilerplateData[]>([]);
-
-  const load = useCallback(async () => {
-    const data = await boilerplate.onLoadBoilerplate();
-    setBoilerplates(data);
-  }, [boilerplate]);
 
   const onClickDelete = () => {
     core.deleteSelectedObject();
@@ -81,11 +76,6 @@ export function TextToolbarContent() {
   const onChangeColor = (c: any) => {
     core.changeSelectedTextColor(c);
     setColor(c);
-  };
-
-  const onClickBoilerplate = async () => {
-    await load();
-    setOpenBoilerplate((v) => !v);
   };
 
   const onClickSave = async () => {
@@ -112,7 +102,16 @@ export function TextToolbarContent() {
               className="save-btn"
               Icon={ReactComponent}
               onClick={onClickSave}
-              tooltip={'상용구로 저장'}
+              tooltip={
+                toolbarPosition === 'bottom' ? (
+                  '자주쓰는 문구로 저장'
+                ) : (
+                  <>
+                    자주쓰는 문구로 <br />
+                    저장
+                  </>
+                )
+              }
               disableToolbar={true}
             />
           </>

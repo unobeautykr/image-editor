@@ -60,7 +60,7 @@ export function BoilerplateDialog({
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={onClose} open={open}>
-      <DialogTitle>상용구를 선택하세요</DialogTitle>
+      <DialogTitle>자주쓰는 문구를 선택하세요</DialogTitle>
       <List sx={{ pt: 0 }}>
         {boilerplates.map((bp: any) => (
           <BoilerplateDialogItem
