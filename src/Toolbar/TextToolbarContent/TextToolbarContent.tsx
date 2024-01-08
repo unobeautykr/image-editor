@@ -1,15 +1,26 @@
-import { Slider, Stack } from '@mui/material';
+import { Slider, Stack, styled } from '@mui/material';
 import { useImageEditor } from '../../ImageEditor';
 import { ColorPalette } from '../ColorPalette';
 import { ToolbarContent } from '../ToolbarContent';
 import TextDecreaseIcon from '@mui/icons-material/TextDecrease';
 import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { ToolbarButton } from '../ToolbarButton';
+import { ReactComponent } from '~/assets/icons/update_icon/ic_Libraryadd.svg';
+import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import { useCallback, useState } from 'react';
 import { BoilerplateDialog } from '../BoilerplateDialog';
 import { BoilerplateData } from '~/types';
+
+const ToolbarButton = styled(_ToolbarButton)(
+  ({ theme }) => `
+  &.save-btn {
+    svg, path {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`
+);
 
 const SizeSlider = ({ value, onChange }: any) => {
   const { toolbarPosition } = useImageEditor();
@@ -97,14 +108,21 @@ export function TextToolbarContent() {
         leadingItems={
           <>
             <SizeSlider value={size} onChange={onChangeSize} />
-            <ToolbarButton Icon={BookmarkAddIcon} onClick={onClickSave} />
+            <ToolbarButton
+              className="save-btn"
+              Icon={ReactComponent}
+              onClick={onClickSave}
+              tooltip={'상용구로 저장'}
+              disableToolbar={true}
+            />
           </>
         }
         palette={<ColorPalette value={color} onChange={onChangeColor} />}
         trailingItems={
           <>
             <ToolbarButton
-              small
+              tooltip={'삭제'}
+              disableToolbar={true}
               Icon={DeleteForeverIcon}
               onClick={onClickDelete}
             />
