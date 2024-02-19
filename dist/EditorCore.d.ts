@@ -57,6 +57,7 @@ export declare class EditorCore extends EventTarget {
     onObjectRemoved: any;
     onObjectSelected: any;
     onObjectDeselected: any;
+    onEraseEnd: any;
     containerSize: any;
     onHistoryChangeListener: any;
     onAvailabilityChangeListener: any;

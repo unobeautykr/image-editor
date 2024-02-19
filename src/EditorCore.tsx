@@ -85,6 +85,7 @@ export class EditorCore extends EventTarget {
   onObjectRemoved: any;
   onObjectSelected: any;
   onObjectDeselected: any;
+  onEraseEnd: any;
   containerSize: any;
   onHistoryChangeListener: any;
   onAvailabilityChangeListener: any;
@@ -160,6 +161,7 @@ export class EditorCore extends EventTarget {
         this.c.on('object:removed', this.onObjectRemoved);
         this.c.on('selection:created', this.onObjectSelected);
         this.c.on('selection:cleared', this.onObjectDeselected);
+        this.c.on('erasing:end', this.onEraseEnd);
       },
       {
         crossOrigin: 'anonymous',
@@ -255,7 +257,12 @@ export class EditorCore extends EventTarget {
       this.pushHistory();
     };
 
-    this.onObjectRemoved = (opt: any) => {
+    this.onEraseEnd = (_opt: any) => {
+      if (this.isTraversingHistory) return;
+      this.pushHistory();
+    };
+
+    this.onObjectRemoved = (_opt: any) => {
       if (this.isTraversingHistory) return;
       this.pushHistory();
     };
