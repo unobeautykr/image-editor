@@ -7,17 +7,20 @@ import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ReactComponent } from '~/assets/icons/update_icon/ic_Libraryadd.svg';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { BoilerplateDialog } from '../BoilerplateDialog';
 import { BoilerplateData } from '~/types';
 
 const ToolbarButton = styled(_ToolbarButton)(
-  ({ theme }) => `
+  () => `
   &.save-btn {
     svg, path {
       width: 20px;
       height: 20px;
     }
+  }
+  &.delete-btn {
+    margin-top: 16px;
   }
 `
 );
@@ -118,14 +121,13 @@ export function TextToolbarContent() {
         }
         palette={<ColorPalette value={color} onChange={onChangeColor} />}
         trailingItems={
-          <>
-            <ToolbarButton
-              tooltip={'삭제'}
-              disableToolbar={true}
-              Icon={DeleteForeverIcon}
-              onClick={onClickDelete}
-            />
-          </>
+          <ToolbarButton
+            className="delete-btn"
+            tooltip={'삭제'}
+            disableToolbar={true}
+            Icon={DeleteForeverIcon}
+            onClick={onClickDelete}
+          />
         }
       />
       <BoilerplateDialog

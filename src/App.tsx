@@ -1,4 +1,4 @@
-import { Box, Button, CssBaseline } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { useMemo, useRef } from 'react';
 import sampleImage from '../samples/highres-portrait.jpeg';
 import { ImageEditor, ImageEditorProps } from './ImageEditor';
@@ -46,9 +46,9 @@ function App() {
           ref={editorRef}
           imageUrl={sampleImage}
           boilerplate={boilerplate}
-          touch={false}
+          // touch={false}
+          // leadingItems={<Button onClick={onClickSave}>save</Button>}
           toolbarPosition="bottom"
-          leadingItems={<Button onClick={onClickSave}>save</Button>}
         />
       </Box>
     </>

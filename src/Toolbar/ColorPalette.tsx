@@ -165,7 +165,8 @@ export function ColorPalette({ value, onChange }: any) {
           gridTemplateRows: 'repeat(3, minmax(0, 1fr))',
           gridTemplateColumns: 'repeat(2, minmax(0, min-content))',
         }),
-        gap: 1,
+        gridRowGap: '6px',
+        gridColumnGap: '8px',
       }}
     >
       {colors.map((c, i) => (

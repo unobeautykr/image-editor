@@ -1,118 +1,46 @@
-import { useImageEditor } from '../ImageEditor';
+import { observer } from 'mobx-react';
 import { useEffect, useRef, useState } from 'react';
 import { BrushToolbarContent } from './BrushToolbarContent/BrushToolbarContent';
 import { TextToolbarContent } from './TextToolbarContent/TextToolbarContent';
 import { ImageToolbarContent } from './ImageToolbarContent/ImageToolbarContent';
 import { EditorCore } from '../EditorCore';
 import { grey } from '@mui/material/colors';
-import {
-  Box as MuiBox,
-  Paper as MuiPaper,
-  IconButton as MuiIconButton,
-  styled,
-} from '@mui/material';
 import { useElementSize } from '~/useElementSize';
+import { useTool, useImageEditor } from '../ImageEditor';
 import { ReactComponent as FoldIcon } from '~/assets/icons/update_icon/fold_dark_16.svg';
+import { Paper, Box, IconButton } from './Toolbar.styled';
+import { ToolName } from '~/EditorCore';
+import { PanToolIcon } from '~/icons/PanToolIcon';
+import { EraserToolIcon } from '~/icons/EraserToolIcon';
+import { SelectToolIcon } from '~/icons/SelectToolIcon';
+import { PenToolIcon } from '~/icons/PenToolIcon';
+import { MarkerToolIcon } from '~/icons/MarkerToolIcon';
+import { TextToolIcon } from '~/icons/TextToolIcon';
+import { ImageToolIcon } from '~/icons/ImageToolIcon';
+import toolbarSettings from '~/store/toolbarSettings';
 
-const Paper = styled(MuiPaper)(
-  () => `
-  padding-top: 12px;
-  border-radius: 6px 6px 0 0;
-`
-);
+const Icon = ({ toolbarMode }: { toolbarMode: string }) => {
+  const { tool } = useTool();
 
-const Box = styled(MuiBox)<{
-  toolbarposition?: 'bottom' | 'right';
-  window_height?: number;
-  window_width?: number;
-  toolbar_width?: number;
-  toolbar_height?: number;
-}>(
-  ({
-    toolbarposition,
-    window_height,
-    window_width,
-    toolbar_width,
-    toolbar_height,
-  }) => `
-  &.toolbar-wrapper {
-    overflow: auto;
-    display: flex;
-    width: ${toolbarposition === 'right' ? 'initial' : '100vw'};
-    justify-content: ${
-      (toolbarposition === 'right' &&
-        window_height &&
-        toolbar_height &&
-        window_height < toolbar_height) ||
-      (toolbarposition === 'bottom' &&
-        window_width &&
-        toolbar_width &&
-        window_width < toolbar_width)
-        ? 'flex-start'
-        : 'center'
-    };
-    flex-direction: ${toolbarposition === 'right' ? 'column' : 'row'};
+  if (toolbarMode === EditorCore.Mode.TEXT) {
+    return <TextToolIcon />;
+  } else if (toolbarMode === EditorCore.Mode.IMAGE) {
+    return <ImageToolIcon />;
+  }
+  return tool === ToolName.PAN ? (
+    <PanToolIcon />
+  ) : tool === ToolName.ERASER ? (
+    <EraserToolIcon />
+  ) : tool === ToolName.FREEDRAW ? (
+    <PenToolIcon />
+  ) : tool === ToolName.MARKER ? (
+    <MarkerToolIcon />
+  ) : (
+    <SelectToolIcon />
+  );
+};
 
-  }
-  &.toggle-show-control-box {
-    width: 100%;
-    height: 12px;
-    border-radius: 6px 6px 0 0;
-    background: white;
-    overflow:hidden;
-  }
-  &.show-control-btn-wrapper {
-    width: 100%;
-    padding: 0 40px;
-    max-width: 802px;
-    height: 88px;
-    position:absolute;
-    bottom: 0;
-    margin: auto;
-    transform: translate(-50%);
-    left: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  &.control-wrapper-1 {
-    width: calc(100% - 2px);
-    position: absolute;
-    left: 1px;
-    top: 1px;
-  }
-`
-);
-
-const IconButton = styled(MuiIconButton)(
-  () => `
-  
-  &.show-control-box-btn {
-    border: 1px solid #eeeeee;
-    border-radius: 2px;
-    background: white;
-    width: 34px;
-    height: 34px;
-    box-shadow: none;
-    &.border-none {
-      border: 0 none;
-    }
-  }
-  &.hide-control-box-btn {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    justify-content: flex-start;
-    padding-left: 6px;
-  }
-  &.rotate-180 {
-    transform: rotate(180deg);
-  }
-`
-);
-
-export function Toolbar({ leadingItems }: { leadingItems: any }) {
+export const Toolbar = observer(({ leadingItems }: { leadingItems: any }) => {
   const { core, toolbarPosition } = useImageEditor();
   const [mode, setMode] = useState(core.mode);
   const wrapperRef = useRef(null);
@@ -120,6 +48,7 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
   const toolbarSize = useElementSize(wrapperRef);
+  const { toolbarVerticalPosition } = toolbarSettings;
 
   const handleResize = () => {
     setHeight(window.innerHeight);
@@ -147,10 +76,12 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
       <Box
         className="toolbar-wrapper"
         toolbarposition={toolbarPosition}
+        $toolbarverticalposition={toolbarVerticalPosition}
         window_width={width}
         window_height={height}
         toolbar_width={toolbarSize?.width}
         toolbar_height={toolbarSize?.height}
+        $showcontrolpad={showControlPad}
       >
         <div
           style={{
@@ -173,7 +104,7 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
                 ...(toolbarPosition === 'bottom' && {
                   flexDirection: 'row',
                   height: 88,
-                  px: 2,
+                  px: '27px',
                 }),
               }}
             >
@@ -187,7 +118,7 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
                       className="show-control-box-btn rotate-180 hide-control-box-btn border-none"
                       onClick={handleToggleShowControlPad}
                     >
-                      <FoldIcon />
+                      <FoldIcon width={16} height={16} />
                     </IconButton>
                   </Box>
                 </Box>
@@ -234,20 +165,21 @@ export function Toolbar({ leadingItems }: { leadingItems: any }) {
       {!showControlPad && (
         <Box
           className="toolbar-wrapper control-wrapper-2"
+          $showcontrolpad={showControlPad}
           toolbarposition={toolbarPosition}
           window_width={width}
           window_height={height}
         >
-          <Box className="show-control-btn-wrapper">
+          <Box className="show-control-btn-wrapper ">
             <IconButton
-              className="show-control-box-btn"
+              className="show-control-box-btn btn-type-1"
               onClick={handleToggleShowControlPad}
             >
-              <FoldIcon />
+              <Icon toolbarMode={mode} />
             </IconButton>
           </Box>
         </Box>
       )}
     </>
   );
-}
+});

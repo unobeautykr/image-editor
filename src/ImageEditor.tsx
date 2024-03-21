@@ -1,6 +1,5 @@
-import { Box } from '@mui/system';
-import { useElementSize } from './useElementSize';
 import {
+  Fragment,
   ReactNode,
   createContext,
   forwardRef,
@@ -11,10 +10,14 @@ import {
   useRef,
   useState,
 } from 'react';
+import { Box } from '@mui/system';
+import { observer } from 'mobx-react';
+import { useElementSize } from './useElementSize';
 import { EditorCanvas } from './EditorCanvas';
 import { Toolbar } from './Toolbar/Toolbar';
 import { EditorCore } from './EditorCore';
 import { BoilerplateData } from './types';
+import toolbarSettings from '~/store/toolbarSettings';
 
 interface ImageEditorContextValue {
   core: EditorCore;
@@ -111,6 +114,25 @@ export function useTool() {
   return { tool, setTool: selectTool };
 }
 
+const Canvas = () => {
+  const containerRef = useRef<HTMLElement | null>(null);
+  const containerSize = useElementSize(containerRef);
+  return (
+    <Box
+      ref={containerRef}
+      sx={{
+        overflow: 'hidden',
+        flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {containerSize && <EditorCanvas containerSize={containerSize} />}
+    </Box>
+  );
+};
+
 export interface ImageEditorProps {
   viewOnly?: boolean;
   imageUrl: string;
@@ -120,8 +142,8 @@ export interface ImageEditorProps {
   leadingItems?: ReactNode;
 }
 
-export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
-  function ImageEditor(
+export const ImageEditor = observer(
+  forwardRef<HTMLElement, ImageEditorProps>(function ImageEditor(
     {
       viewOnly = false,
       imageUrl,
@@ -132,9 +154,23 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
     },
     ref
   ) {
-    const containerRef = useRef<HTMLElement | null>(null);
+    const { toolbarVerticalPosition } = toolbarSettings;
 
-    const containerSize = useElementSize(containerRef);
+    const components = useMemo(() => {
+      const original = [
+        {
+          component: <Canvas />,
+        },
+        {
+          component: (
+            <>{!viewOnly && <Toolbar leadingItems={leadingItems} />}</>
+          ),
+        },
+      ];
+      return toolbarVerticalPosition === 'bottom'
+        ? original
+        : original.reverse();
+    }, [toolbarVerticalPosition]);
 
     return (
       <ImageEditorProvider
@@ -152,21 +188,11 @@ export const ImageEditor = forwardRef<HTMLElement, ImageEditorProps>(
             flexDirection: toolbarPosition === 'right' ? 'row' : 'column',
           }}
         >
-          <Box
-            ref={containerRef}
-            sx={{
-              overflow: 'hidden',
-              flexGrow: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {containerSize && <EditorCanvas containerSize={containerSize} />}
-          </Box>
-          {!viewOnly && <Toolbar leadingItems={leadingItems} />}
+          {components.map((item, index) => {
+            return <Fragment key={index}>{item.component}</Fragment>;
+          })}
         </Box>
       </ImageEditorProvider>
     );
-  }
+  })
 );

@@ -3,13 +3,25 @@ import {
   Tooltip,
   Typography as MuiTypography,
   styled,
+  Box as MuiBox,
 } from '@mui/material';
 import { ReactNode } from 'react';
 import { grey } from '@mui/material/colors';
 import { useImageEditor } from '~/ImageEditor';
 
+const Box = styled(MuiBox)(
+  () => `
+  &.toolbar-btn-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+`
+);
 const IconButton = styled(MuiIconButton)<{ selected: boolean }>(
   ({ selected, disabled }) => `
+  ${selected ? 'background: black;' : ``}
   ${
     selected
       ? `
@@ -41,6 +53,7 @@ const Typography = styled(MuiTypography)(
   letter-spacing: 0em;
   text-align: center;
   white-space: nowrap;
+  
 `
 );
 
@@ -69,15 +82,7 @@ export const ToolbarButton = ({
 }: ToolbarButtonProps) => {
   const { toolbarPosition } = useImageEditor();
   return disableToolbar ? (
-    <span
-      className={`toolbar-btn-wrapper ${className ? className : ''}`}
-      style={{
-        display: 'inline-flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '4px',
-      }}
-    >
+    <Box className={`toolbar-btn-wrapper ${className ? className : ''}`}>
       <IconButton
         color="inherit"
         disabled={disabled}
@@ -91,7 +96,6 @@ export const ToolbarButton = ({
           },
           p: small ? 1 : 1.25,
           borderRadius: '50%',
-          backgroundColor: selected ? 'black' : grey[200],
           color: selected ? 'white' : 'black',
           ...sx,
         }}
@@ -101,14 +105,14 @@ export const ToolbarButton = ({
         <Icon sx={{ fontSize: small ? 16 : 20 }} />
       </IconButton>
       <Typography variant="body1">{tooltip}</Typography>
-    </span>
+    </Box>
   ) : (
     <Tooltip
       title={tooltip}
       arrow
       placement={toolbarPosition === 'right' ? 'left' : 'top'}
     >
-      <span
+      <Box
         style={{ cursor: 'pointer' }}
         className={`toolbar-btn-wrapper ${className ? className : ''}`}
       >
@@ -116,6 +120,7 @@ export const ToolbarButton = ({
           disabled={disabled}
           color="inherit"
           selected={selected}
+          className=""
           sx={{
             ':disabled': {
               backgroundColor: grey[200],
@@ -134,7 +139,7 @@ export const ToolbarButton = ({
         >
           <Icon sx={{ fontSize: small ? 16 : 20 }} />
         </IconButton>
-      </span>
+      </Box>
     </Tooltip>
   );
 };

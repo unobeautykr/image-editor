@@ -74,7 +74,6 @@ export const ImageButton = ({
           },
           p: 1.2,
           borderRadius: '50%',
-          backgroundColor: grey[200],
           color: 'black',
         }}
       >

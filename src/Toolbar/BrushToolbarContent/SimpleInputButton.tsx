@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Popover, styled } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { observer } from 'mobx-react';
+import { Popover } from '@mui/material';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import { SimpleInputToolIcon } from '~/icons/SimpleInputToolIcon';
 import { useImageEditor } from '~/ImageEditor';
@@ -9,35 +9,12 @@ import { ToolName } from '~/EditorCore';
 import { BoilerplateDialog } from '../BoilerplateDialog';
 import { BoilerplateData } from '~/types';
 import { ReactComponent as IconBookmark } from '~/assets/icons/update_icon/ic_bookmark_get.svg';
+import { ToolbarButton } from './SimpleInputButton.styled';
+import toolbarSettings from '~/store/toolbarSettings';
 
-const ToolbarButton = styled(_ToolbarButton)<{}>(
-  () => `
-  &.inner-btn {
-    gap: 10px !important;
-    &.svg-20 {
-      svg,path {
-        width: 20px;
-        height: 20px;
-      }
-    }
-    &.flex-row {
-      flex-direction: row !important;
-    }
-    &.flex-column {
-      flex-direction: column !important;
-    }
-    .MuiTypography-root {
-      background: ${grey[200]};
-      border-radius: 2px;
-      padding: 0 6px;
-      line-height: 18px;
-    }
-  }
-`
-);
-
-export function SimpleInputButton() {
+export const SimpleInputButton = observer(() => {
   const { core, boilerplate, toolbarPosition } = useImageEditor();
+  const { toolbarVerticalPosition } = toolbarSettings;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openBoilerplate, setOpenBoilerplate] = useState(false);
   const [boilerplates, setBoilerplates] = useState<BoilerplateData[]>([]);
@@ -92,10 +69,15 @@ export function SimpleInputButton() {
         onClose={handleClose}
         anchorOrigin={
           toolbarPosition === 'bottom'
-            ? {
-                vertical: -15,
-                horizontal: 'left',
-              }
+            ? toolbarVerticalPosition === 'bottom'
+              ? {
+                  vertical: -15,
+                  horizontal: 'left',
+                }
+              : {
+                  vertical: 60,
+                  horizontal: 'left',
+                }
             : {
                 vertical: 'top',
                 horizontal: -20,
@@ -103,10 +85,15 @@ export function SimpleInputButton() {
         }
         transformOrigin={
           toolbarPosition === 'bottom'
-            ? {
-                vertical: 'bottom',
-                horizontal: 'left',
-              }
+            ? toolbarVerticalPosition === 'bottom'
+              ? {
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }
+              : {
+                  vertical: 'top',
+                  horizontal: 'left',
+                }
             : {
                 vertical: 'top',
                 horizontal: 'right',
@@ -137,7 +124,7 @@ export function SimpleInputButton() {
           <ToolbarButton
             className={`inner-btn ${
               toolbarPosition === 'bottom' ? 'flex-row' : 'flex-column'
-            } svg-20`}
+            } svg-20 bg-grey`}
             Icon={IconBookmark}
             onClick={onClickBoilerplate}
             disableToolbar={true}
@@ -163,4 +150,4 @@ export function SimpleInputButton() {
       />
     </div>
   );
-}
+});
