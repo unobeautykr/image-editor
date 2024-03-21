@@ -25,9 +25,8 @@ import { ReactComponent as MoreIcon } from '~/assets/icons/update_icon/ic_more.s
 import { ReactComponent as Arrow } from '~/assets/images/arrow.svg';
 import { useImageEditor } from '~/ImageEditor';
 import toolbarSettings from '~/store/toolbarSettings';
-
-const sampleTopImage = '/imgs/toolbar/type_1.png';
-const sampleBottomImage = '/imgs/toolbar/type_2.png';
+import sampleTopImage from '~/assets/images/toolbar/type_1.png';
+import sampleBottomImage from '~/assets/images/toolbar/type_2.png';
 
 export interface SimpleDialogProps {
   onClose: () => void;
