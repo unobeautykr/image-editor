@@ -649,11 +649,11 @@ gl_FragColor.rgb *= color.a;
   }
 `),Ll=ue.styled(ue.FormControlLabel)(()=>`
   .MuiTypography-root  {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
     line-height: 18.82px;
     text-align: center;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
 `),Fl=ue.styled(ue.Radio)(()=>`
   padding: 0;
@@ -672,14 +672,21 @@ gl_FragColor.rgb *= color.a;
     gap: 30px;
   }
   &.controller {
-    gap: 12px;
+    gap: 10px;
   }
 `),pv=ue.styled(ue.MenuList)(()=>`
   background: #ffffff;
   border-radius: 4px;
   padding: 0;
 `),Bl=ue.styled(ue.MenuItem)(()=>`
-  min-height:50px !important; 
+  min-height:40px !important; 
+
+  .MuiTypography-root {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18.82px;
+  }
+
 `),vv=ue.styled(ue.Popper)(()=>`
   &[data-popper-placement*="top"] {
     span.arrow {
@@ -698,7 +705,7 @@ gl_FragColor.rgb *= color.a;
   }
 `),mv=ue.styled(ue.Button)(()=>`
   padding: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 18.15px;
   color: #2C62F6;
@@ -707,7 +714,7 @@ gl_FragColor.rgb *= color.a;
 
 `),bv=ue.styled(ue.DialogTitle)(()=>`
   padding: 12px 22px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 21.72px;
   text-align: left;

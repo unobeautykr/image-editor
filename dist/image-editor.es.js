@@ -28726,11 +28726,11 @@ const Dm = He(fu)(
 ), ya = He(du)(
   () => `
   .MuiTypography-root  {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
     line-height: 18.82px;
     text-align: center;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
 `
 ), ba = He(gu)(
@@ -28753,7 +28753,7 @@ const Dm = He(fu)(
     gap: 30px;
   }
   &.controller {
-    gap: 12px;
+    gap: 10px;
   }
 `
 ), Mm = He(pu)(
@@ -28764,7 +28764,14 @@ const Dm = He(fu)(
 `
 ), _a = He(Qa)(
   () => `
-  min-height:50px !important; 
+  min-height:40px !important; 
+
+  .MuiTypography-root {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18.82px;
+  }
+
 `
 ), km = He(vu)(
   () => `
@@ -28787,7 +28794,7 @@ const Dm = He(fu)(
 ), Rm = He(mu)(
   () => `
   padding: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 18.15px;
   color: #2C62F6;
@@ -28800,7 +28807,7 @@ const Dm = He(fu)(
 ), Im = He(Za)(
   () => `
   padding: 12px 22px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 21.72px;
   text-align: left;
