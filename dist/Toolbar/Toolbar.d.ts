@@ -1,4 +1,4 @@
 /// <reference types="react" />
-export declare function Toolbar({ leadingItems }: {
+export declare const Toolbar: ({ leadingItems }: {
     leadingItems: any;
-}): JSX.Element;
+}) => JSX.Element;

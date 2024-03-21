@@ -1,2 +1,5 @@
 /// <reference types="react" />
-export declare function SettingsButton(): JSX.Element;
+export interface SimpleDialogProps {
+    onClose: () => void;
+}
+export declare const SettingsButton: () => JSX.Element;

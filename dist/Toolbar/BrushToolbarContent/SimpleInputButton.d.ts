@@ -1,2 +1,2 @@
 /// <reference types="react" />
-export declare function SimpleInputButton(): JSX.Element;
+export declare const SimpleInputButton: () => JSX.Element;
