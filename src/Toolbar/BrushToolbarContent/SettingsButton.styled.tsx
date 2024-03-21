@@ -65,11 +65,11 @@ export const Switch = styled(MuiSwitch)(
 export const FormControlLabel = styled(MuiFormControlLabel)(
   () => `
   .MuiTypography-root  {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
     line-height: 18.82px;
     text-align: center;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
 `
 );
@@ -96,7 +96,7 @@ export const Stack = styled(MuiStack)(
     gap: 30px;
   }
   &.controller {
-    gap: 12px;
+    gap: 10px;
   }
 `
 );
@@ -111,7 +111,14 @@ export const MenuList = styled(MuiList)(
 
 export const MenuItem = styled(MuiMenuItem)(
   () => `
-  min-height:50px !important; 
+  min-height:40px !important; 
+
+  .MuiTypography-root {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18.82px;
+  }
+
 `
 );
 
@@ -138,7 +145,7 @@ export const Popper = styled(MuiPopper)(
 export const Button = styled(MuiButton)(
   () => `
   padding: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 18.15px;
   color: #2C62F6;
@@ -155,7 +162,7 @@ export const Dialog = styled(MuiDialog)(
 export const DialogTitle = styled(MuiDialogTitle)(
   () => `
   padding: 12px 22px;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 21.72px;
   text-align: left;
