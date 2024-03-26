@@ -83,6 +83,7 @@ export const Box = styled(MuiBox)<{
     position: absolute;
     left: 1px;
     top: 1px;
+    z-index: 10;
   }
 `
 );

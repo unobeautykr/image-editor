@@ -1,6 +1,12 @@
 import { SvgIcon, SvgIconProps } from '@mui/material';
-import { ReactComponent } from '~/assets/icons/update_icon/ic_eraser.svg';
+import Icon from './Icon';
 
 export function EraserToolIcon(props: SvgIconProps) {
-  return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
+  return (
+    <SvgIcon
+      inheritViewBox
+      component={() => <Icon variant={'eraser'} />}
+      {...props}
+    />
+  );
 }

@@ -21,8 +21,7 @@ import {
   Switch,
 } from './SettingsButton.styled';
 import { ToolbarButton } from '../ToolbarButton';
-import { ReactComponent as MoreIcon } from '~/assets/icons/update_icon/ic_more.svg';
-import { ReactComponent as Arrow } from '~/assets/images/arrow.svg';
+import Icon from '~/icons/Icon';
 import { useImageEditor } from '~/ImageEditor';
 import toolbarSettings from '~/store/toolbarSettings';
 import sampleTopImage from '~/assets/images/toolbar/type_1.png';
@@ -148,7 +147,11 @@ export const SettingsButton = observer(() => {
 
   return (
     <>
-      <ToolbarButton aria-describedby={id} Icon={MoreIcon} onClick={onClick} />
+      <ToolbarButton
+        aria-describedby={id}
+        Icon={() => <Icon variant="more" />}
+        onClick={onClick}
+      />
       <Popper
         id={id}
         open={open}
@@ -186,7 +189,7 @@ export const SettingsButton = observer(() => {
             className="arrow"
             style={{ lineHeight: 0, zIndex: '10' }}
           >
-            <Arrow width={14} height={12} />
+            <Icon variant="arrow" width={14} height={12} />
           </span>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList>

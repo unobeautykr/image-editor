@@ -1,6 +1,12 @@
 import { SvgIcon } from '@mui/material';
-import { ReactComponent } from '~/assets/icons/update_icon/ic_calendar.svg';
+import Icon from './Icon';
 
 export function TimestampToolIcon(props: any) {
-  return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
+  return (
+    <SvgIcon
+      inheritViewBox
+      component={() => <Icon variant="calendar" />}
+      {...props}
+    />
+  );
 }

@@ -16,36 +16,42 @@ export function ToolbarContent({
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
-        }}
-      >
-        {leadingItems}
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
-        }}
-      >
-        {palette}
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          gap: '10px',
-          flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
-        }}
-      >
-        {trailingItems}
-      </Box>
+      {leadingItems && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
+          }}
+        >
+          {leadingItems}
+        </Box>
+      )}
+      {palette && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
+          }}
+        >
+          {palette}
+        </Box>
+      )}
+      {trailingItems && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            gap: '10px',
+            flexDirection: toolbarPosition === 'right' ? 'column' : 'row',
+          }}
+        >
+          {trailingItems}
+        </Box>
+      )}
     </>
   );
 }

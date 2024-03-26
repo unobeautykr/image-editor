@@ -1,6 +1,12 @@
 import { SvgIcon } from '@mui/material';
-import { ReactComponent } from '~/assets/icons/update_icon/ic_text.svg';
+import Icon from './Icon';
 
 export function TextToolIcon(props: any) {
-  return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
+  return (
+    <SvgIcon
+      inheritViewBox
+      component={() => <Icon variant="text" />}
+      {...props}
+    />
+  );
 }

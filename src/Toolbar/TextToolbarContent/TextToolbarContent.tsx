@@ -5,7 +5,7 @@ import { ToolbarContent } from '../ToolbarContent';
 import TextDecreaseIcon from '@mui/icons-material/TextDecrease';
 import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { ReactComponent } from '~/assets/icons/update_icon/ic_Libraryadd.svg';
+import Icon from '~/icons/Icon';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import { useState } from 'react';
 import { BoilerplateDialog } from '../BoilerplateDialog';
@@ -82,7 +82,7 @@ export function TextToolbarContent() {
   };
 
   const onClickSave = async () => {
-    await boilerplate.onSaveBoilerplate(core.getSelectedTextContents());
+    await boilerplate[0].onSaveBoilerplate(core.getSelectedTextContents());
   };
 
   const onSelectBoilerplate = (message: string) => {
@@ -91,7 +91,7 @@ export function TextToolbarContent() {
   };
 
   const onDeleteBoilerplate = async (id: number) => {
-    await boilerplate.onDeleteBoilerplate(id);
+    await boilerplate[0].onDeleteBoilerplate(id);
     setBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
@@ -103,7 +103,7 @@ export function TextToolbarContent() {
             <SizeSlider value={size} onChange={onChangeSize} />
             <ToolbarButton
               className="save-btn"
-              Icon={ReactComponent}
+              Icon={() => <Icon variant="library_add" />}
               onClick={onClickSave}
               tooltip={
                 toolbarPosition === 'bottom' ? (

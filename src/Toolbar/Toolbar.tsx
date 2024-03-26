@@ -7,7 +7,7 @@ import { EditorCore } from '../EditorCore';
 import { grey } from '@mui/material/colors';
 import { useElementSize } from '~/useElementSize';
 import { useTool, useImageEditor } from '../ImageEditor';
-import { ReactComponent as FoldIcon } from '~/assets/icons/update_icon/fold_dark_16.svg';
+import SVGIcon from '~/icons/Icon';
 import { Paper, Box, IconButton } from './Toolbar.styled';
 import { ToolName } from '~/EditorCore';
 import { PanToolIcon } from '~/icons/PanToolIcon';
@@ -118,7 +118,7 @@ export const Toolbar = observer(({ leadingItems }: { leadingItems: any }) => {
                       className="show-control-box-btn rotate-180 hide-control-box-btn border-none"
                       onClick={handleToggleShowControlPad}
                     >
-                      <FoldIcon width={16} height={16} />
+                      <SVGIcon variant="fold" width={16} height={16} />
                     </IconButton>
                   </Box>
                 </Box>
@@ -144,14 +144,25 @@ export const Toolbar = observer(({ leadingItems }: { leadingItems: any }) => {
                 className="toolbar-contents"
                 sx={{
                   display: 'grid',
+                  position: 'relative',
                   color: 'black',
                   gap: '16px',
-                  ...(toolbarPosition === 'right' && {
-                    gridTemplateRows: `583px 88px 128px`,
-                  }),
-                  ...(toolbarPosition === 'bottom' && {
-                    gridTemplateColumns: `439px 88px 128px`,
-                  }),
+                  ...(toolbarPosition === 'right' &&
+                    (mode === EditorCore.Mode.IMAGE
+                      ? {
+                          gridTemplateRows: `799px`,
+                        }
+                      : {
+                          gridTemplateRows: `583px 88px 128px`,
+                        })),
+                  ...(toolbarPosition === 'bottom' &&
+                    (mode === EditorCore.Mode.IMAGE
+                      ? {
+                          gridTemplateColumns: `655px`,
+                        }
+                      : {
+                          gridTemplateColumns: `439px 88px 128px`,
+                        })),
                 }}
               >
                 {mode === EditorCore.Mode.BRUSH && <BrushToolbarContent />}

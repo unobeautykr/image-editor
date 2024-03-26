@@ -8,7 +8,7 @@ import { useTool } from '~/ImageEditor';
 import { ToolName } from '~/EditorCore';
 import { BoilerplateDialog } from '../BoilerplateDialog';
 import { BoilerplateData } from '~/types';
-import { ReactComponent as IconBookmark } from '~/assets/icons/update_icon/ic_bookmark_get.svg';
+import Icon from '~/icons/Icon';
 import { ToolbarButton } from './SimpleInputButton.styled';
 import toolbarSettings from '~/store/toolbarSettings';
 
@@ -23,7 +23,7 @@ export const SimpleInputButton = observer(() => {
 
   const load = useCallback(async () => {
     if (!boilerplate) return;
-    const data = await boilerplate.onLoadBoilerplate();
+    const data = await boilerplate[0].onLoadBoilerplate();
     setBoilerplates(data);
   }, [boilerplate]);
 
@@ -43,7 +43,7 @@ export const SimpleInputButton = observer(() => {
   };
 
   const onDeleteBoilerplate = async (id: number) => {
-    boilerplate && (await boilerplate.onDeleteBoilerplate(id));
+    boilerplate && (await boilerplate[0].onDeleteBoilerplate(id));
     setBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
@@ -125,7 +125,7 @@ export const SimpleInputButton = observer(() => {
             className={`inner-btn ${
               toolbarPosition === 'bottom' ? 'flex-row' : 'flex-column'
             } svg-20 bg-grey`}
-            Icon={IconBookmark}
+            Icon={() => <Icon variant="bookmark_library" />}
             onClick={onClickBoilerplate}
             disableToolbar={true}
             tooltip={'자주쓰는 문구'}

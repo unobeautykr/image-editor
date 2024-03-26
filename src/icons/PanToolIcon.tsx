@@ -1,6 +1,12 @@
 import { SvgIcon } from '@mui/material';
-import { ReactComponent } from '~/assets/icons/update_icon/ic_move.svg';
+import Icon from './Icon';
 
 export function PanToolIcon(props: any) {
-  return <SvgIcon inheritViewBox component={ReactComponent} {...props} />;
+  return (
+    <SvgIcon
+      inheritViewBox
+      component={() => <Icon variant="move" />}
+      {...props}
+    />
+  );
 }

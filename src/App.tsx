@@ -16,27 +16,29 @@ let boilerplates = [
 
 function App() {
   const boilerplate: ImageEditorProps['boilerplate'] = useMemo(
-    () => ({
-      onLoadBoilerplate: async () => {
-        return boilerplates;
+    () => [
+      {
+        onLoadBoilerplate: async () => {
+          return boilerplates;
+        },
+        onSaveBoilerplate: async (contents: string) => {
+          console.log('save', contents);
+          return;
+        },
+        onDeleteBoilerplate: async (id: number) => {
+          boilerplates = boilerplates.filter((b) => b.id !== id);
+        },
       },
-      onSaveBoilerplate: async (contents: string) => {
-        console.log('save', contents);
-        return;
-      },
-      onDeleteBoilerplate: async (id: number) => {
-        boilerplates = boilerplates.filter((b) => b.id !== id);
-      },
-    }),
+    ],
     []
   );
 
   const editorRef = useRef<HTMLElement & any>(null);
 
-  const onClickSave = async () => {
-    const blob = await editorRef.current?.toBlob();
-    console.log(blob);
-  };
+  // const onClickSave = async () => {
+  //   const blob = await editorRef.current?.toBlob();
+  //   console.log(blob);
+  // };
 
   return (
     <>
