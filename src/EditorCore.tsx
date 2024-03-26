@@ -435,6 +435,29 @@ export class EditorCore extends EventTarget {
     );
   }
 
+  async saveImageAsBlob(): Promise<Blob | null> {
+    return new Promise((resolve, reject) => {
+      const imageObject = this.c.getActiveObject();
+      if (imageObject && imageObject.type === 'image') {
+        // 이미지 객체가 유효한지 확인
+        const width = imageObject.getScaledWidth();
+        const height = imageObject.getScaledHeight();
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        // canvas 크기를 이미지 객체의 크기로 설정
+        canvas.width = width;
+        canvas.height = height;
+        // 이미지를 캔버스에 그림
+        ctx && ctx.drawImage(imageObject._element, 0, 0, width, height);
+        canvas.toBlob(function (blob) {
+          resolve(blob);
+        });
+      } else {
+        reject(new Error('유효한 이미지 객체가 아닙니다.'));
+      }
+    });
+  }
+
   calcTextSize(fontSize: any) {
     return (
       (MIN_TEXT_SIZE + (fontSize / 100) * (MAX_TEXT_SIZE - MIN_TEXT_SIZE)) /
