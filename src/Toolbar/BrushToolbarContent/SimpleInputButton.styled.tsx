@@ -22,7 +22,6 @@ export const ToolbarButton = styled(_ToolbarButton)<{}>(
       .MuiIconButton-root {
         background: ${grey[200]};
       }
-      
     }
     .MuiTypography-root {
       background: ${grey[200]};
@@ -30,7 +29,6 @@ export const ToolbarButton = styled(_ToolbarButton)<{}>(
       padding: 0 6px;
       line-height: 18px;
     }
-    
   }
 `
 );

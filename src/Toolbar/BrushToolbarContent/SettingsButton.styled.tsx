@@ -153,11 +153,7 @@ export const Button = styled(MuiButton)(
 `
 );
 
-export const Dialog = styled(MuiDialog)(
-  () => `
-
-`
-);
+export const Dialog = styled(MuiDialog)(() => ``);
 
 export const DialogTitle = styled(MuiDialogTitle)(
   () => `

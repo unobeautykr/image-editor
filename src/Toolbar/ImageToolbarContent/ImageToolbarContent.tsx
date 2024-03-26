@@ -4,7 +4,6 @@ import { ToolbarContent } from '../ToolbarContent';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import Icon from '~/icons/Icon';
-// import { Button } from '@mui/material';
 // import { downloadBlob } from '~/utils/fileUtil';
 
 const ToolbarButton = styled(_ToolbarButton)<{
@@ -38,27 +37,16 @@ export function ImageToolbarContent() {
 
   const onClickSave = async () => {
     const image = await core.saveImageAsBlob();
+    //   if (image) {
+    //     downloadBlob(image, 'changedImage.png');
+    //   }
     await boilerplate[1].onSaveBoilerplate(image);
   };
-
-  // const onClickSaveImage = async () => {
-  //   const image = await core.saveImageAsBlob();
-  //   if (image) {
-  //     downloadBlob(image, 'changedImage.png');
-  //   }
-  // };
 
   return (
     <ToolbarContent
       trailingItems={
         <>
-          {/* <Button
-            variant={'outlined'}
-            color={'primary'}
-            onClick={onClickSaveImage}
-          >
-            이미지 저장
-          </Button> */}
           <ToolbarButton
             className="save-library-btn"
             tooltip={
