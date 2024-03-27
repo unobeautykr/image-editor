@@ -20,6 +20,10 @@ export const Box = styled(MuiBox)(
 export const IconButton = styled(MuiIconButton)<{ selected: boolean }>(
   ({ selected, disabled }) => `
   ${selected ? 'background: black;' : ``}
+  svg {
+    width: 20px
+    height: 20px;
+  }
   ${
     selected
       ? `
@@ -38,7 +42,6 @@ export const IconButton = styled(MuiIconButton)<{ selected: boolean }>(
     `
       : ''
   }
-
 `
 );
 
