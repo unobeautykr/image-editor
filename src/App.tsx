@@ -56,17 +56,17 @@ function App() {
           textBoilerplates = textBoilerplates.filter((b) => b.id !== id);
         },
       },
-      // {
-      //   onLoadBoilerplate: async () => {
-      //     return imageBoilerplates;
-      //   },
-      //   onSaveBoilerplate: async (contents: string) => {
-      //     return console.log('save', contents);
-      //   },
-      //   onDeleteBoilerplate: async (id: number) => {
-      //     imageBoilerplates = imageBoilerplates.filter((b) => b.id !== id);
-      //   },
-      // },
+      {
+        onLoadBoilerplate: async () => {
+          return imageBoilerplates;
+        },
+        onSaveBoilerplate: async (contents: string) => {
+          return console.log('save', contents);
+        },
+        onDeleteBoilerplate: async (id: number) => {
+          imageBoilerplates = imageBoilerplates.filter((b) => b.id !== id);
+        },
+      },
     ],
     []
   );

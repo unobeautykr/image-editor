@@ -61,6 +61,7 @@ export const SimpleInputButton = observer(() => {
   };
 
   const onClickTextBoilerplate = async () => {
+    if (!boilerplate || (boilerplate && !boilerplate[0])) return;
     await loadTextList();
     setOpenTextBoilerplate((v) => !v);
   };
@@ -82,6 +83,7 @@ export const SimpleInputButton = observer(() => {
   };
 
   const onClickImageBoilerplate = async () => {
+    if (!boilerplate || (boilerplate && !boilerplate[1])) return;
     await loadImageList();
     setOpenImageBoilerplate((v) => !v);
   };
