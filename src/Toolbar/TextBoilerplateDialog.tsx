@@ -42,7 +42,7 @@ export function BoilerplateDialogItem({ bp, onSelect, onDelete }: any) {
   );
 }
 
-export function BoilerplateDialog({
+export function TextBoilerplateDialog({
   open,
   boilerplates,
   onSelect,

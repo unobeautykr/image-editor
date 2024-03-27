@@ -13,7 +13,9 @@ import { ReactComponent as FoldIcon } from '~/assets/icons/update_icon/fold_dark
 import { ReactComponent as MoreIcon } from '~/assets/icons/update_icon/ic_more.svg';
 import { ReactComponent as ArrowIcon } from '~/assets/images/arrow.svg';
 import { ReactComponent as SaveLibraryIcon } from '~/assets/icons/update_icon/ic_Libraryadd.svg';
-import { ReactComponent as BookmarkIcon_2 } from '~/assets/icons/update_icon/ic_bookmark_get.svg';
+import { ReactComponent as BookmarkTextIcon } from '~/assets/icons/update_icon/ic_lib_text.svg';
+import { ReactComponent as BookmarkImageIcon } from '~/assets/icons/update_icon/ic_lib_image.svg';
+import { ReactComponent as DeleteIcon } from '~/assets/icons/update_icon/ic_delete_16.svg';
 type IconProps = {
   variant:
     | 'eraser'
@@ -31,7 +33,10 @@ type IconProps = {
     | 'fold'
     | 'more'
     | 'arrow'
-    | 'library_add';
+    | 'library_add'
+    | 'bookmark_text'
+    | 'bookmark_image'
+    | 'delete';
   width?: number;
   height?: number;
 };
@@ -53,8 +58,6 @@ const Icon = ({ variant, ...rest }: IconProps) => {
       return <HandIcon {...rest} />;
     case 'bookmark':
       return <BookmarkIcon {...rest} />;
-    case 'bookmark_library':
-      return <BookmarkIcon_2 {...rest} />;
     case 'text':
       return <TextIcon {...rest} />;
     case 'calendar':
@@ -67,8 +70,14 @@ const Icon = ({ variant, ...rest }: IconProps) => {
       return <MoreIcon {...rest} />;
     case 'arrow':
       return <ArrowIcon {...rest} />;
+    case 'bookmark_text':
+      return <BookmarkTextIcon {...rest} />;
+    case 'bookmark_image':
+      return <BookmarkImageIcon {...rest} />;
     case 'library_add':
       return <SaveLibraryIcon {...rest} />;
+    case 'delete':
+      return <DeleteIcon {...rest} />;
     default:
       return <></>;
   }

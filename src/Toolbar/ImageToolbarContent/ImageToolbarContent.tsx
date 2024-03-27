@@ -4,7 +4,6 @@ import { ToolbarContent } from '../ToolbarContent';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import Icon from '~/icons/Icon';
-// import { downloadBlob } from '~/utils/fileUtil';
 
 const ToolbarButton = styled(_ToolbarButton)<{
   $toolbarPosition?: 'bottom' | 'right';
@@ -37,9 +36,6 @@ export function ImageToolbarContent() {
 
   const onClickSave = async () => {
     const image = await core.saveImageAsBlob();
-    //   if (image) {
-    //     downloadBlob(image, 'changedImage.png');
-    //   }
     await boilerplate[1].onSaveBoilerplate(image);
   };
 

@@ -2,29 +2,42 @@ import { useState, useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { Popover } from '@mui/material';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
+import toolbarSettings from '~/store/toolbarSettings';
 import { SimpleInputToolIcon } from '~/icons/SimpleInputToolIcon';
 import { useImageEditor } from '~/ImageEditor';
 import { useTool } from '~/ImageEditor';
 import { ToolName } from '~/EditorCore';
-import { BoilerplateDialog } from '../BoilerplateDialog';
+import { TextBoilerplateDialog } from '../TextBoilerplateDialog';
 import { BoilerplateData } from '~/types';
 import Icon from '~/icons/Icon';
 import { ToolbarButton } from './SimpleInputButton.styled';
-import toolbarSettings from '~/store/toolbarSettings';
+import { ImageBoilerplateDialog } from '../ImageBoilerplateDialog';
 
 export const SimpleInputButton = observer(() => {
   const { core, boilerplate, toolbarPosition } = useImageEditor();
   const { toolbarVerticalPosition } = toolbarSettings;
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openBoilerplate, setOpenBoilerplate] = useState(false);
-  const [boilerplates, setBoilerplates] = useState<BoilerplateData[]>([]);
+  const [openTextBoilerplate, setOpenTextBoilerplate] = useState(false);
+  const [openImageBoilerplate, setOpenImageBoilerplate] = useState(false);
+  const [textBoilerplates, setTextBoilerplates] = useState<BoilerplateData[]>(
+    []
+  );
+  const [imageBoilerplates, setImageBoilerplates] = useState<BoilerplateData[]>(
+    []
+  );
   const { tool, setTool } = useTool();
   const selected = tool === ToolName.SIMPLE_INPUT;
 
-  const load = useCallback(async () => {
+  const loadTextList = useCallback(async () => {
     if (!boilerplate) return;
     const data = await boilerplate[0].onLoadBoilerplate();
-    setBoilerplates(data);
+    setTextBoilerplates(data);
+  }, [boilerplate]);
+
+  const loadImageList = useCallback(async () => {
+    if (!boilerplate) return;
+    const data = await boilerplate[1].onLoadBoilerplate();
+    setImageBoilerplates(data);
   }, [boilerplate]);
 
   const onClick = (e: any) => {
@@ -36,25 +49,41 @@ export const SimpleInputButton = observer(() => {
     setAnchorEl(e.currentTarget);
   };
 
-  const onSelectBoilerplate = (message: string) => {
+  const onSelectTextBoilerplate = (message: string) => {
     core.addText(message, undefined, true);
-    setOpenBoilerplate(false);
+    setOpenTextBoilerplate(false);
     setTool(ToolName.PAN);
   };
 
-  const onDeleteBoilerplate = async (id: number) => {
+  const onDeleteTextBoilerplate = async (id: number) => {
     boilerplate && (await boilerplate[0].onDeleteBoilerplate(id));
-    setBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
+    setTextBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
-  const onClickBoilerplate = async () => {
-    await load();
-    setOpenBoilerplate((v) => !v);
+  const onClickTextBoilerplate = async () => {
+    await loadTextList();
+    setOpenTextBoilerplate((v) => !v);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
     setTool(ToolName.PAN);
+  };
+
+  const onSelectImageBoilerplate = (url: string) => {
+    core.addImage(url);
+    setOpenImageBoilerplate(false);
+    setTool(ToolName.PAN);
+  };
+
+  const onDeleteImageBoilerplate = async (id: number) => {
+    boilerplate && (await boilerplate[1].onDeleteBoilerplate(id));
+    setImageBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
+  };
+
+  const onClickImageBoilerplate = async () => {
+    await loadImageList();
+    setOpenImageBoilerplate((v) => !v);
   };
 
   const open = Boolean(anchorEl);
@@ -125,10 +154,19 @@ export const SimpleInputButton = observer(() => {
             className={`inner-btn ${
               toolbarPosition === 'bottom' ? 'flex-row' : 'flex-column'
             } svg-20 bg-grey`}
-            Icon={() => <Icon variant="bookmark_library" />}
-            onClick={onClickBoilerplate}
+            Icon={() => <Icon variant="bookmark_text" />}
+            onClick={onClickTextBoilerplate}
             disableToolbar={true}
             tooltip={'자주쓰는 문구'}
+          />
+          <ToolbarButton
+            className={`inner-btn ${
+              toolbarPosition === 'bottom' ? 'flex-row' : 'flex-column'
+            } svg-20 bg-grey`}
+            Icon={() => <Icon variant="bookmark_image" />}
+            onClick={onClickImageBoilerplate}
+            disableToolbar={true}
+            tooltip={'자주쓰는 이미지'}
           />
         </div>
       </Popover>
@@ -139,14 +177,23 @@ export const SimpleInputButton = observer(() => {
         onClick={onClick}
         tooltip="간편입력"
       />
-      <BoilerplateDialog
-        open={openBoilerplate}
+      <TextBoilerplateDialog
+        open={openTextBoilerplate}
         onClose={() => {
-          setOpenBoilerplate(false);
+          setOpenTextBoilerplate(false);
         }}
-        onSelect={onSelectBoilerplate}
-        onDelete={onDeleteBoilerplate}
-        boilerplates={boilerplates}
+        onSelect={onSelectTextBoilerplate}
+        onDelete={onDeleteTextBoilerplate}
+        boilerplates={textBoilerplates}
+      />
+      <ImageBoilerplateDialog
+        open={openImageBoilerplate}
+        onClose={() => {
+          setOpenImageBoilerplate(false);
+        }}
+        onSelect={onSelectImageBoilerplate}
+        onDelete={onDeleteImageBoilerplate}
+        boilerplates={imageBoilerplates}
       />
     </div>
   );

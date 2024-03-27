@@ -29,6 +29,9 @@ export const ToolbarButton = styled(_ToolbarButton)<{}>(
       padding: 0 6px;
       line-height: 18px;
     }
+    svg,path {
+      fill: #000000;
+    }
   }
 `
 );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Slider, Stack, styled } from '@mui/material';
 import { useImageEditor } from '../../ImageEditor';
 import { ColorPalette } from '../ColorPalette';
@@ -7,9 +8,6 @@ import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Icon from '~/icons/Icon';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
-import { useState } from 'react';
-import { BoilerplateDialog } from '../BoilerplateDialog';
-import { BoilerplateData } from '~/types';
 
 const ToolbarButton = styled(_ToolbarButton)(
   () => `
@@ -63,8 +61,6 @@ export function TextToolbarContent() {
 
   const [size, setSize] = useState(core.getSelectedTextSize());
   const [color, setColor] = useState(core.getSelectedTextColor());
-  const [openBoilerplate, setOpenBoilerplate] = useState(false);
-  const [boilerplates, setBoilerplates] = useState<BoilerplateData[]>([]);
 
   const onClickDelete = () => {
     core.deleteSelectedObject();
@@ -83,16 +79,6 @@ export function TextToolbarContent() {
 
   const onClickSave = async () => {
     await boilerplate[0].onSaveBoilerplate(core.getSelectedTextContents());
-  };
-
-  const onSelectBoilerplate = (message: string) => {
-    core.changeSelectedTextMessage(message);
-    setOpenBoilerplate(false);
-  };
-
-  const onDeleteBoilerplate = async (id: number) => {
-    await boilerplate[0].onDeleteBoilerplate(id);
-    setBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
   return (
@@ -129,13 +115,6 @@ export function TextToolbarContent() {
             onClick={onClickDelete}
           />
         }
-      />
-      <BoilerplateDialog
-        open={openBoilerplate}
-        onClose={() => setOpenBoilerplate(false)}
-        onSelect={onSelectBoilerplate}
-        onDelete={onDeleteBoilerplate}
-        boilerplates={boilerplates}
       />
     </>
   );
