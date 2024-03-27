@@ -29,13 +29,13 @@ export const SimpleInputButton = observer(() => {
   const selected = tool === ToolName.SIMPLE_INPUT;
 
   const loadTextList = useCallback(async () => {
-    if (!boilerplate) return;
+    if (!boilerplate || (boilerplate && !boilerplate[0])) return;
     const data = await boilerplate[0].onLoadBoilerplate();
     setTextBoilerplates(data);
   }, [boilerplate]);
 
   const loadImageList = useCallback(async () => {
-    if (!boilerplate) return;
+    if (!boilerplate || (boilerplate && !boilerplate[1])) return;
     const data = await boilerplate[1].onLoadBoilerplate();
     setImageBoilerplates(data);
   }, [boilerplate]);
