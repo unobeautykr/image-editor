@@ -28222,6 +28222,10 @@ const _a = Be(Tt)(
 ), wa = Be(Jt)(
   ({ selected: t, disabled: e }) => `
   ${t ? "background: black;" : ""}
+  svg {
+    width: 20px;
+    height: 20px;
+  }
   ${t ? `
       svg, path {
         fill: white;
@@ -28232,7 +28236,6 @@ const _a = Be(Tt)(
         fill: ${Ze[400]};
       }
     ` : ""}
-
 `
 ), dm = Be(Za)(
   () => `

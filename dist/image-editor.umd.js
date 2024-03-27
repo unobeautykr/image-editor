@@ -571,6 +571,10 @@ gl_FragColor.rgb *= color.a;
   }
 `),Dl=se.styled(se.IconButton)(({selected:t,disabled:e})=>`
   ${t?"background: black;":""}
+  svg {
+    width: 20px;
+    height: 20px;
+  }
   ${t?`
       svg, path {
         fill: white;
@@ -581,7 +585,6 @@ gl_FragColor.rgb *= color.a;
         fill: ${et[400]};
       }
     `:""}
-
 `),Qp=se.styled(se.Typography)(()=>`
   font-family: Apple SD Gothic Neo;
   font-size: 11px;
