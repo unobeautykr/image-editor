@@ -6,9 +6,9 @@ interface ImageEditorContextValue {
     touch: boolean;
     boilerplate?: {
         onLoadBoilerplate: () => Promise<BoilerplateData[]>;
-        onSaveBoilerplate: (contents: string) => Promise<void>;
+        onSaveBoilerplate: (contents: any) => Promise<void>;
         onDeleteBoilerplate: (id: number) => Promise<void>;
-    };
+    }[];
     toolbarPosition: 'bottom' | 'right';
 }
 export declare function useImageEditor(): ImageEditorContextValue;

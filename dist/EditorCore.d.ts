@@ -77,6 +77,7 @@ export declare class EditorCore extends EventTarget {
     updateToolConfig(toolId: any, attr: any): any;
     setContainerSize(size: any): void;
     addImage(imageUrl: any): void;
+    saveImageAsBlob(): Promise<Blob | null>;
     calcTextSize(fontSize: any): number;
     calcFontSize(textSize: any): number;
     addText(placeholder: string, position?: {
