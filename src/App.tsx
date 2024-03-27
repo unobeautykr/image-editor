@@ -5,8 +5,9 @@ import { ImageEditor, ImageEditorProps } from './ImageEditor';
 import sampleImage1 from './assets/images/sample_images/cat1.jpg';
 import sampleImage2 from './assets/images/sample_images/cat2.png';
 import sampleImage3 from './assets/images/sample_images/cat3.jpeg';
-import sampleImage4 from './assets/images/sample_images/cat4.jpeg';
+import sampleImage4 from './assets/images/sample_images/cat4.png';
 import sampleImage5 from './assets/images/sample_images/cat5.jpeg';
+import { downloadBlob } from './utils/fileUtil';
 
 let textBoilerplates = [
   {
@@ -60,7 +61,8 @@ function App() {
         onLoadBoilerplate: async () => {
           return imageBoilerplates;
         },
-        onSaveBoilerplate: async (contents: string) => {
+        onSaveBoilerplate: async (contents: Blob) => {
+          downloadBlob(contents, 'savedImage.png');
           return console.log('save', contents);
         },
         onDeleteBoilerplate: async (id: number) => {
