@@ -6,6 +6,7 @@ import { ReactComponent as RedoIcon } from '~/assets/icons/update_icon/ic_redo.s
 import { ReactComponent as UndoIcon } from '~/assets/icons/update_icon/ic_undo.svg';
 import { ReactComponent as HandIcon } from '~/assets/icons/update_icon/ic_hand.svg';
 import { ReactComponent as BookmarkIcon } from '~/assets/icons/update_icon/ic_bookmark.svg';
+import { ReactComponent as BookmarkIcon2 } from '~/assets/icons/update_icon/ic_bookmark_get.svg';
 import { ReactComponent as TextIcon } from '~/assets/icons/update_icon/ic_text.svg';
 import { ReactComponent as CalendarIcon } from '~/assets/icons/update_icon/ic_calendar.svg';
 import { ReactComponent as PencilIcon } from '~/assets/icons/update_icon/ic_pencil.svg';
@@ -26,7 +27,7 @@ type IconProps = {
     | 'undo'
     | 'hand'
     | 'bookmark'
-    | 'bookmark_library'
+    | 'bookmark_2'
     | 'text'
     | 'calendar'
     | 'pencil'
@@ -58,6 +59,8 @@ const Icon = ({ variant, ...rest }: IconProps) => {
       return <HandIcon {...rest} />;
     case 'bookmark':
       return <BookmarkIcon {...rest} />;
+    case 'bookmark_2':
+      return <BookmarkIcon2 {...rest} />;
     case 'text':
       return <TextIcon {...rest} />;
     case 'calendar':

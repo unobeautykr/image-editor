@@ -5,7 +5,7 @@ export function SimpleInputToolIcon(props: any) {
   return (
     <SvgIcon
       inheritViewBox
-      component={() => <Icon variant="bookmark" />}
+      component={() => <Icon variant="bookmark_2" />}
       {...props}
     />
   );
