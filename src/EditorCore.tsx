@@ -77,16 +77,16 @@ export class EditorCore extends EventTarget {
   touches: any;
   lastPoint: any;
 
-  onMouseWheel: any;
-  onMouseUp: any;
-  onGesture: any;
-  onObjectAdded: any;
-  onObjectModified: any;
-  onObjectRemoved: any;
-  onObjectSelected: any;
-  onObjectSelectionUpdated: any;
-  onObjectDeselected: any;
-  onEraseEnd: any;
+  onMouseWheel?: (opt: any) => void;
+  onMouseUp?: (opt: any) => void;
+  onGesture?: (opt: any) => void;
+  onObjectAdded?: (opt: any) => void;
+  onObjectModified?: (opt: any) => void;
+  onObjectRemoved?: (opt: any) => void;
+  onObjectSelected?: (opt: any) => void;
+  onObjectSelectionUpdated?: (opt: any) => void;
+  onObjectDeselected?: (opt: any) => void;
+  onEraseEnd?: (opt: any) => void;
   containerSize: any;
   onHistoryChangeListener: any;
   onAvailabilityChangeListener: any;
