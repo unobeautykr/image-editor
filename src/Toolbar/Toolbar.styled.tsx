@@ -53,17 +53,17 @@ export const Box = styled(MuiBox)<{
         : 'center'
     };
     flex-direction: ${toolbarposition === 'right' ? 'column' : 'row'};
-    
-
   }
   &.toggle-show-control-box {
     width: 100%;
     height: 22px;
     overflow:hidden;
     padding-top: 6px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
   }
   &.show-control-btn-wrapper {
-   
     width: 100%;
     padding: 0 40px;
     max-width: 842px;
@@ -111,12 +111,10 @@ export const IconButton = muiStyled(MuiIconButton)(
   
   &.hide-control-box-btn {
     display: flex;
-    width: 100%;
+    width: 30px;
     height: 100%;
     padding: 0;
-    justify-content: flex-start;
-    padding-left: 37px;
-    
+    justify-content: center;
   }
   &.rotate-180 {
     transform: rotate(180deg);

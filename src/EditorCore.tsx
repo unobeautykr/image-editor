@@ -84,6 +84,7 @@ export class EditorCore extends EventTarget {
   onObjectModified: any;
   onObjectRemoved: any;
   onObjectSelected: any;
+  onObjectSelectionUpdated: any;
   onObjectDeselected: any;
   onEraseEnd: any;
   containerSize: any;
@@ -125,11 +126,9 @@ export class EditorCore extends EventTarget {
     touchEnabled: boolean;
   }) {
     super();
-
     this.config = this.fetchConfig();
     this._busy = true;
     this.imageUrl = imageUrl;
-
     this.touchEnabled = touchEnabled;
   }
 
@@ -137,9 +136,7 @@ export class EditorCore extends EventTarget {
     this.c = new fabric.Canvas(element, {
       selection: false,
     });
-
     const c = this.c;
-
     this.c.usePencil = this.touchEnabled ? this.config.usePencil : false;
 
     fabric.Image.fromURL(
@@ -160,6 +157,7 @@ export class EditorCore extends EventTarget {
         this.c.on('object:modified', this.onObjectModified);
         this.c.on('object:removed', this.onObjectRemoved);
         this.c.on('selection:created', this.onObjectSelected);
+        this.c.on('selection:updated', this.onObjectSelectionUpdated);
         this.c.on('selection:cleared', this.onObjectDeselected);
         this.c.on('erasing:end', this.onEraseEnd);
       },
@@ -181,13 +179,11 @@ export class EditorCore extends EventTarget {
 
     this.onGesture = (opt: any) => {
       const e = opt.e;
-
       if (e.touches && e.touches.length === 2) {
         this.isDragging = false;
-
         const point = new fabric.Point(opt.self.x, opt.self.y);
-
         const touches = [];
+
         for (const t of e.touches) {
           touches.push({
             identifier: t.identifier,
@@ -246,14 +242,12 @@ export class EditorCore extends EventTarget {
 
     this.onObjectModified = (opt: any) => {
       if (this.isTraversingHistory) return;
-
       if (opt.target.type === 'i-text' && opt.target.text.trim() === '') {
         const old = this.isTraversingHistory;
         this.isTraversingHistory = true;
         this.c.remove(opt.target);
         this.isTraversingHistory = old;
       }
-
       this.pushHistory();
     };
 
@@ -269,27 +263,45 @@ export class EditorCore extends EventTarget {
 
     this.onObjectSelected = (opt: any) => {
       const selected = opt.selected[0];
-
       switch (selected.type) {
         case 'i-text':
-          this._dispatch(EditorCore.Event.MODE_CHANGE, EditorCore.Mode.TEXT);
-          return;
+          return this._dispatch(
+            EditorCore.Event.MODE_CHANGE,
+            EditorCore.Mode.TEXT
+          );
         case 'image':
-          this._dispatch(EditorCore.Event.MODE_CHANGE, EditorCore.Mode.IMAGE);
-          return;
+          return this._dispatch(
+            EditorCore.Event.MODE_CHANGE,
+            EditorCore.Mode.IMAGE
+          );
         default:
           throw new Error(`object type ${selected.type} selected`);
       }
     };
 
-    this.onObjectDeselected = (opt: any) => {
+    this.onObjectSelectionUpdated = (opt: any) => {
+      const selected = opt.selected[0];
+      switch (selected.type) {
+        case 'i-text':
+          return this._dispatch(
+            EditorCore.Event.MODE_CHANGE,
+            EditorCore.Mode.TEXT
+          );
+        case 'image':
+          return this._dispatch(
+            EditorCore.Event.MODE_CHANGE,
+            EditorCore.Mode.IMAGE
+          );
+      }
+    };
+
+    this.onObjectDeselected = (_opt: any) => {
       this._dispatch(EditorCore.Event.MODE_CHANGE, EditorCore.Mode.BRUSH);
     };
   }
 
   zoom(point: any, targetZoom: any) {
     const zoom = Math.max(this.zoomMin, Math.min(this.zoomMax, targetZoom));
-
     this.c.zoomToPoint(point, zoom);
     this.adjustPan();
   }
@@ -360,21 +372,15 @@ export class EditorCore extends EventTarget {
 
   selectTool(toolId: any) {
     if (!this.available) return;
-
     const config = this.getToolConfig(toolId);
     const newTool: any = new this.tools[toolId].class(this, config);
-
     const old = this.tool;
     (old as any)?.instance.onDeselect?.();
-
     this.tool = { name: toolId, instance: newTool };
-
     newTool.onSelect?.();
-
     if (old?.type !== newTool) {
       this._dispatch(EditorCore.Event.TOOL_CHANGE, toolId);
     }
-
     this.cacheTool();
   }
 
@@ -515,13 +521,9 @@ export class EditorCore extends EventTarget {
   async undo() {
     if (!this.available) return;
     if (this.history.index === 0) return;
-
     this.history.index -= 1;
-
     const history = this.history.records[this.history.index];
-
     await this.loadFromHistory(history);
-
     this._dispatchHistoryChange();
   }
 
@@ -530,13 +532,9 @@ export class EditorCore extends EventTarget {
     if (this.history.index >= this.history.records.length - 1) {
       return;
     }
-
     this.history.index += 1;
-
     const history = this.history.records[this.history.index];
-
     await this.loadFromHistory(history);
-
     this._dispatchHistoryChange();
   }
 
@@ -697,7 +695,6 @@ export class EditorCore extends EventTarget {
   async toBlob() {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
-
     const blob = new Promise((res, rej) => {
       this.c.toBlob(
         (blob: any) => {
@@ -705,7 +702,6 @@ export class EditorCore extends EventTarget {
             rej(new Error('Cannot create blob'));
             return;
           }
-
           res(blob);
         },
         {
@@ -754,7 +750,6 @@ export class EditorCore extends EventTarget {
 
   getSelectedTextSize() {
     const text = this.c.getActiveObject();
-
     return this.calcFontSize(text.fontSize);
   }
 
@@ -788,7 +783,6 @@ export class EditorCore extends EventTarget {
   fetchConfig() {
     const storedConfigRaw = localStorage.getItem('editorConfig');
     const storedConfig = storedConfigRaw ? JSON.parse(storedConfigRaw) : null;
-
     return {
       freedraw: storedConfig?.freedraw ?? {
         thickness: 3,
