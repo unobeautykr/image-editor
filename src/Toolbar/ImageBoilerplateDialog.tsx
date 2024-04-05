@@ -7,7 +7,9 @@ import {
   DialogContent,
   DialogTitle,
   List,
+  LoadingIcon,
 } from './ImageBoilerplateDialog.styled';
+
 import CloseIcon from '@mui/icons-material/Close';
 import Icon from '~/icons/Icon';
 
@@ -21,7 +23,11 @@ export function BoilerplateDialogItem({ bp, onSelect, onDelete }: any) {
     <ListItem>
       <Box className="image-item">
         <Button onClick={() => onSelect(bp.contents)}>
-          <img src={bp.contents} />
+          {!bp.contents.thumbnailUrl ? (
+            <LoadingIcon />
+          ) : (
+            <img src={bp.contents.thumbnailUrl} />
+          )}
         </Button>
         <IconButton onClick={onClickDelete} className="delete-btn">
           <Icon variant="delete" />
@@ -39,7 +45,7 @@ export function ImageBoilerplateDialog({
   onDelete,
 }: any) {
   const onSelectBoilerplate = (contents: any) => {
-    onSelect(contents);
+    onSelect(contents.originalUrl);
     onClose();
   };
 

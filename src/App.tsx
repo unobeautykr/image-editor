@@ -23,23 +23,45 @@ let textBoilerplates = [
 let imageBoilerplates = [
   {
     id: 1,
-    contents: sampleImage1,
+    contents: {
+      originalUrl: sampleImage1,
+      thumbnailUrl: sampleImage1,
+    },
   },
   {
     id: 2,
-    contents: sampleImage2,
+    contents: {
+      originalUrl: sampleImage2,
+      thumbnailUrl: sampleImage2,
+    },
   },
   {
     id: 3,
-    contents: sampleImage3,
+    contents: {
+      originalUrl: sampleImage3,
+      thumbnailUrl: sampleImage3,
+    },
   },
   {
     id: 4,
-    contents: sampleImage4,
+    contents: {
+      originalUrl: sampleImage4,
+      thumbnailUrl: sampleImage4,
+    },
   },
   {
     id: 5,
-    contents: sampleImage5,
+    contents: {
+      originalUrl: sampleImage5,
+      thumbnailUrl: sampleImage5,
+    },
+  },
+  {
+    id: 6,
+    contents: {
+      originalUrl: sampleImage5,
+      thumbnailUrl: null,
+    },
   },
 ];
 

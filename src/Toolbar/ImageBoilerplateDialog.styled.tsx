@@ -8,7 +8,12 @@ import {
   Box as MuiBox,
   Button as MuiButton,
   styled,
+  CircularProgress,
 } from '@mui/material';
+
+export const LoadingIcon = styled(CircularProgress)`
+  color: #2c62f6;
+`;
 
 export const Dialog = styled(MuiDialog)(
   () => `
@@ -42,7 +47,7 @@ export const DialogTitle = styled(MuiDialogTitle)(
 
 export const DialogContent = styled(MuiDialogContent)(
   () => `
-  padding: 3px 7px;
+  padding: 7px !important;
 `
 );
 
@@ -64,6 +69,7 @@ export const List = styled(MuiList)(
   display: flex;
   gap: 2px;
   flex-wrap: wrap;
+  padding: 0;
 `
 );
 
