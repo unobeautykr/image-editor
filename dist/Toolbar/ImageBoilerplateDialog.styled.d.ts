@@ -1,4 +1,5 @@
 /// <reference types="react" />
+export declare const LoadingIcon: import("@emotion/styled").StyledComponent<import("@mui/material").CircularProgressProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const Dialog: import("@emotion/styled").StyledComponent<import("@mui/material").DialogProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const Button: import("@emotion/styled").StyledComponent<{
     children?: import("react").ReactNode;
