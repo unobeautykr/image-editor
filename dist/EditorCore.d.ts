@@ -88,6 +88,9 @@ export declare class EditorCore extends EventTarget {
     undo(): Promise<void>;
     redo(): Promise<void>;
     loadFromHistory(history: any): Promise<void>;
+    saveHistoryCache(): Promise<void>;
+    clearHistoryCache(): Promise<void>;
+    loadHistoryCache(): Promise<void>;
     get isTraversingHistory(): boolean;
     set isTraversingHistory(value: boolean);
     get busy(): boolean;

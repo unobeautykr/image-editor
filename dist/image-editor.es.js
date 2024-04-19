@@ -27346,7 +27346,15 @@ const be = {
     this.c.usePencil = this.touchEnabled ? this.config.usePencil : !1, ot.fabric.Image.fromURL(
       this.imageUrl,
       (g) => {
-        h.getElement() && (g.erasable = !1, this.busy = !1, h.setBackgroundImage(g, null), this.fitCanvas(), this.pushHistory(), this.selectTool(this.fetchTool()), this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseUp), this.c.on("mouse:wheel", this.onMouseWheel), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:updated", this.onObjectSelectionUpdated), this.c.on("selection:cleared", this.onObjectDeselected), this.c.on("erasing:end", this.onEraseEnd));
+        if (h.getElement()) {
+          if (g.erasable = !1, this.busy = !1, h.setBackgroundImage(g, null), this.fitCanvas(), this.history.index < 0)
+            this.pushHistory();
+          else {
+            const y = this.history.records[this.history.index];
+            this.loadFromHistory(y);
+          }
+          this.selectTool(this.fetchTool()), this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseUp), this.c.on("mouse:wheel", this.onMouseWheel), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:updated", this.onObjectSelectionUpdated), this.c.on("selection:cleared", this.onObjectDeselected), this.c.on("erasing:end", this.onEraseEnd);
+        }
       },
       {
         crossOrigin: "anonymous"
@@ -27588,6 +27596,20 @@ const be = {
         g(y);
       }
     }), this.isTraversingHistory = !1;
+  }
+  async saveHistoryCache() {
+    localStorage.setItem("historyCache", JSON.stringify(this.history));
+  }
+  async clearHistoryCache() {
+    localStorage.removeItem("historyCache");
+  }
+  async loadHistoryCache() {
+    const c = localStorage.getItem("historyCache");
+    if (c) {
+      this.history = JSON.parse(c);
+      const h = this.history.records[this.history.index];
+      await this.loadFromHistory(h), this.clearHistoryCache();
+    }
   }
   get isTraversingHistory() {
     return this._isTraversingHistory;
@@ -29035,7 +29057,7 @@ const bi = new t0(), r0 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC
     const s = f.target;
     y(!s.checked), t.setUsePencil(!s.checked);
   }, r = (f) => {
-    d(!0);
+    u(), d(!0);
   }, o = () => {
     d(!1);
   }, n = !!c, a = n ? "simple-popper" : void 0;

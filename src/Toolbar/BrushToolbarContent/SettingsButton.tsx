@@ -135,6 +135,7 @@ export const SettingsButton = observer(() => {
   };
 
   const handleOpenPopup: MouseEventHandler<HTMLElement> = (e) => {
+    handleClose();
     setPopupOpen(true);
   };
 

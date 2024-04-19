@@ -155,7 +155,6 @@ export const ImageEditor = observer(
     ref
   ) {
     const { toolbarVerticalPosition } = toolbarSettings;
-
     const components = useMemo(() => {
       const original = [
         {

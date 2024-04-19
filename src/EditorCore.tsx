@@ -147,9 +147,14 @@ export class EditorCore extends EventTarget {
         this.busy = false;
         c.setBackgroundImage(oImg, null);
         this.fitCanvas();
-        this.pushHistory();
-        this.selectTool(this.fetchTool());
+        if (this.history.index < 0) {
+          this.pushHistory();
+        } else {
+          const history = this.history.records[this.history.index];
+          this.loadFromHistory(history);
+        }
 
+        this.selectTool(this.fetchTool());
         this.c.on('touch:gesture', this.onGesture);
         this.c.on('mouse:up', this.onMouseUp);
         this.c.on('mouse:wheel', this.onMouseWheel);
@@ -407,7 +412,6 @@ export class EditorCore extends EventTarget {
     }
 
     this.cacheConfig();
-
     return newConfig;
   }
 
@@ -559,8 +563,25 @@ export class EditorCore extends EventTarget {
         reject(e);
       }
     });
-
     this.isTraversingHistory = false;
+  }
+
+  async saveHistoryCache() {
+    localStorage.setItem('historyCache', JSON.stringify(this.history));
+  }
+
+  async clearHistoryCache() {
+    localStorage.removeItem('historyCache');
+  }
+
+  async loadHistoryCache() {
+    const cache = localStorage.getItem('historyCache');
+    if (cache) {
+      this.history = JSON.parse(cache);
+      const history = this.history.records[this.history.index];
+      await this.loadFromHistory(history);
+      this.clearHistoryCache();
+    }
   }
 
   get isTraversingHistory() {
@@ -589,7 +610,6 @@ export class EditorCore extends EventTarget {
     const prevHistories = this.history.records.slice(0, this.history.index + 1);
     this.history.records = [...prevHistories, this.c.toObject().objects] as any;
     this.history.index = this.history.records.length - 1;
-
     this._dispatchHistoryChange();
   }
 
