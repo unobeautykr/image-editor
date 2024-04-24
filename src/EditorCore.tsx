@@ -147,6 +147,8 @@ export class EditorCore extends EventTarget {
         this.busy = false;
         c.setBackgroundImage(oImg, null);
         this.fitCanvas();
+        this.selectTool(this.fetchTool());
+
         if (this.history.index < 0) {
           this.pushHistory();
         } else {
@@ -154,7 +156,6 @@ export class EditorCore extends EventTarget {
           this.loadFromHistory(history);
         }
 
-        this.selectTool(this.fetchTool());
         this.c.on('touch:gesture', this.onGesture);
         this.c.on('mouse:up', this.onMouseUp);
         this.c.on('mouse:wheel', this.onMouseWheel);

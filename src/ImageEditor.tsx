@@ -117,6 +117,7 @@ export function useTool() {
 const Canvas = () => {
   const containerRef = useRef<HTMLElement | null>(null);
   const containerSize = useElementSize(containerRef);
+
   return (
     <Box
       ref={containerRef}
