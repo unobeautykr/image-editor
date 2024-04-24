@@ -27347,13 +27347,13 @@ const be = {
       this.imageUrl,
       (g) => {
         if (h.getElement()) {
-          if (g.erasable = !1, this.busy = !1, h.setBackgroundImage(g, null), this.fitCanvas(), this.history.index < 0)
+          if (g.erasable = !1, this.busy = !1, h.setBackgroundImage(g, null), this.fitCanvas(), this.selectTool(this.fetchTool()), this.history.index < 0)
             this.pushHistory();
           else {
             const y = this.history.records[this.history.index];
             this.loadFromHistory(y);
           }
-          this.selectTool(this.fetchTool()), this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseUp), this.c.on("mouse:wheel", this.onMouseWheel), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:updated", this.onObjectSelectionUpdated), this.c.on("selection:cleared", this.onObjectDeselected), this.c.on("erasing:end", this.onEraseEnd);
+          this.c.on("touch:gesture", this.onGesture), this.c.on("mouse:up", this.onMouseUp), this.c.on("mouse:wheel", this.onMouseWheel), this.c.on("object:added", this.onObjectAdded), this.c.on("object:modified", this.onObjectModified), this.c.on("object:removed", this.onObjectRemoved), this.c.on("selection:created", this.onObjectSelected), this.c.on("selection:updated", this.onObjectSelectionUpdated), this.c.on("selection:cleared", this.onObjectDeselected), this.c.on("erasing:end", this.onEraseEnd);
         }
       },
       {
