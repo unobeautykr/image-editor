@@ -425,6 +425,7 @@ export class EditorCore extends EventTarget {
 
   addImage(imageUrl: any) {
     if (!this.available) return;
+
     this.busy = true;
     this.selectTool(ToolName.SELECT);
     fabric.Image.fromURL(
@@ -495,23 +496,43 @@ export class EditorCore extends EventTarget {
       this.selectTool(ToolName.SELECT);
     }
 
+    let canvasSpace = null;
+    if (position) {
+      canvasSpace = this.c.getPointer({
+        clientX: position.x,
+        clientY: position.y,
+      });
+
+      if (canvasSpace) {
+        const clickedObject = this.c.findTarget(
+          { x: position.x, y: position.y },
+          false // includeMargins: false
+        );
+
+        if (clickedObject) {
+          this.c.setActiveObject(clickedObject);
+          this.c.requestRenderAll();
+          return;
+        }
+      }
+    }
+
     const text: any = new fabric.IText(placeholder, {
       borderColor: '#0B99FF',
       cornerColor: '#0B99FF',
       cornerSize: 11,
     });
+
     text.set('fill', this.config.text.color.code);
     text.set('fontSize', this.calcTextSize(this.config.text.fontSize));
-    if (position) {
-      const canvasSpace = this.c.getPointer({
-        clientX: position.x,
-        clientY: position.y,
-      });
+
+    if (canvasSpace) {
       text.set('left', canvasSpace.x);
       text.set('top', canvasSpace.y);
     } else {
       this.c.viewportCenterObject(text);
     }
+
     text.erasable = false;
 
     this.c.add(text);
