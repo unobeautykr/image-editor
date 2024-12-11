@@ -27551,20 +27551,27 @@ const be = {
     if (!this.available)
       return;
     this.touchEnabled && this.selectTool(be.SELECT);
-    const y = new ot.fabric.IText(c, {
+    let y = null;
+    if (h && (y = this.c.getPointer({
+      clientX: h.x,
+      clientY: h.y
+    }), y)) {
+      const C = this.c.findTarget(
+        { x: h.x, y: h.y },
+        !1
+        // includeMargins: false
+      );
+      if (C) {
+        this.c.setActiveObject(C), this.c.requestRenderAll();
+        return;
+      }
+    }
+    const _ = new ot.fabric.IText(c, {
       borderColor: "#0B99FF",
       cornerColor: "#0B99FF",
       cornerSize: 11
     });
-    if (y.set("fill", this.config.text.color.code), y.set("fontSize", this.calcTextSize(this.config.text.fontSize)), h) {
-      const _ = this.c.getPointer({
-        clientX: h.x,
-        clientY: h.y
-      });
-      y.set("left", _.x), y.set("top", _.y);
-    } else
-      this.c.viewportCenterObject(y);
-    y.erasable = !1, this.c.add(y), g || (this.c.setActiveObject(y), y.selectAll(), y.enterEditing());
+    _.set("fill", this.config.text.color.code), _.set("fontSize", this.calcTextSize(this.config.text.fontSize)), y ? (_.set("left", y.x), _.set("top", y.y)) : this.c.viewportCenterObject(_), _.erasable = !1, this.c.add(_), g || (this.c.setActiveObject(_), _.selectAll(), _.enterEditing());
   }
   async undo() {
     if (!this.available || this.history.index === 0)
