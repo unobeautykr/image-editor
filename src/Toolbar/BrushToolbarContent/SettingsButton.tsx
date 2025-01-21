@@ -1,11 +1,12 @@
 import {
   useState,
   ChangeEvent,
-  MouseEvent,
   MouseEventHandler,
   useEffect,
+  useCallback,
 } from 'react';
 import { observer } from 'mobx-react';
+import { debounce } from 'lodash';
 import { ListItemText, ClickAwayListener, RadioGroup } from '@mui/material';
 import {
   MenuList,
@@ -119,13 +120,29 @@ export const SettingsButton = observer(() => {
   const [usePencil, setUsePencil] = useState(core.config.usePencil);
   const [arrowRef, setArrowRef] = useState<HTMLElement | null>(null);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const onClick = (e: MouseEvent<HTMLElement>) => {
-    setAnchorEl(anchorEl ? null : e.currentTarget);
+  const debouncedToggle = useCallback(
+    debounce((element: HTMLElement) => {
+      setAnchorEl(element);
+      setIsOpen((prev) => !prev);
+    }, 100),
+    []
+  );
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const element = event.currentTarget;
+    debouncedToggle(element);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setIsOpen(false);
   };
 
   const handleClickTogglePencil = (e: ChangeEvent<HTMLInputElement>) => {
@@ -143,19 +160,20 @@ export const SettingsButton = observer(() => {
     setPopupOpen(false);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
+  const id = isOpen ? 'simple-popper' : undefined;
 
   return (
     <>
       <ToolbarButton
         aria-describedby={id}
         Icon={() => <Icon variant="more" />}
-        onClick={onClick}
+        onClick={handleClick}
+        onTouchEnd={handleClick}
+        style={{ touchAction: 'none' }}
       />
       <Popper
         id={id}
-        open={open}
+        open={isOpen}
         disablePortal={false}
         anchorEl={anchorEl}
         placement={toolbarVerticalPosition === 'bottom' ? 'top' : 'bottom'}

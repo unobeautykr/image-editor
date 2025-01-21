@@ -110,7 +110,7 @@ function App() {
           ref={editorRef}
           imageUrl={sampleImage}
           boilerplate={boilerplate}
-          touch={false}
+          touch={true}
           // leadingItems={<Button onClick={onClickSave}>save</Button>}
           toolbarPosition="bottom"
         />

@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/material';
+import { Tooltip, IconButtonProps } from '@mui/material';
 import { ReactNode } from 'react';
 import { grey } from '@mui/material/colors';
 import { useImageEditor } from '~/ImageEditor';
@@ -10,11 +10,9 @@ type ToolbarButtonProps = {
   small?: boolean;
   tooltip?: ReactNode;
   disableToolbar?: boolean;
-  onClick?: (value?: any) => void;
-  disabled?: boolean;
   sx?: any;
   className?: string;
-};
+} & Omit<IconButtonProps, 'sx' | 'className'>;
 
 export const ToolbarButton = ({
   Icon,
