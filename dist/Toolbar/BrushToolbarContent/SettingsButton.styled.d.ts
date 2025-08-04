@@ -105,7 +105,7 @@ export declare const DialogTitle: import("@emotion/styled").StyledComponent<{
     classes?: Partial<import("@mui/material").DialogTitleClasses> | undefined;
     sx?: import("@mui/material").SxProps<import("@mui/material").Theme> | undefined;
 } & Omit<import("@mui/system").SystemProps<import("@mui/material").Theme> & {
-    align?: "left" | "right" | "inherit" | "center" | "justify" | undefined;
+    align?: "left" | "center" | "right" | "inherit" | "justify" | undefined;
     children?: import("react").ReactNode;
     classes?: Partial<import("@mui/material").TypographyClasses> | undefined;
     gutterBottom?: boolean | undefined;

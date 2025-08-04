@@ -38,7 +38,7 @@ export declare const IconButton: import("@emotion/styled").StyledComponent<{
     selected: boolean;
 }, {}, {}>;
 export declare const Typography: import("@emotion/styled").StyledComponent<import("@mui/system").SystemProps<import("@mui/material").Theme> & {
-    align?: "left" | "right" | "inherit" | "center" | "justify" | undefined;
+    align?: "left" | "center" | "right" | "inherit" | "justify" | undefined;
     children?: import("react").ReactNode;
     classes?: Partial<import("@mui/material").TypographyClasses> | undefined;
     gutterBottom?: boolean | undefined;

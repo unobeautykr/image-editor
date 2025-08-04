@@ -17,6 +17,8 @@ import { ReactComponent as SaveLibraryIcon } from '~/assets/icons/update_icon/ic
 import { ReactComponent as BookmarkTextIcon } from '~/assets/icons/update_icon/ic_lib_text.svg';
 import { ReactComponent as BookmarkImageIcon } from '~/assets/icons/update_icon/ic_lib_image.svg';
 import { ReactComponent as DeleteIcon } from '~/assets/icons/update_icon/ic_delete_16.svg';
+import { ReactComponent as Clockwise90 } from '~/assets/icons/ic-clockwise90.svg';
+
 type IconProps = {
   variant:
     | 'eraser'
@@ -37,7 +39,8 @@ type IconProps = {
     | 'library_add'
     | 'bookmark_text'
     | 'bookmark_image'
-    | 'delete';
+    | 'delete'
+    | 'clockwise90';
   width?: number;
   height?: number;
 };
@@ -81,8 +84,10 @@ const Icon = ({ variant, ...rest }: IconProps) => {
       return <SaveLibraryIcon {...rest} />;
     case 'delete':
       return <DeleteIcon {...rest} />;
+    case 'clockwise90':
+      return <Clockwise90 {...rest} />;
     default:
-      return <></>;
+      return null;
   }
 };
 

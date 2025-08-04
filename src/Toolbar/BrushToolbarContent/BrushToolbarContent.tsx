@@ -18,7 +18,7 @@ import { TodayTimestampButton } from './TodayTimestampButton';
 import { SimpleInputButton } from './SimpleInputButton';
 
 export function BrushToolbarContent() {
-  const { core, touch } = useImageEditor();
+  const { core } = useImageEditor();
 
   const { tool } = useTool();
   const [config, setConfig] = useState(tool ? core.getToolConfig(tool) : null);
@@ -87,7 +87,7 @@ export function BrushToolbarContent() {
             onClick={onClickRedo}
             tooltip="재실행"
           />
-          {touch && <SettingsButton />}
+          <SettingsButton />
         </>
       }
     />

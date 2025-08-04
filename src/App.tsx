@@ -1,4 +1,4 @@
-import { Box, CssBaseline } from '@mui/material';
+import { Button, Box, CssBaseline } from '@mui/material';
 import { useMemo, useRef } from 'react';
 import sampleImage from '../samples/highres-portrait.jpeg';
 import { ImageEditor, ImageEditorProps } from './ImageEditor';
@@ -97,10 +97,22 @@ function App() {
 
   const editorRef = useRef<HTMLElement & any>(null);
 
-  // const onClickSave = async () => {
-  //   const blob = await editorRef.current?.toBlob();
-  //   console.log(blob);
-  // };
+  const onClickSave = async (): Promise<void> => {
+    try {
+      const blob = await editorRef.current?.toBlob();
+      if (blob) {
+        const now = new Date();
+        const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5);
+        const filename = `edited-image-${timestamp}.png`;
+
+        downloadBlob(blob, filename);
+      } else {
+        console.error('Failed to generate blob from editor');
+      }
+    } catch (error) {
+      console.error('Error saving image:', error);
+    }
+  };
 
   return (
     <>
@@ -111,7 +123,7 @@ function App() {
           imageUrl={sampleImage}
           boilerplate={boilerplate}
           touch={true}
-          // leadingItems={<Button onClick={onClickSave}>save</Button>}
+          leadingItems={<Button onClick={onClickSave}>save</Button>}
           toolbarPosition="bottom"
         />
       </Box>

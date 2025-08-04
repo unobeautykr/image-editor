@@ -114,7 +114,7 @@ const PopupModal = observer((props: SimpleDialogProps) => {
 });
 
 export const SettingsButton = observer(() => {
-  const { core } = useImageEditor();
+  const { core, touch } = useImageEditor();
   const { toolbarVerticalPosition } = toolbarSettings;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [usePencil, setUsePencil] = useState(core.config.usePencil);
@@ -160,6 +160,11 @@ export const SettingsButton = observer(() => {
     setPopupOpen(false);
   };
 
+  const handleClockwise90 = () => {
+    core.rotateBaseImage90();
+    handleClose();
+  };
+
   const id = isOpen ? 'simple-popper' : undefined;
 
   return (
@@ -171,61 +176,75 @@ export const SettingsButton = observer(() => {
         onTouchEnd={handleClick}
         style={{ touchAction: 'none' }}
       />
-      <Popper
-        id={id}
-        open={isOpen}
-        disablePortal={false}
-        anchorEl={anchorEl}
-        placement={toolbarVerticalPosition === 'bottom' ? 'top' : 'bottom'}
-        modifiers={[
-          {
-            name: 'flip',
-            enabled: false,
-            options: {
-              altBoundary: true,
-              rootBoundary: 'document',
-              padding: 8,
+      {anchorEl && (
+        <Popper
+          id={id}
+          open={isOpen}
+          disablePortal={false}
+          anchorEl={anchorEl}
+          placement={toolbarVerticalPosition === 'bottom' ? 'top' : 'bottom'}
+          modifiers={[
+            {
+              name: 'flip',
+              enabled: false,
+              options: {
+                altBoundary: true,
+                rootBoundary: 'document',
+                padding: 8,
+              },
             },
-          },
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 40],
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 40],
+              },
             },
-          },
-          {
-            name: 'arrow',
-            enabled: true,
-            options: {
-              element: arrowRef,
+            {
+              name: 'arrow',
+              enabled: true,
+              options: {
+                element: arrowRef,
+              },
             },
-          },
-        ]}
-      >
-        <>
-          <span
-            ref={setArrowRef}
-            className="arrow"
-            style={{ lineHeight: 0, zIndex: '10' }}
-          >
-            <Icon variant="arrow" width={14} height={12} />
-          </span>
-          <ClickAwayListener onClickAway={handleClose}>
-            <MenuList>
-              <MenuItem>
-                <ListItemText>손가락으로 그리기</ListItemText>
-                <Switch
-                  checked={!usePencil}
-                  onChange={handleClickTogglePencil}
-                />
-              </MenuItem>
-              <MenuItem onClick={handleOpenPopup}>
-                <ListItemText>툴바 위치 설정</ListItemText>
-              </MenuItem>
-            </MenuList>
-          </ClickAwayListener>
-        </>
-      </Popper>
+          ]}
+        >
+          <>
+            <span
+              ref={setArrowRef}
+              className="arrow"
+              style={{ lineHeight: 0, zIndex: '10' }}
+            >
+              <Icon variant="arrow" width={14} height={12} />
+            </span>
+            <ClickAwayListener onClickAway={handleClose}>
+              <MenuList>
+                {touch && (
+                  <>
+                    <MenuItem>
+                      <ListItemText>손가락으로 그리기</ListItemText>
+                      <Switch
+                        checked={!usePencil}
+                        onChange={handleClickTogglePencil}
+                      />
+                    </MenuItem>
+                    <MenuItem onClick={handleOpenPopup}>
+                      <ListItemText>툴바 위치 설정</ListItemText>
+                    </MenuItem>
+                  </>
+                )}
+                <MenuItem onClick={handleClockwise90}>
+                  <ListItemText>
+                    <Stack gap={'8px'} flexDirection={'row'}>
+                      90도 회전 <Icon variant="clockwise90" />
+                    </Stack>
+                  </ListItemText>
+                </MenuItem>
+              </MenuList>
+            </ClickAwayListener>
+          </>
+        </Popper>
+      )}
+
       {popupOpen && <PopupModal onClose={handleClosePopup} />}
     </>
   );

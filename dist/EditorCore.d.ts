@@ -132,4 +132,5 @@ export declare class EditorCore extends EventTarget {
     cacheConfig(): void;
     cacheTool(): void;
     isDirty(): boolean;
+    rotateBaseImage90(): void;
 }

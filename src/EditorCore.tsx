@@ -679,57 +679,81 @@ export class EditorCore extends EventTarget {
   }
 
   fitCanvas() {
-    if (!this.c.backgroundImage) return;
-    if (!this.containerSize) return;
+    const image = this.c.backgroundImage;
+    const container = this.containerSize;
+    if (!image || !container) return;
+
+    const imageWidth = image.width;
+    const imageHeight = image.height;
+    const imageAngle = image.angle || 0;
+
+    // 90도 또는 270도 회전인지 확인
+    const isRotated90or270 = Math.abs(imageAngle % 180) === 90;
+
+    // 회전된 경우 실제 차지하는 공간의 width/height 계산
+    const effectiveWidth = isRotated90or270 ? imageHeight : imageWidth;
+    const effectiveHeight = isRotated90or270 ? imageWidth : imageHeight;
 
     let zoomMin = Math.min(
-      1,
-      Math.min(
-        this.containerSize.width / this.c.backgroundImage.width,
-        this.containerSize.height / this.c.backgroundImage.height
-      )
+      this.containerSize.width / effectiveWidth,
+      this.containerSize.height / effectiveHeight
     );
 
     const isSmallImage =
-      this.containerSize.width > this.c.backgroundImage.width ||
-      this.containerSize.height > this.c.backgroundImage.height;
+      container.width > effectiveWidth || container.height > effectiveHeight;
 
     if (isSmallImage) {
       zoomMin = Math.min(
-        this.containerSize.width / this.c.backgroundImage.width,
-        this.containerSize.height / this.c.backgroundImage.height
+        container.width / effectiveWidth,
+        container.height / effectiveHeight
       );
     }
 
-    this.c.setWidth(this.containerSize.width);
-    this.c.setHeight(this.containerSize.height);
-    this.c.backgroundImage.center();
+    this.zoomMin = zoomMin;
+    this.c.setWidth(container.width);
+    this.c.setHeight(container.height);
+
+    image.set({
+      originX: 'center',
+      originY: 'center',
+    });
+    image.center();
 
     const clipPath = new fabric.Rect({
-      width: this.c.backgroundImage.width + 2,
-      height: this.c.backgroundImage.height + 2,
-      top: this.c.backgroundImage.top - 1,
-      left: this.c.backgroundImage.left - 1,
+      width: effectiveWidth + 2,
+      height: effectiveHeight + 2,
+      originX: 'center',
+      originY: 'center',
+      angle: 0,
+      left: image.left - 1,
+      top: image.top - 1,
     });
 
     this.c.clipPath = clipPath;
-    this.zoomMin = zoomMin;
-    this.zoom(
-      { x: this.containerSize.width / 2, y: this.containerSize.height / 2 },
-      zoomMin
-    );
+
+    this.zoom({ x: container.width / 2, y: container.height / 2 }, zoomMin);
   }
 
   getDataUrl(format: any) {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
+
+    const image = this.c.backgroundImage;
+    const imageAngle = image?.angle || 0;
+    const isRotated90or270 = Math.abs(imageAngle % 180) === 90;
+
+    // 회전된 경우 실제 차지하는 공간 크기 사용
+    const exportWidth = isRotated90or270 ? image.height : image.width;
+    const exportHeight = isRotated90or270 ? image.width : image.height;
+
     const dataUrl = this.c.toDataURL({
       format: format.toLowerCase() === 'png' ? 'png' : 'jpeg',
-      width: this.c.clipPath.width,
-      height: this.c.clipPath.height,
-      left: this.c.clipPath.left,
-      top: this.c.clipPath.top,
+      width: exportWidth,
+      height: exportHeight,
+      left: image.left - exportWidth / 2,
+      top: image.top - exportHeight / 2,
     });
+
     this.c.viewportTransform = originalTransform;
     return dataUrl;
   }
@@ -737,6 +761,15 @@ export class EditorCore extends EventTarget {
   async toBlob() {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
+
+    const image = this.c.backgroundImage;
+    const imageAngle = image?.angle || 0;
+    const isRotated90or270 = Math.abs(imageAngle % 180) === 90;
+
+    // 회전된 경우 실제 차지하는 공간 크기 사용
+    const exportWidth = isRotated90or270 ? image.height : image.width;
+    const exportHeight = isRotated90or270 ? image.width : image.height;
+
     const blob = new Promise((res, rej) => {
       this.c.toBlob(
         (blob: any) => {
@@ -747,13 +780,14 @@ export class EditorCore extends EventTarget {
           res(blob);
         },
         {
-          width: this.c.clipPath.width - 2,
-          height: this.c.clipPath.height - 2,
-          left: this.c.clipPath.left + 1,
-          top: this.c.clipPath.top + 1,
+          width: exportWidth,
+          height: exportHeight,
+          left: image.left - exportWidth / 2,
+          top: image.top - exportHeight / 2,
         }
       );
     });
+
     try {
       this.busy = true;
       await blob;
@@ -868,5 +902,24 @@ export class EditorCore extends EventTarget {
 
   isDirty() {
     return this.history.index > 0;
+  }
+
+  rotateBaseImage90() {
+    if (!this.available) return;
+    if (!this.c.backgroundImage) return;
+
+    const image = this.c.backgroundImage;
+    const currentAngle = image.angle || 0;
+    const newAngle = (currentAngle + 90) % 360;
+
+    image.set({
+      originX: 'center',
+      originY: 'center',
+      angle: newAngle,
+    });
+
+    image.center();
+    this.c.requestRenderAll();
+    this.fitCanvas();
   }
 }
