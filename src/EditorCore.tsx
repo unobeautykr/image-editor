@@ -324,34 +324,65 @@ export class EditorCore extends EventTarget {
   adjustPan() {
     const vpt = this.c.viewportTransform;
     const zoom = this.c.getZoom();
+    const image = this.c.backgroundImage;
 
-    const offset = {
-      x: (this.c.getWidth() * (1 / this.zoomMin - 1)) / 2,
-      y: (this.c.getHeight() * (1 / this.zoomMin - 1)) / 2,
-    };
+    if (!image) return;
 
-    const frameSize = {
-      width:
-        (offset.x + this.c.backgroundImage.left) * 2 +
-        this.c.backgroundImage.width,
-      height:
-        (offset.y + this.c.backgroundImage.top) * 2 +
-        this.c.backgroundImage.height,
-    };
+    const imageAngle = image.angle || 0;
+    const isRotated90or270 = Math.abs(imageAngle % 180) === 90;
 
-    const offsetBoundary = {
-      x: {
-        min: this.c.getWidth() + (offset.x - frameSize.width) * zoom,
-        max: offset.x * zoom,
-      },
-      y: {
-        min: this.c.getHeight() + (offset.y - frameSize.height) * zoom,
-        max: offset.y * zoom,
-      },
-    };
+    // 회전을 고려한 실제 이미지 크기
+    const actualImageWidth = isRotated90or270 ? image.height : image.width;
+    const actualImageHeight = isRotated90or270 ? image.width : image.height;
 
-    vpt[4] = this.clamp(vpt[4], offsetBoundary.x.min, offsetBoundary.x.max);
-    vpt[5] = this.clamp(vpt[5], offsetBoundary.y.min, offsetBoundary.y.max);
+    // 캔버스 크기
+    const canvasWidth = this.c.getWidth();
+    const canvasHeight = this.c.getHeight();
+
+    // 줌된 이미지 크기
+    const scaledImageWidth = actualImageWidth * zoom;
+    const scaledImageHeight = actualImageHeight * zoom;
+
+    // 이미지 중심점 (회전 고려)
+    const imageCenterX = image.left;
+    const imageCenterY = image.top;
+
+    // 이미지의 실제 경계 좌표 (줌 적용)
+    const imageLeft = (imageCenterX - actualImageWidth / 2) * zoom;
+    const imageRight = (imageCenterX + actualImageWidth / 2) * zoom;
+    const imageTop = (imageCenterY - actualImageHeight / 2) * zoom;
+    const imageBottom = (imageCenterY + actualImageHeight / 2) * zoom;
+
+    // 패닝 제한 계산
+    let minX: number, maxX: number, minY: number, maxY: number;
+
+    if (scaledImageWidth <= canvasWidth) {
+      // 이미지가 캔버스보다 작거나 같으면 중앙에 고정
+      const targetX = canvasWidth / 2 - imageCenterX * zoom;
+      minX = maxX = targetX;
+    } else {
+      // 이미지가 캔버스보다 크면 이미지 경계가 캔버스 경계를 벗어나지 않도록
+      // 이미지 오른쪽 끝이 캔버스 오른쪽에 닿을 때의 최소 X
+      minX = canvasWidth - imageRight;
+      // 이미지 왼쪽 끝이 캔버스 왼쪽에 닿을 때의 최대 X
+      maxX = -imageLeft;
+    }
+
+    if (scaledImageHeight <= canvasHeight) {
+      // 이미지가 캔버스보다 작거나 같으면 중앙에 고정
+      const targetY = canvasHeight / 2 - imageCenterY * zoom;
+      minY = maxY = targetY;
+    } else {
+      // 이미지가 캔버스보다 크면 이미지 경계가 캔버스 경계를 벗어나지 않도록
+      // 이미지 아래쪽 끝이 캔버스 아래쪽에 닿을 때의 최소 Y
+      minY = canvasHeight - imageBottom;
+      // 이미지 위쪽 끝이 캔버스 위쪽에 닿을 때의 최대 Y
+      maxY = -imageTop;
+    }
+
+    // viewport transform 제한 적용
+    vpt[4] = this.clamp(vpt[4], minX, maxX);
+    vpt[5] = this.clamp(vpt[5], minY, maxY);
 
     this.c.setViewportTransform(vpt);
   }

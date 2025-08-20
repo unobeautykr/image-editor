@@ -18,6 +18,7 @@ import { Toolbar } from './Toolbar/Toolbar';
 import { EditorCore } from './EditorCore';
 import { BoilerplateData } from './types';
 import toolbarSettings from '~/store/toolbarSettings';
+import { EditorMode } from './types/editor';
 
 interface ImageEditorContextValue {
   core: EditorCore;
@@ -141,6 +142,7 @@ export interface ImageEditorProps {
   touch?: boolean;
   toolbarPosition?: 'bottom' | 'right';
   leadingItems?: ReactNode;
+  mode?: EditorMode;
 }
 
 export const ImageEditor = observer(
@@ -152,6 +154,7 @@ export const ImageEditor = observer(
       touch,
       toolbarPosition = 'bottom',
       leadingItems,
+      mode = 'image',
     },
     ref
   ) {
@@ -163,7 +166,9 @@ export const ImageEditor = observer(
         },
         {
           component: (
-            <>{!viewOnly && <Toolbar leadingItems={leadingItems} />}</>
+            <>
+              {!viewOnly && <Toolbar leadingItems={leadingItems} mode={mode} />}
+            </>
           ),
         },
       ];

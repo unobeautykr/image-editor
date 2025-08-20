@@ -123,6 +123,8 @@ function App() {
           imageUrl={sampleImage}
           boilerplate={boilerplate}
           touch={true}
+          // viewOnly={true}
+          mode="template"
           leadingItems={<Button onClick={onClickSave}>save</Button>}
           toolbarPosition="bottom"
         />
