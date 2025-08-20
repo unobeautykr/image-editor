@@ -124,9 +124,9 @@ function App() {
           boilerplate={boilerplate}
           touch={true}
           // viewOnly={true}
-          mode="template"
+          // mode="template"
           leadingItems={<Button onClick={onClickSave}>save</Button>}
-          toolbarPosition="bottom"
+          toolbarPosition="right"
         />
       </Box>
     </>

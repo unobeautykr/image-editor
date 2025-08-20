@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BrushToolbarContent } from './BrushToolbarContent/BrushToolbarContent';
 import { TextToolbarContent } from './TextToolbarContent/TextToolbarContent';
 import { ImageToolbarContent } from './ImageToolbarContent/ImageToolbarContent';
+import { TemplateToolbarContent } from './BrushToolbarContent/TemplateToolbarContent';
 import { EditorCore } from '../EditorCore';
 import { grey } from '@mui/material/colors';
 import { useElementSize } from '~/useElementSize';
@@ -19,104 +20,197 @@ import { TextToolIcon } from '~/icons/TextToolIcon';
 import { ImageToolIcon } from '~/icons/ImageToolIcon';
 import toolbarSettings from '~/store/toolbarSettings';
 import { EditorMode } from '~/types/editor';
-import { TemplateToolbarContent } from './BrushToolbarContent/TemplateToolbarContent';
 
-const Icon = ({ toolbarMode }: { toolbarMode: string }) => {
+interface ToolbarProps {
+  leadingItems?: React.ReactNode;
+  mode: EditorMode;
+}
+
+interface WindowDimensions {
+  width: number;
+  height: number;
+}
+
+const TOOL_ICON_MAP: Record<string, React.ComponentType> = {
+  [ToolName.PAN]: PanToolIcon,
+  [ToolName.ERASER]: EraserToolIcon,
+  [ToolName.FREEDRAW]: PenToolIcon,
+  [ToolName.MARKER]: MarkerToolIcon,
+};
+
+const MODE_ICON_MAP: Record<string, React.ComponentType> = {
+  [EditorCore.Mode.TEXT]: TextToolIcon,
+  [EditorCore.Mode.IMAGE]: ImageToolIcon,
+};
+
+const useWindowDimensions = (): WindowDimensions => {
+  const [dimensions, setDimensions] = useState<WindowDimensions>({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  return dimensions;
+};
+
+const ToolbarIcon: React.FC<{ toolbarMode: string }> = ({ toolbarMode }) => {
   const { tool } = useTool();
 
-  if (toolbarMode === EditorCore.Mode.TEXT) {
-    return <TextToolIcon />;
-  } else if (toolbarMode === EditorCore.Mode.IMAGE) {
-    return <ImageToolIcon />;
+  const ModeIcon = MODE_ICON_MAP[toolbarMode];
+  if (ModeIcon) {
+    return <ModeIcon />;
   }
-  return tool === ToolName.PAN ? (
-    <PanToolIcon />
-  ) : tool === ToolName.ERASER ? (
-    <EraserToolIcon />
-  ) : tool === ToolName.FREEDRAW ? (
-    <PenToolIcon />
-  ) : tool === ToolName.MARKER ? (
-    <MarkerToolIcon />
-  ) : (
-    <SelectToolIcon />
-  );
+
+  const ToolIcon = TOOL_ICON_MAP[tool] || SelectToolIcon;
+  return <ToolIcon />;
+};
+
+const ToolbarContent: React.FC<{ mode: string; editorMode: EditorMode }> = ({
+  mode,
+  editorMode,
+}) => {
+  switch (mode) {
+    case EditorCore.Mode.BRUSH:
+      return editorMode === 'image' ? (
+        <BrushToolbarContent />
+      ) : (
+        <TemplateToolbarContent />
+      );
+    case EditorCore.Mode.TEXT:
+      return <TextToolbarContent />;
+    case EditorCore.Mode.IMAGE:
+      return <ImageToolbarContent />;
+    default:
+      return null;
+  }
 };
 
 export const Toolbar = observer(
-  ({
-    leadingItems,
-    mode: editorMode,
-  }: {
-    leadingItems: any;
-    mode: EditorMode;
-  }) => {
+  ({ leadingItems, mode: editorMode }: ToolbarProps) => {
     const { core, toolbarPosition } = useImageEditor();
     const [mode, setMode] = useState(core.mode);
-    const wrapperRef = useRef(null);
     const [showControlPad, setShowControlPad] = useState(true);
-    const [height, setHeight] = useState(window.innerHeight);
-    const [width, setWidth] = useState(window.innerWidth);
+
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const { width, height } = useWindowDimensions();
     const toolbarSize = useElementSize(wrapperRef);
     const { toolbarVerticalPosition } = toolbarSettings;
 
-    const handleResize = () => {
-      setHeight(window.innerHeight);
-      setWidth(window.innerWidth);
-    };
-
     useEffect(() => {
-      window.addEventListener('resize', handleResize);
-      return () => {
-        // cleanup
-        window.removeEventListener('resize', handleResize);
-      };
-    }, []);
-
-    useEffect(() => {
-      return core.on(EditorCore.Event.MODE_CHANGE, setMode);
+      const unsubscribe = core.on(EditorCore.Event.MODE_CHANGE, setMode);
+      return () => unsubscribe?.();
     }, [core]);
 
-    const handleToggleShowControlPad = () => {
-      setShowControlPad(!showControlPad);
-    };
+    const handleToggleShowControlPad = useCallback(() => {
+      setShowControlPad((prev) => !prev);
+    }, []);
+
+    const styles = useMemo(() => {
+      const isRight = toolbarPosition === 'right';
+      const isBottom = toolbarPosition === 'bottom';
+
+      const getGridTemplate = () => {
+        const templateKey = isRight
+          ? 'gridTemplateRows'
+          : 'gridTemplateColumns';
+
+        if (mode === EditorCore.Mode.IMAGE) {
+          return { [templateKey]: isRight ? '799px' : '655px' };
+        }
+
+        if (editorMode === 'image') {
+          return {
+            [templateKey]: isRight ? '583px 88px 128px' : '439px 88px 128px',
+          };
+        }
+
+        if (mode === EditorCore.Mode.TEXT) {
+          return {
+            [templateKey]: isRight ? '400px 88px 50px' : '320px 88px 50px',
+          };
+        }
+
+        return { [templateKey]: isRight ? '400px 88px' : '320px 88px' };
+      };
+
+      return {
+        paper: {
+          display: 'flex',
+          backgroundColor: grey[50],
+          alignItems: 'center',
+          gap: 1,
+          ...(isRight && {
+            flexDirection: 'column',
+            width: 88,
+            py: 2,
+          }),
+          ...(isBottom && {
+            flexDirection: 'row',
+            height: 88,
+            px: '27px',
+          }),
+        },
+        leadingItems: {
+          display: 'flex',
+          gap: 1,
+          flexDirection: isRight ? 'column' : 'row',
+        },
+        toolbarContents: {
+          display: 'grid',
+          position: 'relative',
+          color: 'black',
+          gap: '16px',
+          ...getGridTemplate(),
+        },
+      };
+    }, [toolbarPosition, mode, editorMode]);
+
+    const boxWrapperProps = useMemo(
+      () => ({
+        toolbarposition: toolbarPosition,
+        $toolbarverticalposition: toolbarVerticalPosition,
+        window_width: width,
+        window_height: height,
+        toolbar_width: toolbarSize?.width,
+        toolbar_height: toolbarSize?.height,
+        $showcontrolpad: showControlPad,
+      }),
+      [
+        toolbarPosition,
+        toolbarVerticalPosition,
+        width,
+        height,
+        toolbarSize?.width,
+        toolbarSize?.height,
+        showControlPad,
+      ]
+    );
 
     return (
       <>
-        <Box
-          className="toolbar-wrapper"
-          toolbarposition={toolbarPosition}
-          $toolbarverticalposition={toolbarVerticalPosition}
-          window_width={width}
-          window_height={height}
-          toolbar_width={toolbarSize?.width}
-          toolbar_height={toolbarSize?.height}
-          $showcontrolpad={showControlPad}
-        >
-          <div
-            style={{
-              position: 'relative',
-            }}
-          >
+        <Box className="toolbar-wrapper" {...boxWrapperProps}>
+          <div style={{ position: 'relative' }}>
             {showControlPad && (
-              <Paper
-                ref={wrapperRef}
-                sx={{
-                  display: 'flex',
-                  backgroundColor: grey[50],
-                  alignItems: 'center',
-                  gap: 1,
-                  ...(toolbarPosition === 'right' && {
-                    flexDirection: 'column',
-                    width: 88,
-                    py: 2,
-                  }),
-                  ...(toolbarPosition === 'bottom' && {
-                    flexDirection: 'row',
-                    height: 88,
-                    px: '27px',
-                  }),
-                }}
-              >
+              <Paper ref={wrapperRef} sx={styles.paper}>
                 {toolbarPosition === 'bottom' && (
                   <Box
                     className="control-wrapper-1"
@@ -126,72 +220,22 @@ export const Toolbar = observer(
                       <IconButton
                         className="show-control-box-btn rotate-180 hide-control-box-btn border-none"
                         onClick={handleToggleShowControlPad}
+                        aria-label="툴바 숨기기"
                       >
                         <SVGIcon variant="fold" width={16} height={16} />
                       </IconButton>
                     </Box>
                   </Box>
                 )}
+
                 {leadingItems && (
-                  <Box
-                    className="leading-items"
-                    sx={{
-                      display: 'flex',
-                      gap: 1,
-                      ...(toolbarPosition === 'right' && {
-                        flexDirection: 'column',
-                      }),
-                      ...(toolbarPosition === 'bottom' && {
-                        flexDirection: 'row',
-                      }),
-                    }}
-                  >
+                  <Box className="leading-items" sx={styles.leadingItems}>
                     {leadingItems}
                   </Box>
                 )}
-                <Box
-                  className="toolbar-contents"
-                  sx={{
-                    display: 'grid',
-                    position: 'relative',
-                    color: 'black',
-                    gap: '16px',
-                    ...(toolbarPosition === 'right' &&
-                      (mode === EditorCore.Mode.IMAGE
-                        ? {
-                            gridTemplateRows: `799px`,
-                          }
-                        : {
-                            gridTemplateRows:
-                              editorMode === 'image'
-                                ? `583px 88px 128px`
-                                : mode === EditorCore.Mode.TEXT
-                                ? `400px 88px 50px`
-                                : '400px 88px',
-                          })),
-                    ...(toolbarPosition === 'bottom' &&
-                      (mode === EditorCore.Mode.IMAGE
-                        ? {
-                            gridTemplateColumns: `655px`,
-                          }
-                        : {
-                            gridTemplateColumns:
-                              editorMode === 'image'
-                                ? `439px 88px 128px`
-                                : mode === EditorCore.Mode.TEXT
-                                ? `320px 88px 50px`
-                                : '320px 88px',
-                          })),
-                  }}
-                >
-                  {mode === EditorCore.Mode.BRUSH &&
-                    (editorMode === 'image' ? (
-                      <BrushToolbarContent />
-                    ) : (
-                      <TemplateToolbarContent />
-                    ))}
-                  {mode === EditorCore.Mode.TEXT && <TextToolbarContent />}
-                  {mode === EditorCore.Mode.IMAGE && <ImageToolbarContent />}
+
+                <Box className="toolbar-contents" sx={styles.toolbarContents}>
+                  <ToolbarContent mode={mode} editorMode={editorMode} />
                 </Box>
               </Paper>
             )}
@@ -205,12 +249,13 @@ export const Toolbar = observer(
             window_width={width}
             window_height={height}
           >
-            <Box className="show-control-btn-wrapper ">
+            <Box className="show-control-btn-wrapper">
               <IconButton
                 className="show-control-box-btn btn-type-1"
                 onClick={handleToggleShowControlPad}
+                aria-label="툴바 보이기"
               >
-                <Icon toolbarMode={mode} />
+                <ToolbarIcon toolbarMode={mode} />
               </IconButton>
             </Box>
           </Box>

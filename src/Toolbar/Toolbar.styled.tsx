@@ -5,6 +5,7 @@ import {
   styled as muiStyled,
 } from '@mui/material';
 import styled from 'styled-components';
+import { ToolbarPosition } from '../types/editor';
 
 export const Paper = muiStyled(MuiPaper)(
   () => `
@@ -14,7 +15,7 @@ export const Paper = muiStyled(MuiPaper)(
 );
 
 export const Box = styled(MuiBox)<{
-  toolbarposition?: 'bottom' | 'right';
+  toolbarposition?: ToolbarPosition;
   $toolbarverticalposition?: 'bottom' | 'top';
   window_height?: number;
   window_width?: number;
@@ -39,6 +40,7 @@ export const Box = styled(MuiBox)<{
         : 'padding-top: 10px;')
     }
     display: flex;
+    height: ${toolbarposition === 'right' ? '100vh' : 'initial'};
     width: ${toolbarposition === 'right' ? 'initial' : '100vw'};
     justify-content: ${
       (toolbarposition === 'right' &&

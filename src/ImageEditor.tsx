@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Box } from '@mui/system';
+import { Box } from './ImageEditor.styled';
 import { observer } from 'mobx-react';
 import { useElementSize } from './useElementSize';
 import { EditorCanvas } from './EditorCanvas';
@@ -18,7 +18,7 @@ import { Toolbar } from './Toolbar/Toolbar';
 import { EditorCore } from './EditorCore';
 import { BoilerplateData } from './types';
 import toolbarSettings from '~/store/toolbarSettings';
-import { EditorMode } from './types/editor';
+import { EditorMode, ToolbarPosition } from './types/editor';
 
 interface ImageEditorContextValue {
   core: EditorCore;
@@ -28,7 +28,7 @@ interface ImageEditorContextValue {
     onSaveBoilerplate: (contents: any) => Promise<void>;
     onDeleteBoilerplate: (id: number) => Promise<void>;
   }[];
-  toolbarPosition: 'bottom' | 'right';
+  toolbarPosition: ToolbarPosition;
 }
 
 interface ImageEditorProviderProps {
@@ -37,7 +37,7 @@ interface ImageEditorProviderProps {
   children: React.ReactNode;
   boilerplate?: ImageEditorContextValue['boilerplate'];
   touch?: boolean;
-  toolbarPosition: 'bottom' | 'right';
+  toolbarPosition: ToolbarPosition;
 }
 
 const ImageEditorContext = createContext<ImageEditorContextValue | null>(null);
@@ -140,7 +140,7 @@ export interface ImageEditorProps {
   imageUrl: string;
   boilerplate?: ImageEditorContextValue['boilerplate'];
   touch?: boolean;
-  toolbarPosition?: 'bottom' | 'right';
+  toolbarPosition?: ToolbarPosition;
   leadingItems?: ReactNode;
   mode?: EditorMode;
 }
@@ -167,7 +167,14 @@ export const ImageEditor = observer(
         {
           component: (
             <>
-              {!viewOnly && <Toolbar leadingItems={leadingItems} mode={mode} />}
+              {!viewOnly && (
+                <Box
+                  className="toolbar-wrapper-box"
+                  toolbarPosition={toolbarPosition}
+                >
+                  <Toolbar leadingItems={leadingItems} mode={mode} />
+                </Box>
+              )}
             </>
           ),
         },
