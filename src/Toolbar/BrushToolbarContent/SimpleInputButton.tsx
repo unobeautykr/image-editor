@@ -29,13 +29,13 @@ export const SimpleInputButton = observer(() => {
   const selected = tool === ToolName.SIMPLE_INPUT;
 
   const loadTextList = useCallback(async () => {
-    if (!boilerplate || (boilerplate && !boilerplate[0])) return;
+    if (!boilerplate?.[0]?.onLoadBoilerplate) return;
     const data = await boilerplate[0].onLoadBoilerplate();
     setTextBoilerplates(data);
   }, [boilerplate]);
 
   const loadImageList = useCallback(async () => {
-    if (!boilerplate || (boilerplate && !boilerplate[1])) return;
+    if (!boilerplate?.[1]?.onLoadBoilerplate) return;
     const data = await boilerplate[1].onLoadBoilerplate();
     setImageBoilerplates(data);
   }, [boilerplate]);
@@ -56,12 +56,14 @@ export const SimpleInputButton = observer(() => {
   };
 
   const onDeleteTextBoilerplate = async (id: number) => {
-    boilerplate && (await boilerplate[0].onDeleteBoilerplate(id));
+    if (boilerplate?.[0]?.onDeleteBoilerplate) {
+      await boilerplate[0].onDeleteBoilerplate(id);
+    }
     setTextBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
   const onClickTextBoilerplate = async () => {
-    if (!boilerplate || (boilerplate && !boilerplate[0])) return;
+    if (!boilerplate?.[0]?.onLoadBoilerplate) return;
     await loadTextList();
     setOpenTextBoilerplate((v) => !v);
   };
@@ -78,12 +80,14 @@ export const SimpleInputButton = observer(() => {
   };
 
   const onDeleteImageBoilerplate = async (id: number) => {
-    boilerplate && (await boilerplate[1].onDeleteBoilerplate(id));
+    if (boilerplate?.[1]?.onDeleteBoilerplate) {
+      await boilerplate[1].onDeleteBoilerplate(id);
+    }
     setImageBoilerplates((bps) => bps.filter((b: any) => b.id !== id));
   };
 
   const onClickImageBoilerplate = async () => {
-    if (!boilerplate || (boilerplate && !boilerplate[1])) return;
+    if (!boilerplate?.[1]?.onLoadBoilerplate) return;
     await loadImageList();
     setOpenImageBoilerplate((v) => !v);
   };

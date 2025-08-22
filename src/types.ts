@@ -1,1 +1,4 @@
-export interface BoilerplateData {}
+export interface BoilerplateData {
+  id: number;
+  contents: any;
+}

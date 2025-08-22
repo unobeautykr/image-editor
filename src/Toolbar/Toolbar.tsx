@@ -96,7 +96,7 @@ const ToolbarContent: React.FC<{ mode: string; editorMode: EditorMode }> = ({
         <TemplateToolbarContent />
       );
     case EditorCore.Mode.TEXT:
-      return <TextToolbarContent />;
+      return <TextToolbarContent editorMode={editorMode} />;
     case EditorCore.Mode.IMAGE:
       return <ImageToolbarContent />;
     default:
@@ -144,12 +144,19 @@ export const Toolbar = observer(
         }
 
         if (mode === EditorCore.Mode.TEXT) {
+          if (editorMode === 'template') {
+            return {
+              [templateKey]: isRight ? '210px 88px 50px' : '200px 88px 50px',
+            };
+          }
           return {
-            [templateKey]: isRight ? '400px 88px 50px' : '320px 88px 50px',
+            [templateKey]: isRight ? '190px 88px 50px' : '320px 88px 50px',
           };
         }
 
-        return { [templateKey]: isRight ? '400px 88px' : '320px 88px' };
+        return {
+          [templateKey]: isRight ? '190px 88px 88px' : '160px 88px 88px',
+        };
       };
 
       return {

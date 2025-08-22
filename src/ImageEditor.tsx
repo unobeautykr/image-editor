@@ -20,24 +20,33 @@ import { BoilerplateData } from './types';
 import toolbarSettings from '~/store/toolbarSettings';
 import { EditorMode, ToolbarPosition } from './types/editor';
 
+export interface ImageEditorRef {
+  getDataUrl: (format?: string) => string;
+  toBlob: () => Promise<Blob | null>;
+  isDirty: () => boolean;
+  isBusy: () => boolean;
+  saveCanvasJson: () => any;
+  loadCanvasJson: (json: any) => void;
+}
+
 interface ImageEditorContextValue {
   core: EditorCore;
   touch: boolean;
   boilerplate?: {
-    onLoadBoilerplate: () => Promise<BoilerplateData[]>;
-    onSaveBoilerplate: (contents: any) => Promise<void>;
-    onDeleteBoilerplate: (id: number) => Promise<void>;
+    onLoadBoilerplate?: () => Promise<BoilerplateData[]>;
+    onSaveBoilerplate?: (contents: any) => Promise<void>;
+    onDeleteBoilerplate?: (id: number) => Promise<void>;
   }[];
   toolbarPosition: ToolbarPosition;
 }
 
 interface ImageEditorProviderProps {
-  editorRef: React.Ref<HTMLElement>;
   imageUrl: string;
   children: React.ReactNode;
   boilerplate?: ImageEditorContextValue['boilerplate'];
   touch?: boolean;
   toolbarPosition: ToolbarPosition;
+  editorRef: React.Ref<ImageEditorRef>;
 }
 
 const ImageEditorContext = createContext<ImageEditorContextValue | null>(null);
@@ -59,7 +68,7 @@ const ImageEditorProvider = ({
 
   useImperativeHandle(
     editorRef,
-    (): any => {
+    (): ImageEditorRef => {
       return {
         getDataUrl(format: any) {
           return core.getDataUrl(format);
@@ -72,6 +81,12 @@ const ImageEditorProvider = ({
         },
         isBusy() {
           return core.busy;
+        },
+        saveCanvasJson() {
+          return core.saveCanvasJson();
+        },
+        loadCanvasJson(json: any) {
+          core.loadCanvasJson(json);
         },
       };
     },
@@ -143,10 +158,11 @@ export interface ImageEditorProps {
   toolbarPosition?: ToolbarPosition;
   leadingItems?: ReactNode;
   mode?: EditorMode;
+  customerTemplates?: BoilerplateData[];
 }
 
 export const ImageEditor = observer(
-  forwardRef<HTMLElement, ImageEditorProps>(function ImageEditor(
+  forwardRef<ImageEditorRef, ImageEditorProps>(function ImageEditor(
     {
       viewOnly = false,
       imageUrl,

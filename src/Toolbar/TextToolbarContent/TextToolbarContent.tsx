@@ -8,6 +8,7 @@ import TextIncreaseIcon from '@mui/icons-material/TextIncrease';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Icon from '~/icons/Icon';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
+import { EditorMode } from '~/types/editor';
 
 const ToolbarButton = styled(_ToolbarButton)(
   () => `
@@ -52,7 +53,11 @@ const SizeSlider = ({ value, onChange }: any) => {
   );
 };
 
-export function TextToolbarContent() {
+export function TextToolbarContent({
+  editorMode,
+}: {
+  editorMode?: EditorMode;
+}) {
   const { core, boilerplate, toolbarPosition } = useImageEditor();
   if (!boilerplate)
     throw new Error(
@@ -78,6 +83,9 @@ export function TextToolbarContent() {
   };
 
   const onClickSave = async () => {
+    if (!boilerplate?.[0]?.onSaveBoilerplate) {
+      return;
+    }
     await boilerplate[0].onSaveBoilerplate(core.getSelectedTextContents());
   };
 
@@ -87,22 +95,24 @@ export function TextToolbarContent() {
         leadingItems={
           <>
             <SizeSlider value={size} onChange={onChangeSize} />
-            <ToolbarButton
-              className="save-btn"
-              Icon={() => <Icon variant="library_add" />}
-              onClick={onClickSave}
-              tooltip={
-                toolbarPosition === 'bottom' ? (
-                  '자주쓰는 문구로 저장'
-                ) : (
-                  <>
-                    자주쓰는 문구로 <br />
-                    저장
-                  </>
-                )
-              }
-              disableToolbar={true}
-            />
+            {editorMode === 'image' && (
+              <ToolbarButton
+                className="save-btn"
+                Icon={() => <Icon variant="library_add" />}
+                onClick={onClickSave}
+                tooltip={
+                  toolbarPosition === 'bottom' ? (
+                    '자주쓰는 문구로 저장'
+                  ) : (
+                    <>
+                      자주쓰는 문구로 <br />
+                      저장
+                    </>
+                  )
+                }
+                disableToolbar={true}
+              />
+            )}
           </>
         }
         palette={<ColorPalette value={color} onChange={onChangeColor} />}

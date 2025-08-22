@@ -18,6 +18,7 @@ import { ReactComponent as BookmarkTextIcon } from '~/assets/icons/update_icon/i
 import { ReactComponent as BookmarkImageIcon } from '~/assets/icons/update_icon/ic_lib_image.svg';
 import { ReactComponent as DeleteIcon } from '~/assets/icons/update_icon/ic_delete_16.svg';
 import { ReactComponent as Clockwise90 } from '~/assets/icons/ic-clockwise90.svg';
+import { ReactComponent as CustomerTemplate } from '~/assets/icons/templateCustomer.svg';
 
 type IconProps = {
   variant:
@@ -40,9 +41,11 @@ type IconProps = {
     | 'bookmark_text'
     | 'bookmark_image'
     | 'delete'
-    | 'clockwise90';
+    | 'clockwise90'
+    | 'customer_template';
   width?: number;
   height?: number;
+  [key: string]: any;
 };
 const Icon = ({ variant, ...rest }: IconProps) => {
   switch (variant) {
@@ -86,6 +89,8 @@ const Icon = ({ variant, ...rest }: IconProps) => {
       return <DeleteIcon {...rest} />;
     case 'clockwise90':
       return <Clockwise90 {...rest} />;
+    case 'customer_template':
+      return <CustomerTemplate {...rest} />;
     default:
       return null;
   }

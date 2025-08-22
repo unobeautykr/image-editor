@@ -4,19 +4,26 @@ import { useEffect, useState } from 'react';
 import { ToolbarContent } from '../ToolbarContent';
 import { ToolbarButton } from '../ToolbarButton';
 import { PanButton } from './PanButton';
-import { TextButton } from './TextButton';
 import { SelectButton } from './SelectButton';
+import { ColorPalette } from '../ColorPalette';
 import { UndoIcon } from '~/icons/UndoIcon';
 import { RedoIcon } from '~/icons/RedoIcon';
+import { TemplateInputButton } from './TemplateInputButton';
 
 export function TemplateToolbarContent() {
   const { core } = useImageEditor();
 
   const { tool } = useTool();
-  const [, setConfig] = useState(tool ? core.getToolConfig(tool) : null);
-
+  const [config, setConfig] = useState(tool ? core.getToolConfig(tool) : null);
   const [history, setHistory] = useState(core.getHistoryInfo());
   const [available, setAvailable] = useState(core.available);
+
+  const onChangeToolColor = (c: any) => {
+    const newConfig = core.updateToolConfig(tool, {
+      color: c,
+    });
+    setConfig(newConfig);
+  };
 
   const onClickUndo = () => {
     core.undo();
@@ -46,12 +53,12 @@ export function TemplateToolbarContent() {
         <>
           <PanButton />
           <SelectButton />
-          <TextButton />
+          <TemplateInputButton />
         </>
       }
-      // palette={
-      //   <ColorPalette value={config?.color} onChange={onChangeToolColor} />
-      // }
+      palette={
+        <ColorPalette value={config?.color} onChange={onChangeToolColor} />
+      }
       trailingItems={
         <>
           <ToolbarButton

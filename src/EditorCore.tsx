@@ -789,7 +789,7 @@ export class EditorCore extends EventTarget {
     return dataUrl;
   }
 
-  async toBlob() {
+  async toBlob(): Promise<Blob | null> {
     const originalTransform = this.c.viewportTransform;
     this.c.viewportTransform = fabric.iMatrix.slice(0);
 
@@ -803,7 +803,7 @@ export class EditorCore extends EventTarget {
 
     const blob = new Promise((res, rej) => {
       this.c.toBlob(
-        (blob: any) => {
+        (blob: Blob) => {
           if (!blob) {
             rej(new Error('Cannot create blob'));
             return;
@@ -822,7 +822,7 @@ export class EditorCore extends EventTarget {
     try {
       this.busy = true;
       await blob;
-      return blob;
+      return blob as any as Blob | null;
     } finally {
       this.c.viewportTransform = originalTransform;
       this.busy = false;
@@ -952,5 +952,142 @@ export class EditorCore extends EventTarget {
     image.center();
     this.c.requestRenderAll();
     this.fitCanvas();
+  }
+
+  saveCanvasJson(): any {
+    if (!this.c) return null;
+
+    const objects = this.c.getObjects().filter((obj: any) => {
+      return obj !== this.c.backgroundImage;
+    });
+
+    // 백그라운드 이미지의 실제 크기와 위치
+    const image = this.c.backgroundImage;
+    const imageAngle = image?.angle || 0;
+    const isRotated90or270 = Math.abs(imageAngle % 180) === 90;
+    const imageWidth = isRotated90or270 ? image.height : image.width;
+    const imageHeight = isRotated90or270 ? image.width : image.height;
+
+    // 이미지의 실제 경계 (중심점 기준)
+    const imageLeft = image.left - imageWidth / 2;
+    const imageTop = image.top - imageHeight / 2;
+
+    // 객체들을 상대적 위치로 변환하여 저장
+    const normalizedObjects = objects.map((obj: any) => {
+      const objData = obj.toObject();
+
+      // 절대 좌표를 이미지 내 상대 비율(0~1)로 변환
+      const relativeLeft = (obj.left - imageLeft) / imageWidth;
+      const relativeTop = (obj.top - imageTop) / imageHeight;
+
+      // 크기도 상대적으로 저장
+      let relativeScale = 1;
+      if (obj.type === 'i-text') {
+        relativeScale = obj.fontSize / imageWidth; // 이미지 너비 대비 폰트 크기 비율
+      } else {
+        relativeScale = (obj.scaleX || 1) / imageWidth; // 이미지 너비 대비 스케일 비율
+      }
+
+      return {
+        ...objData,
+        relativeLeft,
+        relativeTop,
+        relativeScale,
+        originalType: obj.type,
+      };
+    });
+
+    return {
+      objects: normalizedObjects,
+      version: '1.0',
+      timestamp: Date.now(),
+      reference: {
+        width: imageWidth,
+        height: imageHeight,
+        angle: imageAngle,
+      },
+    };
+  }
+
+  async loadCanvasJson(canvasData: any): Promise<boolean> {
+    if (!this.available || !canvasData) return false;
+
+    try {
+      this.busy = true;
+      this.isTraversingHistory = true;
+
+      // 기존 객체들 제거 (백그라운드는 유지)
+      const objectsToRemove = this.c.getObjects().filter((obj: any) => {
+        return obj !== this.c.backgroundImage;
+      });
+      this.c.remove(...objectsToRemove);
+
+      // 현재 캔버스의 백그라운드 이미지 정보
+      const currentImage = this.c.backgroundImage;
+      const currentAngle = currentImage?.angle || 0;
+      const isCurrentRotated = Math.abs(currentAngle % 180) === 90;
+      const currentWidth = isCurrentRotated
+        ? currentImage.height
+        : currentImage.width;
+      const currentHeight = isCurrentRotated
+        ? currentImage.width
+        : currentImage.height;
+
+      const currentLeft = currentImage.left - currentWidth / 2;
+      const currentTop = currentImage.top - currentHeight / 2;
+
+      // 저장된 객체들 복원
+      if (canvasData.objects && canvasData.objects.length > 0) {
+        await new Promise((resolve, reject) => {
+          fabric.util.enlivenObjects(
+            canvasData.objects,
+            (objects: any) => {
+              objects.forEach((obj: any, index: number) => {
+                const savedObj = canvasData.objects[index];
+
+                // 상대적 위치를 현재 이미지의 절대 좌표로 변환
+                const absoluteLeft =
+                  currentLeft + savedObj.relativeLeft * currentWidth;
+                const absoluteTop =
+                  currentTop + savedObj.relativeTop * currentHeight;
+
+                obj.set({
+                  left: absoluteLeft,
+                  top: absoluteTop,
+                });
+
+                // 크기 복원
+                if (savedObj.originalType === 'i-text') {
+                  const newFontSize = savedObj.relativeScale * currentWidth;
+                  obj.set('fontSize', newFontSize);
+                } else {
+                  const newScale = savedObj.relativeScale * currentWidth;
+                  obj.set({
+                    scaleX: newScale,
+                    scaleY: newScale,
+                  });
+                }
+
+                this.c.add(obj);
+              });
+
+              this.c.renderAll();
+              resolve(true);
+            },
+            null as any
+          );
+        });
+      }
+
+      this.isTraversingHistory = false;
+      this.busy = false;
+      this.pushHistory();
+      return true;
+    } catch (error) {
+      console.error('Failed to load canvas data:', error);
+      this.isTraversingHistory = false;
+      this.busy = false;
+      return false;
+    }
   }
 }
