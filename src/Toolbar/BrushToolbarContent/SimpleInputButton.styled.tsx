@@ -2,7 +2,7 @@ import { styled } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 
-export const ToolbarButton = styled(_ToolbarButton)<{}>(
+export const ToolbarButton = styled(_ToolbarButton)(
   () => `
   &.inner-btn {
     gap: 10px !important;

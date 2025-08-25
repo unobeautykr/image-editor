@@ -340,13 +340,13 @@ function App() {
     }
   };
 
-  const handleJsonLoad = async (): Promise<void> => {
-    try {
-      await editorRef.current?.loadCanvasJson(sampleJson);
-    } catch (error) {
-      console.error('Error saving image:', error);
-    }
-  };
+  // const handleJsonLoad = async (): Promise<void> => {
+  //   try {
+  //     await editorRef.current?.loadCanvasJson(sampleJson);
+  //   } catch (error) {
+  //     console.error('Error saving image:', error);
+  //   }
+  // };
 
   return (
     <>
@@ -364,10 +364,10 @@ function App() {
             <div>
               {/* <Button onClick={onClickSave}>save</Button> */}
               <Button onClick={handleJsonSave}>템플릿저장</Button>
-              <Button onClick={handleJsonLoad}>템플릿로드</Button>
+              {/* <Button onClick={handleJsonLoad}>템플릿로드</Button> */}
             </div>
           }
-          toolbarPosition="bottom"
+          toolbarPosition="right"
         />
       </Box>
     </>

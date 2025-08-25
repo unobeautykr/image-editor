@@ -4,14 +4,14 @@ import { ToolbarButton as _ToolbarButton } from '../ToolbarButton';
 import { useImageEditor } from '~/ImageEditor';
 import { useTool } from '~/ImageEditor';
 import { ToolName } from '~/EditorCore';
-import { TextBoilerplateDialog } from '../TextBoilerplateDialog';
+import { TextBoilerplatePopup } from '../TextBoilerplatePopup';
 import { BoilerplateData } from '~/types';
 import { ToolbarButton } from './SimpleInputButton.styled';
 import { CustomerTemplateIcon } from '~/icons/CustomerTemplateIcon';
 
 export const TemplateInputButton = observer(() => {
   const { core, boilerplate } = useImageEditor();
-  const [openTextBoilerplate, setOpenTextBoilerplate] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [textBoilerplates, setTextBoilerplates] = useState<BoilerplateData[]>(
     []
   );
@@ -26,14 +26,22 @@ export const TemplateInputButton = observer(() => {
 
   const onSelectTextBoilerplate = (message: string) => {
     core.addText(message, undefined, true);
-    setOpenTextBoilerplate(false);
+    setAnchorEl(null);
     setTool(ToolName.PAN);
   };
 
-  const onClickTextBoilerplate = async () => {
+  const onClickTextBoilerplate = async (
+    event: React.MouseEvent<HTMLElement>
+  ) => {
     if (!boilerplate || (boilerplate && !boilerplate[0])) return;
+
+    const target = event.currentTarget;
     await loadTextList();
-    setOpenTextBoilerplate((v) => !v);
+    setAnchorEl(target);
+  };
+
+  const onClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -45,11 +53,10 @@ export const TemplateInputButton = observer(() => {
         onClick={onClickTextBoilerplate}
         tooltip="고객정보 입력"
       />
-      <TextBoilerplateDialog
-        open={openTextBoilerplate}
-        onClose={() => {
-          setOpenTextBoilerplate(false);
-        }}
+      <TextBoilerplatePopup
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={onClose}
         onSelect={onSelectTextBoilerplate}
         boilerplates={textBoilerplates}
       />

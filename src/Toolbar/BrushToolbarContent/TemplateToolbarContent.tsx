@@ -12,7 +12,6 @@ import { TemplateInputButton } from './TemplateInputButton';
 
 export function TemplateToolbarContent() {
   const { core } = useImageEditor();
-
   const { tool } = useTool();
   const [config, setConfig] = useState(tool ? core.getToolConfig(tool) : null);
   const [history, setHistory] = useState(core.getHistoryInfo());
