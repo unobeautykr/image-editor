@@ -1,4 +1,5 @@
 /// <reference types="react" />
+import { ToolbarPosition } from '../types/editor';
 export declare const Paper: import("@emotion/styled").StyledComponent<{
     children?: import("react").ReactNode;
     classes?: Partial<import("@mui/material").PaperClasses> | undefined;
@@ -8,9 +9,9 @@ export declare const Paper: import("@emotion/styled").StyledComponent<{
     variant?: import("@mui/types").OverridableStringUnion<"elevation" | "outlined", import("@mui/material").PaperPropsVariantOverrides> | undefined;
 } & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & {
     ref?: ((instance: HTMLDivElement | null) => void) | import("react").RefObject<HTMLDivElement> | null | undefined;
-}, "children" | "sx" | "elevation" | keyof import("@mui/material/OverridableComponent").CommonProps | "square" | "variant"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+}, "children" | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "elevation" | "variant" | "square"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const Box: import("styled-components").StyledComponent<import("@mui/types").OverridableComponent<import("@mui/system").BoxTypeMap<{}, "div", import("@mui/material").Theme>>, any, {
-    toolbarposition?: "bottom" | "right" | undefined;
+    toolbarposition?: ToolbarPosition | undefined;
     $toolbarverticalposition?: "top" | "bottom" | undefined;
     window_height?: number | undefined;
     window_width?: number | undefined;
@@ -45,4 +46,4 @@ export declare const IconButton: import("@emotion/styled").StyledComponent<{
     touchRippleRef?: import("react").Ref<import("@mui/material/ButtonBase/TouchRipple").TouchRippleActions> | undefined;
 }, "classes"> & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & {
     ref?: ((instance: HTMLButtonElement | null) => void) | import("react").RefObject<HTMLButtonElement> | null | undefined;
-}, "children" | "color" | "sx" | "tabIndex" | "disabled" | "action" | "size" | keyof import("@mui/material/OverridableComponent").CommonProps | "centerRipple" | "disableRipple" | "disableTouchRipple" | "focusRipple" | "focusVisibleClassName" | "LinkComponent" | "onFocusVisible" | "TouchRippleProps" | "touchRippleRef" | "disableFocusRipple" | "edge"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+}, "children" | "color" | "tabIndex" | "sx" | "size" | keyof import("@mui/material/OverridableComponent").CommonProps | "disabled" | "action" | "centerRipple" | "disableRipple" | "disableTouchRipple" | "focusRipple" | "focusVisibleClassName" | "LinkComponent" | "onFocusVisible" | "TouchRippleProps" | "touchRippleRef" | "disableFocusRipple" | "edge"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;

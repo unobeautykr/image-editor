@@ -109,7 +109,7 @@ export declare class EditorCore extends EventTarget {
     _dispatchAvailbilityChange(): void;
     fitCanvas(): void;
     getDataUrl(format: any): any;
-    toBlob(): Promise<unknown>;
+    toBlob(): Promise<Blob | null>;
     deleteSelectedObject(): void;
     changeSelectedTextSize(fontSize: any): void;
     changeSelectedTextColor(c: any): void;
@@ -133,4 +133,6 @@ export declare class EditorCore extends EventTarget {
     cacheTool(): void;
     isDirty(): boolean;
     rotateBaseImage90(): void;
+    saveCanvasJson(): any;
+    loadCanvasJson(canvasData: any): Promise<boolean>;
 }

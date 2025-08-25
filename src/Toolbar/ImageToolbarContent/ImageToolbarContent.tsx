@@ -35,6 +35,9 @@ export function ImageToolbarContent() {
   };
 
   const onClickSave = async () => {
+    if (!boilerplate?.[1]?.onSaveBoilerplate) {
+      return;
+    }
     const image = await core.saveImageAsBlob();
     await boilerplate[1].onSaveBoilerplate(image);
   };

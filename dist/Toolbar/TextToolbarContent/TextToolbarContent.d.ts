@@ -1,2 +1,5 @@
 /// <reference types="react" />
-export declare function TextToolbarContent(): JSX.Element;
+import { EditorMode } from '../../types/editor';
+export declare function TextToolbarContent({ editorMode, }: {
+    editorMode?: EditorMode;
+}): JSX.Element;

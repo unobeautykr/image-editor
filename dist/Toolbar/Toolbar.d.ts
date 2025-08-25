@@ -1,4 +1,8 @@
 /// <reference types="react" />
-export declare const Toolbar: ({ leadingItems }: {
-    leadingItems: any;
-}) => JSX.Element;
+import { EditorMode } from '../types/editor';
+interface ToolbarProps {
+    leadingItems?: React.ReactNode;
+    mode: EditorMode;
+}
+export declare const Toolbar: ({ leadingItems, mode: editorMode }: ToolbarProps) => JSX.Element;
+export {};

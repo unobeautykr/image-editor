@@ -81,7 +81,7 @@ const PopupModal = observer((props: SimpleDialogProps) => {
                 src={sampleTopImage}
                 alt="상단고정 미리보기"
                 onClick={() => {
-                  setValue('');
+                  setValue('top');
                 }}
               />
               <FormControlLabel
