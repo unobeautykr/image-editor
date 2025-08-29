@@ -32829,7 +32829,7 @@ const oo = new fP(), hP = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC
   }, u = () => {
     o(!1);
   }, m = () => {
-    t.rotateBaseImage90(), s();
+    t.rotateBaseImage90();
   }, y = f ? "simple-popper" : void 0;
   return /* @__PURE__ */ U.jsxs(U.Fragment, { children: [
     /* @__PURE__ */ U.jsx(

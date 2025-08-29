@@ -359,7 +359,7 @@ function App() {
           customerTemplates={customerTemplates}
           touch={true}
           // viewOnly={true}
-          mode="template"
+          mode="image"
           leadingItems={
             <div>
               {/* <Button onClick={onClickSave}>save</Button> */}

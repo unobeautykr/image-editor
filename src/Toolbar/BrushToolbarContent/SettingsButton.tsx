@@ -162,7 +162,6 @@ export const SettingsButton = observer(() => {
 
   const handleClockwise90 = () => {
     core.rotateBaseImage90();
-    handleClose();
   };
 
   const id = isOpen ? 'simple-popper' : undefined;
