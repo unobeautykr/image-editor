@@ -271,11 +271,17 @@ export class EditorCore extends EventTarget {
       const selected = opt.selected[0];
       switch (selected.type) {
         case 'i-text':
+          if (this.tool.name === ToolName.PAN) {
+            this.selectTool(ToolName.SELECT);
+          }
           return this._dispatch(
             EditorCore.Event.MODE_CHANGE,
             EditorCore.Mode.TEXT
           );
         case 'image':
+          if (this.tool.name === ToolName.PAN) {
+            this.selectTool(ToolName.SELECT);
+          }
           return this._dispatch(
             EditorCore.Event.MODE_CHANGE,
             EditorCore.Mode.IMAGE
@@ -289,11 +295,17 @@ export class EditorCore extends EventTarget {
       const selected = opt.selected[0];
       switch (selected.type) {
         case 'i-text':
+          if (this.tool.name === ToolName.PAN) {
+            this.selectTool(ToolName.SELECT);
+          }
           return this._dispatch(
             EditorCore.Event.MODE_CHANGE,
             EditorCore.Mode.TEXT
           );
         case 'image':
+          if (this.tool.name === ToolName.PAN) {
+            this.selectTool(ToolName.SELECT);
+          }
           return this._dispatch(
             EditorCore.Event.MODE_CHANGE,
             EditorCore.Mode.IMAGE
