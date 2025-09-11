@@ -25,8 +25,7 @@ export const TemplateInputButton = observer(() => {
   }, [boilerplate]);
 
   const onSelectTextBoilerplate = (message: string) => {
-    core.addText(message, undefined, true);
-    setAnchorEl(null);
+    core.addText(message, { shaking: true }, true);
     setTool(ToolName.PAN);
   };
 

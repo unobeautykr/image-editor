@@ -7,7 +7,7 @@ export function TodayTimestampButton() {
   const { core } = useImageEditor();
   const onClick = (e: any) => {
     const today = new Date();
-    core.addText(format(today, 'yyyy-MM-dd'), undefined, true);
+    core.addText(format(today, 'yyyy-MM-dd'), { shaking: true }, true);
   };
 
   return (

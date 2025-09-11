@@ -460,8 +460,33 @@ export class EditorCore extends EventTarget {
   }
 
   setContainerSize(size: any) {
+    const oldContainerSize = this.containerSize;
     this.containerSize = size;
-    if (this.c) {
+
+    if (this.c && oldContainerSize) {
+      const oldImageCenterX = oldContainerSize.width / 2;
+      const oldImageCenterY = oldContainerSize.height / 2;
+
+      const newImageCenterX = size.width / 2;
+      const newImageCenterY = size.height / 2;
+
+      // 기존 객체들 위치/크기 조정
+      this.c.getObjects().forEach((obj: any) => {
+        if (obj !== this.c.backgroundImage) {
+          // 이미지 중심점 기준으로 스케일링 후 새로운 중심점으로 이동
+          const relativeX = obj.left - oldImageCenterX;
+          const relativeY = obj.top - oldImageCenterY;
+
+          obj.set({
+            left: newImageCenterX + relativeX,
+            top: newImageCenterY + relativeY,
+          });
+        }
+      });
+
+      this.fitCanvas();
+      this.c.requestRenderAll();
+    } else if (this.c) {
       this.fitCanvas();
     }
   }
@@ -530,7 +555,7 @@ export class EditorCore extends EventTarget {
 
   addText(
     placeholder: string,
-    position?: { x: number; y: number },
+    position?: { x?: number; y?: number; shaking?: boolean },
     skipEditing?: boolean
   ) {
     if (!this.available) return;
@@ -540,7 +565,7 @@ export class EditorCore extends EventTarget {
     }
 
     let canvasSpace = null;
-    if (position) {
+    if (position?.x && position?.y) {
       canvasSpace = this.c.getPointer({
         clientX: position.x,
         clientY: position.y,
@@ -570,10 +595,31 @@ export class EditorCore extends EventTarget {
     text.set('fontSize', this.calcTextSize(this.config.text.fontSize));
 
     if (canvasSpace) {
-      text.set('left', canvasSpace.x);
-      text.set('top', canvasSpace.y);
+      let finalX = canvasSpace.x;
+      let finalY = canvasSpace.y;
+
+      if (position?.shaking) {
+        const shakeRange = 40;
+        const offsetX = (Math.random() - 0.5) * 2 * shakeRange; // -40 ~ +40
+        const offsetY = (Math.random() - 0.5) * 2 * shakeRange; // -40 ~ +40
+
+        finalX += offsetX;
+        finalY += offsetY;
+      }
+
+      text.set('left', finalX);
+      text.set('top', finalY);
     } else {
       this.c.viewportCenterObject(text);
+
+      if (position?.shaking) {
+        const shakeRange = 40;
+        const offsetX = (Math.random() - 0.5) * 2 * shakeRange;
+        const offsetY = (Math.random() - 0.5) * 2 * shakeRange;
+
+        text.set('left', text.left + offsetX);
+        text.set('top', text.top + offsetY);
+      }
     }
 
     text.erasable = false;
@@ -763,13 +809,13 @@ export class EditorCore extends EventTarget {
     image.center();
 
     const clipPath = new fabric.Rect({
-      width: effectiveWidth + 2,
-      height: effectiveHeight + 2,
+      width: imageWidth + 4, // 원본 이미지 크기 사용
+      height: imageHeight + 4, // 원본 이미지 크기 사용
       originX: 'center',
       originY: 'center',
-      angle: 0,
-      left: image.left - 1,
-      top: image.top - 1,
+      angle: imageAngle, // 이미지와 같은 각도
+      left: image.left, // 이미지 중심과 동일
+      top: image.top, // 이미지 중심과 동일
     });
 
     this.c.clipPath = clipPath;
@@ -962,8 +1008,27 @@ export class EditorCore extends EventTarget {
     });
 
     image.center();
+
+    this.updateClipPath();
     this.c.requestRenderAll();
     this.fitCanvas();
+  }
+
+  updateClipPath() {
+    const image = this.c.backgroundImage;
+    if (!image) return;
+
+    const clipPath = new fabric.Rect({
+      width: image.width + 4,
+      height: image.height + 4,
+      originX: 'center',
+      originY: 'center',
+      angle: image.angle || 0,
+      left: image.left,
+      top: image.top,
+    });
+
+    this.c.clipPath = clipPath;
   }
 
   saveCanvasJson(): any {

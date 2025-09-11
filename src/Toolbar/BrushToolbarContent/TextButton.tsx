@@ -10,7 +10,7 @@ export function TextButton() {
 
   const onClick = (e: any) => {
     if (touch) {
-      core.addText('text');
+      core.addText('text', { shaking: true });
     } else {
       setTool(ToolName.TEXT);
     }

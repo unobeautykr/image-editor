@@ -167,7 +167,7 @@ export const SettingsButton = observer(() => {
   const id = isOpen ? 'simple-popper' : undefined;
 
   return (
-    <>
+    <div>
       <ToolbarButton
         aria-describedby={id}
         Icon={() => <Icon variant="more" />}
@@ -243,8 +243,7 @@ export const SettingsButton = observer(() => {
           </>
         </Popper>
       )}
-
       {popupOpen && <PopupModal onClose={handleClosePopup} />}
-    </>
+    </div>
   );
 });
