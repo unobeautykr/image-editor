@@ -655,15 +655,32 @@ export class EditorCore extends EventTarget {
 
   async loadFromHistory(history: any) {
     this.isTraversingHistory = true;
+
     await new Promise((resolve: any, reject) => {
       try {
+        const objectsData = history.objects || history; // 이전 버전 호환성
+
         fabric.util.enlivenObjects(
-          history,
+          objectsData,
           (objects: any) => {
             this.c.remove(...this.c.getObjects());
             objects.forEach((o: any) => {
               this.c.add(o);
             });
+
+            // 백그라운드 이미지 복원
+            if (history.backgroundImage && this.c.backgroundImage) {
+              this.c.backgroundImage.set({
+                angle: history.backgroundImage.angle || 0,
+                left: history.backgroundImage.left,
+                top: history.backgroundImage.top,
+                originX: 'center',
+                originY: 'center',
+              });
+
+              this.updateClipPath();
+              this.fitCanvas();
+            }
 
             this.c.renderAll();
             resolve();
@@ -674,6 +691,7 @@ export class EditorCore extends EventTarget {
         reject(e);
       }
     });
+
     this.isTraversingHistory = false;
   }
 
@@ -719,7 +737,22 @@ export class EditorCore extends EventTarget {
 
   pushHistory() {
     const prevHistories = this.history.records.slice(0, this.history.index + 1);
-    this.history.records = [...prevHistories, this.c.toObject().objects] as any;
+
+    // 백그라운드 이미지 정보 포함
+    const backgroundImageInfo = this.c.backgroundImage
+      ? {
+          angle: this.c.backgroundImage.angle || 0,
+          left: this.c.backgroundImage.left,
+          top: this.c.backgroundImage.top,
+        }
+      : null;
+
+    const historyData = {
+      objects: this.c.toObject().objects,
+      backgroundImage: backgroundImageInfo,
+    };
+
+    this.history.records = [...prevHistories, historyData] as any;
     this.history.index = this.history.records.length - 1;
     this._dispatchHistoryChange();
   }
@@ -999,6 +1032,7 @@ export class EditorCore extends EventTarget {
 
     const image = this.c.backgroundImage;
     const currentAngle = image.angle || 0;
+
     const newAngle = (currentAngle + 90) % 360;
 
     image.set({
@@ -1012,6 +1046,8 @@ export class EditorCore extends EventTarget {
     this.updateClipPath();
     this.c.requestRenderAll();
     this.fitCanvas();
+
+    this.pushHistory();
   }
 
   updateClipPath() {

@@ -167,7 +167,7 @@ export const SettingsButton = observer(() => {
   const id = isOpen ? 'simple-popper' : undefined;
 
   return (
-    <div>
+    <>
       <ToolbarButton
         aria-describedby={id}
         Icon={() => <Icon variant="more" />}
@@ -207,7 +207,7 @@ export const SettingsButton = observer(() => {
             },
           ]}
         >
-          <>
+          <div>
             <span
               ref={setArrowRef}
               className="arrow"
@@ -216,34 +216,45 @@ export const SettingsButton = observer(() => {
               <Icon variant="arrow" width={14} height={12} />
             </span>
             <ClickAwayListener onClickAway={handleClose}>
-              <MenuList>
-                {touch && (
-                  <>
-                    <MenuItem>
-                      <ListItemText>손가락으로 그리기</ListItemText>
-                      <Switch
-                        checked={!usePencil}
-                        onChange={handleClickTogglePencil}
-                      />
-                    </MenuItem>
-                    <MenuItem onClick={handleOpenPopup}>
-                      <ListItemText>툴바 위치 설정</ListItemText>
-                    </MenuItem>
-                  </>
-                )}
-                <MenuItem onClick={handleClockwise90}>
-                  <ListItemText>
-                    <Stack gap={'8px'} flexDirection={'row'}>
-                      90도 회전 <Icon variant="clockwise90" />
-                    </Stack>
-                  </ListItemText>
-                </MenuItem>
-              </MenuList>
+              {touch ? (
+                <MenuList>
+                  <MenuItem>
+                    <ListItemText>손가락으로 그리기</ListItemText>
+                    <Switch
+                      checked={!usePencil}
+                      onChange={handleClickTogglePencil}
+                    />
+                  </MenuItem>
+                  <MenuItem onClick={handleOpenPopup}>
+                    <ListItemText>툴바 위치 설정</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={handleClockwise90}>
+                    <ListItemText>
+                      <Stack gap={'8px'} flexDirection={'row'}>
+                        90도 회전 <Icon variant="clockwise90" />
+                      </Stack>
+                    </ListItemText>
+                  </MenuItem>
+                </MenuList>
+              ) : (
+                <MenuList>
+                  <MenuItem>
+                    <ListItemText>손가락으로 그리기</ListItemText>
+                    <Switch
+                      checked={!usePencil}
+                      onChange={handleClickTogglePencil}
+                    />
+                  </MenuItem>
+                  <MenuItem onClick={handleOpenPopup}>
+                    <ListItemText>툴바 위치 설정</ListItemText>
+                  </MenuItem>
+                </MenuList>
+              )}
             </ClickAwayListener>
-          </>
+          </div>
         </Popper>
       )}
       {popupOpen && <PopupModal onClose={handleClosePopup} />}
-    </div>
+    </>
   );
 });
