@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function MarkerButton(): JSX.Element;
+export declare function MarkerButton(): import("react/jsx-runtime").JSX.Element;

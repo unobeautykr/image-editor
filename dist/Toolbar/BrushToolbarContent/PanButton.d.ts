@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function PanButton(): JSX.Element;
+export declare function PanButton(): import("react/jsx-runtime").JSX.Element;

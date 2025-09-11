@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function SelectToolIcon(props: any): JSX.Element;
+export declare function SelectToolIcon(props: any): import("react/jsx-runtime").JSX.Element;

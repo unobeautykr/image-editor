@@ -38,7 +38,7 @@ export declare const IconButton: import("@emotion/styled").StyledComponent<{
     disableTouchRipple?: boolean | undefined;
     focusRipple?: boolean | undefined;
     focusVisibleClassName?: string | undefined;
-    LinkComponent?: import("react").ElementType<any> | undefined;
+    LinkComponent?: import("react").ElementType<any, keyof import("react").JSX.IntrinsicElements> | undefined;
     onFocusVisible?: import("react").FocusEventHandler<any> | undefined;
     sx?: import("@mui/material").SxProps<import("@mui/material").Theme> | undefined;
     tabIndex?: number | undefined;

@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare const EraserConfigView: ({ value, onChange }: any) => JSX.Element;
+export declare const EraserConfigView: ({ value, onChange }: any) => import("react/jsx-runtime").JSX.Element;

@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function ToolbarPopover({ children, ...props }: any): JSX.Element;
+export declare function ToolbarPopover({ children, ...props }: any): import("react/jsx-runtime").JSX.Element;

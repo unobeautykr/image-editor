@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function TodayTimestampButton(): JSX.Element;
+export declare function TodayTimestampButton(): import("react/jsx-runtime").JSX.Element;

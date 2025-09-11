@@ -77,13 +77,15 @@ export declare class EditorCore extends EventTarget {
     selectTool(toolId: any): void;
     updateToolConfig(toolId: any, attr: any): any;
     setContainerSize(size: any): void;
+    private updateHistoryForResize;
     addImage(imageUrl: any): void;
     saveImageAsBlob(): Promise<Blob | null>;
     calcTextSize(fontSize: any): number;
     calcFontSize(textSize: any): number;
     addText(placeholder: string, position?: {
-        x: number;
-        y: number;
+        x?: number;
+        y?: number;
+        shaking?: boolean;
     }, skipEditing?: boolean): void;
     undo(): Promise<void>;
     redo(): Promise<void>;
@@ -133,6 +135,7 @@ export declare class EditorCore extends EventTarget {
     cacheTool(): void;
     isDirty(): boolean;
     rotateBaseImage90(): void;
+    updateClipPath(): void;
     saveCanvasJson(): any;
     loadCanvasJson(canvasData: any): Promise<boolean>;
 }

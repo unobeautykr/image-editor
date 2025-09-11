@@ -1,4 +1,3 @@
-/// <reference types="react" />
 interface TextBoilerplatePopupProps {
     anchorEl: null | HTMLElement;
     open: boolean;
@@ -6,5 +5,5 @@ interface TextBoilerplatePopupProps {
     onSelect: (contents: string) => void;
     boilerplates: any[];
 }
-export declare const TextBoilerplatePopup: ({ anchorEl, open, onClose, onSelect, boilerplates, }: TextBoilerplatePopupProps) => JSX.Element;
+export declare const TextBoilerplatePopup: ({ anchorEl, open, onClose, onSelect, boilerplates, }: TextBoilerplatePopupProps) => import("react/jsx-runtime").JSX.Element;
 export {};

@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function FreedrawButton(): JSX.Element;
+export declare function FreedrawButton(): import("react/jsx-runtime").JSX.Element;

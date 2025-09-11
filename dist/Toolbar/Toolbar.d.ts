@@ -4,5 +4,5 @@ interface ToolbarProps {
     leadingItems?: React.ReactNode;
     mode: EditorMode;
 }
-export declare const Toolbar: ({ leadingItems, mode: editorMode }: ToolbarProps) => JSX.Element;
+export declare const Toolbar: ({ leadingItems, mode: editorMode }: ToolbarProps) => import("react/jsx-runtime").JSX.Element;
 export {};

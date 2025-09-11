@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function TextButton(): JSX.Element;
+export declare function TextButton(): import("react/jsx-runtime").JSX.Element;

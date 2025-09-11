@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function ImageToolIcon(props: any): JSX.Element;
+export declare function ImageToolIcon(props: any): import("react/jsx-runtime").JSX.Element;

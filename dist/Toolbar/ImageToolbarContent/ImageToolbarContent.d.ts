@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function ImageToolbarContent(): JSX.Element;
+export declare function ImageToolbarContent(): import("react/jsx-runtime").JSX.Element;

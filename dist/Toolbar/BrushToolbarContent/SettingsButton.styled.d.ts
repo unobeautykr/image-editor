@@ -4,14 +4,14 @@ export declare const FormControlLabel: import("@emotion/styled").StyledComponent
 export declare const Radio: import("@emotion/styled").StyledComponent<import("@mui/material").RadioProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const Stack: import("@emotion/styled").StyledComponent<import("@mui/system").SystemProps<import("@mui/material").Theme> & {
     children?: import("react").ReactNode;
-    direction?: import("@mui/system").ResponsiveStyleValue<"column" | "column-reverse" | "row" | "row-reverse"> | undefined;
+    direction?: import("@mui/system").ResponsiveStyleValue<"row" | "column" | "column-reverse" | "row-reverse"> | undefined;
     spacing?: import("@mui/system").ResponsiveStyleValue<string | number> | undefined;
     divider?: import("react").ReactNode;
     useFlexGap?: boolean | undefined;
     sx?: import("@mui/material").SxProps<import("@mui/material").Theme> | undefined;
 } & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & {
     ref?: ((instance: HTMLDivElement | null) => void) | import("react").RefObject<HTMLDivElement> | null | undefined;
-}, "children" | "direction" | ("p" | "borderColor" | "fontSize" | "left" | "top" | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft" | "borderRadius" | "display" | "displayPrint" | "overflow" | "textOverflow" | "visibility" | "whiteSpace" | "flexBasis" | "flexDirection" | "flexWrap" | "justifyContent" | "alignItems" | "alignContent" | "order" | "flex" | "flexGrow" | "flexShrink" | "alignSelf" | "justifyItems" | "justifySelf" | "gap" | "columnGap" | "rowGap" | "gridColumn" | "gridRow" | "gridAutoFlow" | "gridAutoColumns" | "gridAutoRows" | "gridTemplateColumns" | "gridTemplateRows" | "gridTemplateAreas" | "gridArea" | "bgcolor" | "color" | "zIndex" | "position" | "right" | "bottom" | "boxShadow" | "width" | "maxWidth" | "minWidth" | "height" | "maxHeight" | "minHeight" | "boxSizing" | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my" | "pt" | "pr" | "pb" | "pl" | "px" | "py" | "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY" | "padding" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft" | "paddingX" | "paddingY" | "typography" | "fontFamily" | "fontStyle" | "fontWeight" | "letterSpacing" | "lineHeight" | "textAlign" | "textTransform") | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "spacing" | "divider" | "useFlexGap"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+}, "children" | "direction" | ("borderColor" | "fontSize" | "left" | "top" | "p" | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft" | "borderRadius" | "display" | "displayPrint" | "overflow" | "textOverflow" | "visibility" | "whiteSpace" | "flexBasis" | "flexDirection" | "flexWrap" | "justifyContent" | "alignItems" | "alignContent" | "order" | "flex" | "flexGrow" | "flexShrink" | "alignSelf" | "justifyItems" | "justifySelf" | "gap" | "columnGap" | "rowGap" | "gridColumn" | "gridRow" | "gridAutoFlow" | "gridAutoColumns" | "gridAutoRows" | "gridTemplateColumns" | "gridTemplateRows" | "gridTemplateAreas" | "gridArea" | "bgcolor" | "color" | "zIndex" | "position" | "right" | "bottom" | "boxShadow" | "width" | "maxWidth" | "minWidth" | "height" | "maxHeight" | "minHeight" | "boxSizing" | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my" | "pt" | "pr" | "pb" | "pl" | "px" | "py" | "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY" | "padding" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft" | "paddingX" | "paddingY" | "typography" | "fontFamily" | "fontStyle" | "fontWeight" | "letterSpacing" | "lineHeight" | "textAlign" | "textTransform") | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "spacing" | "divider" | "useFlexGap"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const MenuList: import("@emotion/styled").StyledComponent<{
     autoFocus?: boolean | undefined;
     autoFocusItem?: boolean | undefined;
@@ -28,7 +28,7 @@ export declare const MenuList: import("@emotion/styled").StyledComponent<{
     sx?: import("@mui/material").SxProps<import("@mui/material").Theme> | undefined;
 } & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLUListElement>, HTMLUListElement>, "ref"> & {
     ref?: ((instance: HTMLUListElement | null) => void) | import("react").RefObject<HTMLUListElement> | null | undefined;
-}, "children" | "autoFocus" | "sx" | "dense" | keyof import("@mui/material/OverridableComponent").CommonProps | "variant" | "disablePadding" | "subheader" | "autoFocusItem" | "disabledItemsFocusable" | "disableListWrap"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+}, "children" | "autoFocus" | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "variant" | "dense" | "disablePadding" | "subheader" | "autoFocusItem" | "disabledItemsFocusable" | "disableListWrap"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const MenuItem: import("@emotion/styled").StyledComponent<{
     autoFocus?: boolean | undefined;
     classes?: Partial<import("@mui/material").MenuItemClasses> | undefined;
@@ -48,7 +48,7 @@ export declare const MenuItem: import("@emotion/styled").StyledComponent<{
     disableTouchRipple?: boolean | undefined;
     focusRipple?: boolean | undefined;
     focusVisibleClassName?: string | undefined;
-    LinkComponent?: import("react").ElementType<any> | undefined;
+    LinkComponent?: import("react").ElementType<any, keyof import("react").JSX.IntrinsicElements> | undefined;
     onFocusVisible?: import("react").FocusEventHandler<any> | undefined;
     sx?: import("@mui/material").SxProps<import("@mui/material").Theme> | undefined;
     tabIndex?: number | undefined;
@@ -56,10 +56,10 @@ export declare const MenuItem: import("@emotion/styled").StyledComponent<{
     touchRippleRef?: import("react").Ref<import("@mui/material/ButtonBase/TouchRipple").TouchRippleActions> | undefined;
 }, "classes"> & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").LiHTMLAttributes<HTMLLIElement>, HTMLLIElement>, "ref"> & {
     ref?: ((instance: HTMLLIElement | null) => void) | import("react").RefObject<HTMLLIElement> | null | undefined;
-}, "children" | "autoFocus" | "tabIndex" | "sx" | "dense" | keyof import("@mui/material/OverridableComponent").CommonProps | "disabled" | "action" | "selected" | "centerRipple" | "disableRipple" | "disableTouchRipple" | "focusRipple" | "focusVisibleClassName" | "LinkComponent" | "onFocusVisible" | "TouchRippleProps" | "touchRippleRef" | "disableGutters" | "divider"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+}, "children" | "autoFocus" | "tabIndex" | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "disabled" | "action" | "selected" | "dense" | "centerRipple" | "disableRipple" | "disableTouchRipple" | "focusRipple" | "focusVisibleClassName" | "LinkComponent" | "onFocusVisible" | "TouchRippleProps" | "touchRippleRef" | "disableGutters" | "divider"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const Popper: import("@emotion/styled").StyledComponent<Omit<import("@mui/base").PopperUnstyledProps<"div", {}>, "direction"> & {
     components?: {
-        Root?: import("react").ElementType<any> | undefined;
+        Root?: import("react").ElementType<any, keyof import("react").JSX.IntrinsicElements> | undefined;
     } | undefined;
     componentsProps?: {
         root?: import("@mui/base").SlotComponentProps<"div", import("@mui/base").PopperUnstyledRootSlotPropsOverrides, import("@mui/base").PopperUnstyledOwnerState> | undefined;
@@ -90,7 +90,7 @@ export declare const Button: import("@emotion/styled").StyledComponent<{
     disableTouchRipple?: boolean | undefined;
     focusRipple?: boolean | undefined;
     focusVisibleClassName?: string | undefined;
-    LinkComponent?: import("react").ElementType<any> | undefined;
+    LinkComponent?: import("react").ElementType<any, keyof import("react").JSX.IntrinsicElements> | undefined;
     onFocusVisible?: import("react").FocusEventHandler<any> | undefined;
     sx?: import("@mui/material").SxProps<import("@mui/material").Theme> | undefined;
     tabIndex?: number | undefined;
@@ -116,5 +116,5 @@ export declare const DialogTitle: import("@emotion/styled").StyledComponent<{
     variantMapping?: Partial<Record<import("@mui/types").OverridableStringUnion<"inherit" | import("@mui/material").TypographyVariant, import("@mui/material").TypographyPropsVariantOverrides>, string>> | undefined;
 }, "classes"> & import("@mui/material/OverridableComponent").CommonProps & Omit<Omit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>, "ref"> & {
     ref?: ((instance: HTMLSpanElement | null) => void) | import("react").RefObject<HTMLSpanElement> | null | undefined;
-}, "children" | ("p" | "borderColor" | "fontSize" | "left" | "top" | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft" | "borderRadius" | "display" | "displayPrint" | "overflow" | "textOverflow" | "visibility" | "whiteSpace" | "flexBasis" | "flexDirection" | "flexWrap" | "justifyContent" | "alignItems" | "alignContent" | "order" | "flex" | "flexGrow" | "flexShrink" | "alignSelf" | "justifyItems" | "justifySelf" | "gap" | "columnGap" | "rowGap" | "gridColumn" | "gridRow" | "gridAutoFlow" | "gridAutoColumns" | "gridAutoRows" | "gridTemplateColumns" | "gridTemplateRows" | "gridTemplateAreas" | "gridArea" | "bgcolor" | "color" | "zIndex" | "position" | "right" | "bottom" | "boxShadow" | "width" | "maxWidth" | "minWidth" | "height" | "maxHeight" | "minHeight" | "boxSizing" | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my" | "pt" | "pr" | "pb" | "pl" | "px" | "py" | "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY" | "padding" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft" | "paddingX" | "paddingY" | "typography" | "fontFamily" | "fontStyle" | "fontWeight" | "letterSpacing" | "lineHeight" | "textAlign" | "textTransform") | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "align" | "variant" | "gutterBottom" | "noWrap" | "paragraph" | "variantMapping"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
+}, "children" | ("borderColor" | "fontSize" | "left" | "top" | "p" | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft" | "borderRadius" | "display" | "displayPrint" | "overflow" | "textOverflow" | "visibility" | "whiteSpace" | "flexBasis" | "flexDirection" | "flexWrap" | "justifyContent" | "alignItems" | "alignContent" | "order" | "flex" | "flexGrow" | "flexShrink" | "alignSelf" | "justifyItems" | "justifySelf" | "gap" | "columnGap" | "rowGap" | "gridColumn" | "gridRow" | "gridAutoFlow" | "gridAutoColumns" | "gridAutoRows" | "gridTemplateColumns" | "gridTemplateRows" | "gridTemplateAreas" | "gridArea" | "bgcolor" | "color" | "zIndex" | "position" | "right" | "bottom" | "boxShadow" | "width" | "maxWidth" | "minWidth" | "height" | "maxHeight" | "minHeight" | "boxSizing" | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my" | "pt" | "pr" | "pb" | "pl" | "px" | "py" | "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft" | "marginX" | "marginY" | "padding" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft" | "paddingX" | "paddingY" | "typography" | "fontFamily" | "fontStyle" | "fontWeight" | "letterSpacing" | "lineHeight" | "textAlign" | "textTransform") | "sx" | keyof import("@mui/material/OverridableComponent").CommonProps | "align" | "variant" | "gutterBottom" | "noWrap" | "paragraph" | "variantMapping"> & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;
 export declare const DialogContent: import("@emotion/styled").StyledComponent<import("@mui/material").DialogContentProps & import("@mui/system").MUIStyledCommonProps<import("@mui/material").Theme>, {}, {}>;

@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function EraserButton(): JSX.Element;
+export declare function EraserButton(): import("react/jsx-runtime").JSX.Element;

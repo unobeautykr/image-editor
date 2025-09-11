@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare const TemplateInputButton: () => JSX.Element;
+export declare const TemplateInputButton: () => import("react/jsx-runtime").JSX.Element;

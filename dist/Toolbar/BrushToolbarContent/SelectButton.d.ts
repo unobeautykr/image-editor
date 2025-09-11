@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function SelectButton(): JSX.Element;
+export declare function SelectButton(): import("react/jsx-runtime").JSX.Element;

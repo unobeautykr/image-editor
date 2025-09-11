@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function MarkerToolIcon(props: any): JSX.Element;
+export declare function MarkerToolIcon(props: any): import("react/jsx-runtime").JSX.Element;

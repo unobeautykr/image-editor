@@ -9,5 +9,5 @@ type ToolbarButtonProps = {
     sx?: any;
     className?: string;
 } & Omit<IconButtonProps, 'sx' | 'className'>;
-export declare const ToolbarButton: ({ Icon, selected, small, tooltip, disableToolbar, sx, disabled, className, ...props }: ToolbarButtonProps) => JSX.Element;
+export declare const ToolbarButton: ({ Icon, selected, small, tooltip, disableToolbar, sx, disabled, className, ...props }: ToolbarButtonProps) => import("react/jsx-runtime").JSX.Element;
 export {};

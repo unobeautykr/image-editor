@@ -1,2 +1,1 @@
-/// <reference types="react" />
-export declare function PenToolIcon(props: any): JSX.Element;
+export declare function PenToolIcon(props: any): import("react/jsx-runtime").JSX.Element;
