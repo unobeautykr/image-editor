@@ -50,6 +50,11 @@ const ConfigName = {
   TEXT: 'TEXT',
 };
 
+interface HistoryState {
+  index: number;
+  records: any[];
+}
+
 export class EditorCore extends EventTarget {
   static readonly Event = Event;
   static readonly Mode = Mode;
@@ -61,7 +66,7 @@ export class EditorCore extends EventTarget {
   private _busy: boolean;
   private zoomMin: number = 1;
   private zoomMax: number = 2;
-  private history = {
+  private history: HistoryState = {
     index: -1,
     records: [],
   };
@@ -466,14 +471,12 @@ export class EditorCore extends EventTarget {
     if (this.c && oldContainerSize) {
       const oldImageCenterX = oldContainerSize.width / 2;
       const oldImageCenterY = oldContainerSize.height / 2;
-
       const newImageCenterX = size.width / 2;
       const newImageCenterY = size.height / 2;
 
-      // 기존 객체들 위치/크기 조정
+      // 기존 객체들 위치/크기 조정 (기존 로직)
       this.c.getObjects().forEach((obj: any) => {
         if (obj !== this.c.backgroundImage) {
-          // 이미지 중심점 기준으로 스케일링 후 새로운 중심점으로 이동
           const relativeX = obj.left - oldImageCenterX;
           const relativeY = obj.top - oldImageCenterY;
 
@@ -484,11 +487,45 @@ export class EditorCore extends EventTarget {
         }
       });
 
+      this.updateHistoryForResize(oldContainerSize, size);
+
       this.fitCanvas();
       this.c.requestRenderAll();
     } else if (this.c) {
       this.fitCanvas();
     }
+  }
+
+  private updateHistoryForResize(oldSize: any, newSize: any) {
+    const oldCenterX = oldSize.width / 2;
+    const oldCenterY = oldSize.height / 2;
+    const newCenterX = newSize.width / 2;
+    const newCenterY = newSize.height / 2;
+
+    this.history.records = this.history.records.map((record) => {
+      if (record.objects && Array.isArray(record.objects)) {
+        const updatedObjects = record.objects.map((obj: any) => {
+          // 백그라운드 이미지가 아닌 객체들만 위치 조정
+          if (obj.type !== 'image' || !obj.isBackground) {
+            const relativeX = obj.left - oldCenterX;
+            const relativeY = obj.top - oldCenterY;
+
+            return {
+              ...obj,
+              left: newCenterX + relativeX,
+              top: newCenterY + relativeY,
+            };
+          }
+          return obj;
+        });
+
+        return {
+          ...record,
+          objects: updatedObjects,
+        };
+      }
+      return record;
+    });
   }
 
   addImage(imageUrl: any) {
