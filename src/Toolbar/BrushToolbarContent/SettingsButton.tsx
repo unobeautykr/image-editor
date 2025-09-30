@@ -232,6 +232,16 @@ export const SettingsButton = observer(() => {
             <ClickAwayListener onClickAway={handleClose}>
               {touch === true ? (
                 <MenuList>
+                  <MenuItem>
+                    <ListItemText>손가락으로 그리기</ListItemText>
+                    <Switch
+                      checked={!usePencil}
+                      onChange={handleClickTogglePencil}
+                    />
+                  </MenuItem>
+                  <MenuItem onClick={handleOpenPopup}>
+                    <ListItemText>툴바 위치 설정</ListItemText>
+                  </MenuItem>
                   <MenuItem onClick={handleClockwise90}>
                     <ListItemText>
                       <Stack gap={'8px'} flexDirection={'row'}>
@@ -242,15 +252,12 @@ export const SettingsButton = observer(() => {
                 </MenuList>
               ) : (
                 <MenuList>
-                  <MenuItem>
-                    <ListItemText>손가락으로 그리기</ListItemText>
-                    <Switch
-                      checked={!usePencil}
-                      onChange={handleClickTogglePencil}
-                    />
-                  </MenuItem>
-                  <MenuItem onClick={handleOpenPopup}>
-                    <ListItemText>툴바 위치 설정</ListItemText>
+                  <MenuItem onClick={handleClockwise90}>
+                    <ListItemText>
+                      <Stack gap={'8px'} flexDirection={'row'}>
+                        90도 회전 <Icon variant="clockwise90" />
+                      </Stack>
+                    </ListItemText>
                   </MenuItem>
                 </MenuList>
               )}
