@@ -114,7 +114,7 @@ const PopupModal = observer((props: SimpleDialogProps) => {
 });
 
 export const SettingsButton = observer(() => {
-  const { core, touch } = useImageEditor();
+  const { core, touch, toolbarPosition } = useImageEditor();
   const { toolbarVerticalPosition } = toolbarSettings;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [usePencil, setUsePencil] = useState(core.config.usePencil);
@@ -181,7 +181,13 @@ export const SettingsButton = observer(() => {
           open={isOpen}
           disablePortal={false}
           anchorEl={anchorEl}
-          placement={toolbarVerticalPosition === 'bottom' ? 'top' : 'bottom'}
+          placement={
+            toolbarPosition === 'right'
+              ? 'left'
+              : toolbarVerticalPosition === 'bottom'
+              ? 'top'
+              : 'bottom'
+          }
           modifiers={[
             {
               name: 'flip',
@@ -213,21 +219,19 @@ export const SettingsButton = observer(() => {
               className="arrow"
               style={{ lineHeight: 0, zIndex: '10' }}
             >
-              <Icon variant="arrow" width={14} height={12} />
+              <Icon
+                variant="arrow"
+                width={14}
+                height={12}
+                style={{
+                  display:
+                    toolbarPosition === 'right' ? 'none' : 'inline-block',
+                }}
+              />
             </span>
             <ClickAwayListener onClickAway={handleClose}>
-              {touch ? (
+              {touch === true ? (
                 <MenuList>
-                  <MenuItem>
-                    <ListItemText>손가락으로 그리기</ListItemText>
-                    <Switch
-                      checked={!usePencil}
-                      onChange={handleClickTogglePencil}
-                    />
-                  </MenuItem>
-                  <MenuItem onClick={handleOpenPopup}>
-                    <ListItemText>툴바 위치 설정</ListItemText>
-                  </MenuItem>
                   <MenuItem onClick={handleClockwise90}>
                     <ListItemText>
                       <Stack gap={'8px'} flexDirection={'row'}>

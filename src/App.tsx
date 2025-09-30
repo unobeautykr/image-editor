@@ -367,7 +367,7 @@ function App() {
               {/* <Button onClick={handleJsonLoad}>템플릿로드</Button> */}
             </div>
           }
-          toolbarPosition="right"
+          toolbarPosition="bottom"
         />
       </Box>
     </>
