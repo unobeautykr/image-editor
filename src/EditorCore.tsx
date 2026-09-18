@@ -138,6 +138,14 @@ export class EditorCore extends EventTarget {
   }
 
   setCanvas(element: HTMLCanvasElement) {
+    /**
+     * 이 에디터는 문자 단위 서식 UI 가 없고 색상·크기를 텍스트 객체 전체에 적용한다.
+     * fabric 은 텍스트 편집 중 복사한 구간의 스타일을 문자 단위로 붙여넣기 때문에
+     * (fabric.copiedTextStyle) 이후 객체 단위 fill/fontSize 변경이 붙여넣은 문자에
+     * 적용되지 않는다. 문자 단위 스타일이 생기지 않도록 스타일 복사를 끈다.
+     */
+    (fabric as any).disableStyleCopyPaste = true;
+
     this.c = new fabric.Canvas(element, {
       selection: false,
     });
@@ -961,8 +969,24 @@ export class EditorCore extends EventTarget {
     this.c.remove(this.c.getActiveObject());
   }
 
+  /**
+   * 텍스트 객체에 남아 있는 문자 단위 스타일에서 해당 속성을 제거한다.
+   * fabric 은 렌더링 시 문자 단위 스타일을 객체 단위 속성보다 우선하므로,
+   * 객체 전체에 속성을 적용하려면 먼저 문자 단위 값을 지워야 한다.
+   */
+  private clearTextCharStyle(text: any, property: string) {
+    if (!text?.styles || Object.keys(text.styles).length === 0) return;
+
+    text.removeStyle(property);
+    // removeStyle 은 캐시를 무효화하지 않는다. 또한 뒤이어 설정할 객체 단위 값이
+    // 기존 값과 같으면 fabric 이 변경을 감지하지 못해 캐시된 렌더 결과가 남는다.
+    text.set('dirty', true);
+  }
+
   changeSelectedTextSize(fontSize: any) {
     const text = this.c.getActiveObject();
+    // 문자 단위 fontSize 가 남아 있으면 객체 단위 설정이 무시된다. (예: 이전 버전에서 저장된 템플릿)
+    this.clearTextCharStyle(text, 'fontSize');
     text.set('fontSize', this.calcTextSize(fontSize));
     this.config.text.fontSize = fontSize;
     this.cacheConfig();
@@ -971,6 +995,8 @@ export class EditorCore extends EventTarget {
 
   changeSelectedTextColor(c: any) {
     const text = this.c.getActiveObject();
+    // 문자 단위 fill 이 남아 있으면 객체 단위 설정이 무시된다. (예: 이전 버전에서 저장된 템플릿)
+    this.clearTextCharStyle(text, 'fill');
     text.set('fill', c.code);
     this.config.text.color = c;
     this.cacheConfig();

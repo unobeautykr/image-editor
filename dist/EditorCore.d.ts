@@ -113,6 +113,12 @@ export declare class EditorCore extends EventTarget {
     getDataUrl(format: any): any;
     toBlob(): Promise<Blob | null>;
     deleteSelectedObject(): void;
+    /**
+     * 텍스트 객체에 남아 있는 문자 단위 스타일에서 해당 속성을 제거한다.
+     * fabric 은 렌더링 시 문자 단위 스타일을 객체 단위 속성보다 우선하므로,
+     * 객체 전체에 속성을 적용하려면 먼저 문자 단위 값을 지워야 한다.
+     */
+    private clearTextCharStyle;
     changeSelectedTextSize(fontSize: any): void;
     changeSelectedTextColor(c: any): void;
     changeSelectedTextMessage(message: any): void;
